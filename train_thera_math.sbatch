@@ -14,44 +14,15 @@
 # Create logs directory if it doesn't exist
 mkdir -p logs
 
-echo "Starting LIIF Thera Math Training..."
+# Load necessary modules
+module load cuda/11.8
+module load python/3.10
 
-# Load conda module (required for cluster)
-module load anaconda3_cpu 2>/dev/null || \
-module load miniconda3 2>/dev/null || \
-module load conda 2>/dev/null || \
-echo "No conda module found, trying system conda..."
-
-# Initialize conda for this shell session
-eval "$(conda shell.bash hook)" 2>/dev/null || true
-
-# Activate the LIIF environment
-echo "Activating conda environment: liif_env"
-conda activate liif_env
-
-# Verify environment is working
-echo "Verifying CUDA-enabled PyTorch environment..."
-python -c "
-import torch
-print(f'PyTorch version: {torch.__version__}')
-print(f'CUDA available: {torch.cuda.is_available()}')
-print(f'CUDA version: {torch.version.cuda}')
-print(f'Number of GPUs: {torch.cuda.device_count()}')
-
-import yaml, tensorboardX, imageio
-print('All required packages imported successfully!')
-
-if torch.cuda.is_available():
-    print(f'Current CUDA device: {torch.cuda.current_device()}')
-    print(f'Device name: {torch.cuda.get_device_name()}')
-else:
-    raise RuntimeError('CUDA not available - environment setup failed')
-"
+# Activate virtual environment if needed
+# source /path/to/your/venv/bin/activate
 
 # Set CUDA device
 export CUDA_VISIBLE_DEVICES=0
-
-echo "Starting training with Thera Math configuration..."
 
 # Run training
 python train_liif.py \
