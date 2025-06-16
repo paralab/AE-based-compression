@@ -3,16 +3,15 @@ train_dataset:
     name: math-function
     args:
       k_values: [2, 3, 4, 5, 6]
-      resolution: 384  # Increased to accommodate 8x scaling (48 * 8 = 384)
+      resolution: 1024
       num_functions: 1000
       repeat: 20
       cache: in_memory
-      diagonal_only: true  # Only use k1=k2 combinations
   wrapper:
     name: math-function-downsampled
     args:
       inp_size: 48
-      scale_max: 8  # Reduced from 32x to 8x
+      scale_max: 4
       augment: true
       sample_q: 2304
   batch_size: 16
@@ -22,16 +21,15 @@ val_dataset:
     name: math-function
     args:
       k_values: [2, 3, 4, 5, 6]
-      resolution: 384  # Increased to accommodate 8x scaling
+      resolution: 1024
       num_functions: 100
       repeat: 160
       cache: in_memory
-      diagonal_only: true  # Only use k1=k2 combinations
   wrapper:
     name: math-function-downsampled
     args:
       inp_size: 48
-      scale_max: 8  # Reduced from 32x to 8x
+      scale_max: 4
       sample_q: 2304
   batch_size: 16
 

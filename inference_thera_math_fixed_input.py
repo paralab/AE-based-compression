@@ -26,6 +26,12 @@ def load_model(model_path, config_path=None):
 
 def create_test_function(k1, k2, resolution=256):
     """Create a test mathematical function at high resolution"""
+    if isinstance(k1, str) and k1.startswith('super'):
+        # Handle superposition case
+        k_pairs = [(2, 2), (6, 6)]  # Superposition of (2,2) and (6,6)
+        return datasets.math_function.MathFunctionDataset.generate_superposition(k_pairs, resolution)
+    
+    # Regular single-frequency case
     x = np.linspace(-1, 1, resolution)
     y = np.linspace(-1, 1, resolution)
     X, Y = np.meshgrid(x, y)
@@ -106,7 +112,10 @@ def visualize_results(gt, lr, bicubic, thera, liif, k1, k2, scale_factor, save_p
     
     # Plot images
     im1 = axes[0, 0].imshow(gt_np, cmap='viridis', vmin=-1, vmax=1)
-    axes[0, 0].set_title(f'Ground Truth ({gt.shape[-1]}×{gt.shape[-2]})\nsin(2π{k1}x)sin(2π{k2}y)')
+    if isinstance(k1, str) and k1 == 'super':
+        axes[0, 0].set_title(f'Ground Truth ({gt.shape[-1]}×{gt.shape[-2]})\nSuperposition: sin(4πx)sin(4πy) + sin(12πx)sin(12πy)')
+    else:
+        axes[0, 0].set_title(f'Ground Truth ({gt.shape[-1]}×{gt.shape[-2]})\nsin(2π{k1}x)sin(2π{k2}y)')
     axes[0, 0].axis('off')
     
     im2 = axes[0, 1].imshow(lr_np, cmap='viridis', vmin=-1, vmax=1)
@@ -145,14 +154,23 @@ def visualize_results(gt, lr, bicubic, thera, liif, k1, k2, scale_factor, save_p
     plt.close()
 
 
+def parse_test_function(func_spec):
+    """Parse test function specification"""
+    if func_spec == 'super,0':
+        return 'super', 0  # Special case for superposition
+    else:
+        k1, k2 = map(int, func_spec.split(','))
+        return k1, k2
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--thera_model', required=True, help='Path to trained Thera model')
     parser.add_argument('--liif_model', default=None, help='Path to trained LIIF model for comparison')
     parser.add_argument('--output_dir', default='results/thera_fixed_input_corrected', help='Output directory')
-    parser.add_argument('--scale_factors', nargs='+', type=int, default=[2, 4, 8, 16, 32], help='Scale factors to test')
-    parser.add_argument('--test_functions', nargs='+', default=['2,2', '2,8', '5,5', '8,2', '8,8'], 
-                       help='Test functions as k1,k2 pairs')
+    parser.add_argument('--scale_factors', nargs='+', type=int, default=[2, 4, 6, 8], help='Scale factors to test')
+    parser.add_argument('--test_functions', nargs='+', default=['2,2', '3,3', '4,4', '5,5', '6,6', 'super,0'], 
+                       help='Test functions as k1,k2 pairs or special cases')
     args = parser.parse_args()
     
     # Create output directory
@@ -181,8 +199,14 @@ def main():
         print(f"\nTesting scale factor: {scale_factor}× (64×64 → {hr_resolution}×{hr_resolution})")
         
         for func_spec in args.test_functions:
-            k1, k2 = map(int, func_spec.split(','))
-            print(f"  Testing function: sin(2π{k1}x)sin(2π{k2}y)")
+            # Parse function specification
+            k1, k2 = parse_test_function(func_spec)
+            
+            # Print appropriate message based on function type
+            if isinstance(k1, str) and k1 == 'super':
+                print(f"  Testing function: Superposition of sin(4πx)sin(4πy) + sin(12πx)sin(12πy)")
+            else:
+                print(f"  Testing function: sin(2π{k1}x)sin(2π{k2}y)")
             
             # CORRECTED APPROACH: Create GT at target resolution, then downsample to 64x64
             gt_func = create_test_function(k1, k2, hr_resolution)
@@ -218,7 +242,8 @@ def main():
                 'scale': scale_factor,
                 'input_res': input_resolution,
                 'output_res': hr_resolution,
-                'k1': k1, 'k2': k2,
+                'k1': str(k1),  # Convert to string to handle 'super' case
+                'k2': str(k2),
                 'bicubic_l1': bicubic_l1, 'bicubic_psnr': bicubic_psnr,
                 'thera_l1': thera_l1, 'thera_psnr': thera_psnr,
                 'liif_l1': liif_l1, 'liif_psnr': liif_psnr
@@ -232,7 +257,8 @@ def main():
                 print(f"    LIIF     - L1: {liif_l1:.6f}, PSNR: {liif_psnr:.2f} dB")
             
             # Visualize results
-            save_path = os.path.join(args.output_dir, f'fixed_input_corrected_k{k1}k{k2}_scale{scale_factor}x.png')
+            save_path = os.path.join(args.output_dir, 
+                                   f'fixed_input_corrected_{"super" if k1=="super" else f"k{k1}k{k2}"}_scale{scale_factor}x.png')
             visualize_results(gt_func, lr_func, bicubic_result, thera_result, liif_result,
                             k1, k2, scale_factor, save_path)
     
@@ -243,8 +269,12 @@ def main():
         f.write("=" * 80 + "\n\n")
         
         for result in results:
-            f.write(f"Scale: {result['scale']}×, Input: {result['input_res']}×{result['input_res']} → Output: {result['output_res']}×{result['output_res']}\n")
-            f.write(f"Function: sin(2π{result['k1']}x)sin(2π{result['k2']}y)\n")
+            if result['k1'] == 'super':
+                f.write(f"Scale: {result['scale']}×, Input: {result['input_res']}×{result['input_res']} → Output: {result['output_res']}×{result['output_res']}\n")
+                f.write(f"Function: Superposition of sin(4πx)sin(4πy) + sin(12πx)sin(12πy)\n")
+            else:
+                f.write(f"Scale: {result['scale']}×, Input: {result['input_res']}×{result['input_res']} → Output: {result['output_res']}×{result['output_res']}\n")
+                f.write(f"Function: sin(2π{result['k1']}x)sin(2π{result['k2']}y)\n")
             f.write(f"  Bicubic  - L1: {result['bicubic_l1']:.6f}, PSNR: {result['bicubic_psnr']:.2f} dB\n")
             f.write(f"  Thera    - L1: {result['thera_l1']:.6f}, PSNR: {result['thera_psnr']:.2f} dB\n")
             if result['liif_l1'] is not None:

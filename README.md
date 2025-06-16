@@ -10,6 +10,8 @@ CVPR 2021 (Oral)
 
 The project page with video is at https://yinboc.github.io/liif/.
 
+![Thera Implementation Results](image.png)
+
 <img src="https://user-images.githubusercontent.com/10364424/102488232-b3c96080-40a6-11eb-905f-a1a21b7c6f8a.png" width="200">
 
 ### Citation

@@ -11,8 +11,8 @@ class MathFunctionDataset(Dataset):
     Dataset for mathematical functions of the form sin(2πk1*x)*sin(2πk2*y)
     """
     
-    def __init__(self, k_values=[2, 3, 4, 5, 6, 7, 8, 9], resolution=256, 
-                 num_functions=1000, repeat=1, cache='in_memory', diagonal_only=False):
+    def __init__(self, k_values=[2, 3, 4, 5, 6], resolution=1024, 
+                 num_functions=1000, repeat=1, cache='in_memory'):
         """
         Args:
             k_values: List of frequency values for k1 and k2
@@ -20,28 +20,18 @@ class MathFunctionDataset(Dataset):
             num_functions: Number of functions to generate
             repeat: Number of times to repeat the dataset
             cache: Caching strategy ('in_memory', 'none')
-            diagonal_only: If True, only use combinations where k1=k2
         """
         self.k_values = k_values
         self.resolution = resolution
         self.num_functions = num_functions
         self.repeat = repeat
         self.cache = cache
-        self.diagonal_only = diagonal_only
         
-        # Generate k1, k2 combinations
+        # Generate all possible k1, k2 combinations
         self.k_combinations = []
-        if diagonal_only:
-            # Only diagonal combinations: (k, k)
-            for k in k_values:
-                self.k_combinations.append((k, k))
-        else:
-            # All possible combinations
-            for k1 in k_values:
-                for k2 in k_values:
-                    self.k_combinations.append((k1, k2))
-        
-        print(f"Math function dataset: Using {len(self.k_combinations)} combinations: {self.k_combinations}")
+        for k1 in k_values:
+            for k2 in k_values:
+                self.k_combinations.append((k1, k2))
         
         # Pre-generate functions if caching in memory
         if cache == 'in_memory':
@@ -78,30 +68,4 @@ class MathFunctionDataset(Dataset):
         if self.cache == 'in_memory':
             return self.functions[actual_idx]
         else:
-            return self._generate_function(actual_idx)
-
-    @staticmethod
-    def generate_superposition(k_pairs, resolution=384):
-        """
-        Generate a superposition of multiple mathematical functions
-        
-        Args:
-            k_pairs: List of (k1, k2) tuples for each component
-            resolution: Resolution of the output function
-        """
-        x = np.linspace(-1, 1, resolution)
-        y = np.linspace(-1, 1, resolution)
-        X, Y = np.meshgrid(x, y)
-        
-        # Sum all component functions
-        func = np.zeros_like(X)
-        for k1, k2 in k_pairs:
-            func += np.sin(2 * np.pi * k1 * X) * np.sin(2 * np.pi * k2 * Y)
-        
-        # Normalize to [-1, 1] range
-        func = func / len(k_pairs)
-        
-        # Convert to tensor and add channel dimension
-        func_tensor = torch.FloatTensor(func).unsqueeze(0)  # (1, H, W)
-        
-        return func_tensor 
+            return self._generate_function(actual_idx) 
