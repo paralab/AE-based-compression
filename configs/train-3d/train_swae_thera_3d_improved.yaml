@@ -1,0 +1,71 @@
+train_dataset:
+  dataset:
+    name: math-function-3d
+    args:
+      k_values: [2, 3, 4, 5, 6]
+      resolution: 40  # Input resolution 40x40x40
+      num_functions: 500  # Reduced for faster training
+      repeat: 10  # Reduced repeat
+      cache: in_memory
+      diagonal_only: true  # Only use k1=k2=k3 combinations
+  wrapper:
+    name: math-function-3d-downsampled
+    args:
+      inp_size: 20  # Downsample to 20x20x20
+      scale_max: 2  # 2x super-resolution (20x20x20 -> 40x40x40)
+      augment: false  # Disable augmentation for now
+      sample_q: 2000  # Reduced sample points for faster training
+  batch_size: 2  # Smaller batch size for better gradients
+
+val_dataset:
+  dataset:
+    name: math-function-3d
+    args:
+      k_values: [2, 3, 4, 5, 6]
+      resolution: 40
+      num_functions: 50  # Smaller validation set
+      repeat: 20
+      cache: in_memory
+      diagonal_only: true
+  wrapper:
+    name: math-function-3d-downsampled
+    args:
+      inp_size: 20
+      scale_max: 2
+      sample_q: 2000
+  batch_size: 2
+
+data_norm:
+  inp: {sub: [0.0], div: [1.0]}
+  gt: {sub: [0.0], div: [1.0]}
+
+model:
+  name: liif-3d
+  args:
+    encoder_spec:
+      name: swae-encoder-3d
+      args:
+        input_channels: 1
+        hidden_channels: [16, 32, 64]  # Smaller network for faster training
+        no_upsampling: true
+    imnet_spec:
+      name: thera-3d-simple
+      args:
+        out_dim: 1
+        hidden_dim: 128  # Smaller hidden dimension
+        num_frequencies: 32  # Fewer frequencies
+        kappa: 1.0
+
+optimizer:
+  name: adam
+  args:
+    lr: 5.e-4  # Increased learning rate
+    weight_decay: 1.e-6  # Added weight decay
+    
+epoch_max: 200  # Reduced epochs for testing
+multi_step_lr:
+  milestones: [50, 100, 150]  # Earlier milestones
+  gamma: 0.5
+
+epoch_val: 5  # More frequent validation
+epoch_save: 25 

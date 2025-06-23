@@ -297,3 +297,128 @@ class MathFunctionDownsampled(Dataset):
             'gt': hr_values,
             'scale': torch.tensor(s, dtype=torch.float32)  # Add explicit scale information
         }
+
+
+def resize_fn_3d(img, size):
+    """3D resize function using trilinear interpolation"""
+    if isinstance(size, int):
+        size = (size, size, size)
+    return F.interpolate(img.unsqueeze(0), size=size, mode='trilinear', align_corners=False).squeeze(0)
+
+
+def to_3d_samples(img):
+    """Convert 3D image to coordinate-value pairs"""
+    D, H, W = img.shape[-3:]
+    coord = make_coord_3d((D, H, W))
+    values = img.view(-1, D * H * W).permute(1, 0)
+    return coord, values
+
+
+def make_coord_3d(shape, ranges=None, flatten=True):
+    """Make 3D coordinates"""
+    D, H, W = shape
+    if ranges is None:
+        ranges = [(-1, 1), (-1, 1), (-1, 1)]
+    
+    coord_seqs = []
+    for i, n in enumerate(shape):
+        r0, r1 = ranges[i]
+        coord_seqs.append(torch.linspace(r0, r1, n))
+    
+    coord_z, coord_y, coord_x = torch.meshgrid(*coord_seqs, indexing='ij')
+    coord = torch.stack([coord_x, coord_y, coord_z], dim=-1)  # (D, H, W, 3)
+    
+    if flatten:
+        coord = coord.view(-1, 3)  # (D*H*W, 3)
+    
+    return coord
+
+
+@register('math-function-3d-downsampled')
+class MathFunction3DDownsampled(Dataset):
+    """Wrapper for 3D mathematical function dataset with downsampling for super-resolution training"""
+
+    def __init__(self, dataset, inp_size=None, scale_min=1, scale_max=None,
+                 augment=False, sample_q=None):
+        self.dataset = dataset
+        self.inp_size = inp_size
+        self.scale_min = scale_min
+        if scale_max is None:
+            scale_max = scale_min
+        self.scale_max = scale_max
+        self.augment = augment
+        self.sample_q = sample_q
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, idx):
+        func = self.dataset[idx]  # (1, D, H, W)
+        s = random.uniform(self.scale_min, self.scale_max)
+
+        if self.inp_size is None:
+            d_lr = math.floor(func.shape[-3] / s + 1e-9)
+            h_lr = math.floor(func.shape[-2] / s + 1e-9)
+            w_lr = math.floor(func.shape[-1] / s + 1e-9)
+            func = func[:, :round(d_lr * s), :round(h_lr * s), :round(w_lr * s)]
+            func_down = resize_fn_3d(func, (d_lr, h_lr, w_lr))
+            crop_lr, crop_hr = func_down, func
+        else:
+            d_lr = h_lr = w_lr = self.inp_size
+            d_hr = h_hr = w_hr = round(self.inp_size * s)
+            
+            # Random crop from high-resolution function
+            x0 = random.randint(0, max(0, func.shape[-3] - d_hr))
+            y0 = random.randint(0, max(0, func.shape[-2] - h_hr))
+            z0 = random.randint(0, max(0, func.shape[-1] - w_hr))
+            crop_hr = func[:, x0: x0 + d_hr, y0: y0 + h_hr, z0: z0 + w_hr]
+            crop_lr = resize_fn_3d(crop_hr, (d_lr, h_lr, w_lr))
+
+        if self.augment:
+            # 3D augmentations
+            hflip = random.random() < 0.5
+            vflip = random.random() < 0.5
+            dflip = random.random() < 0.5
+            # Rotation around axes
+            rot_xy = random.random() < 0.5
+            rot_xz = random.random() < 0.5
+            rot_yz = random.random() < 0.5
+
+            def augment_3d(x):
+                if hflip:
+                    x = x.flip(-2)  # flip height
+                if vflip:
+                    x = x.flip(-1)  # flip width
+                if dflip:
+                    x = x.flip(-3)  # flip depth
+                if rot_xy:
+                    x = x.transpose(-2, -1)  # rotate in xy plane
+                if rot_xz:
+                    x = x.transpose(-3, -1)  # rotate in xz plane
+                if rot_yz:
+                    x = x.transpose(-3, -2)  # rotate in yz plane
+                return x
+
+            crop_lr = augment_3d(crop_lr)
+            crop_hr = augment_3d(crop_hr)
+
+        hr_coord, hr_values = to_3d_samples(crop_hr.contiguous())
+
+        if self.sample_q is not None:
+            sample_lst = np.random.choice(
+                len(hr_coord), self.sample_q, replace=False)
+            hr_coord = hr_coord[sample_lst]
+            hr_values = hr_values[sample_lst]
+
+        cell = torch.ones_like(hr_coord)
+        cell[:, 0] *= 2 / crop_hr.shape[-3]  # depth
+        cell[:, 1] *= 2 / crop_hr.shape[-2]  # height
+        cell[:, 2] *= 2 / crop_hr.shape[-1]  # width
+
+        return {
+            'inp': crop_lr,
+            'coord': hr_coord,
+            'cell': cell,
+            'gt': hr_values,
+            'scale': torch.tensor([s, s, s])  # 3D scale
+        }

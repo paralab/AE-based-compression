@@ -1,0 +1,12 @@
+VTI Comparison Statistics
+==================================================
+Original data shape: (40, 40, 40)
+Reconstructed data shape: (40, 40, 40)
+Original data range: [-0.997569, 0.997569]
+Reconstructed data range: [-1.139302, 1.091771]
+Mean Squared Error (MSE): 0.00164567
+Mean Absolute Error (MAE): 0.03192739
+Maximum Absolute Error: 0.19593960
+Root Mean Squared Error (RMSE): 0.04056680
+Peak Signal-to-Noise Ratio (PSNR): 27.82 dB
+Structural Similarity (correlation): 0.994343

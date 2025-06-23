@@ -1,84 +1,237 @@
-# LIIF
+# Neural Network-Based Compression for Scientific Data
 
-This repository contains the official implementation for LIIF introduced in the following paper:
+A deep learning compression system implementing **Sliced-Wasserstein Autoencoders (SWAE)** for 3D scientific data reconstruction, with plans for continuous upsampling using **Thera Neural Heat Fields**.
 
-[**Learning Continuous Image Representation with Local Implicit Image Function**](https://arxiv.org/abs/2012.09161)
-<br>
-[Yinbo Chen](https://yinboc.github.io/), [Sifei Liu](https://www.sifeiliu.net/), [Xiaolong Wang](https://xiaolonw.github.io/)
-<br>
-CVPR 2021 (Oral)
+## Overview
 
-The project page with video is at https://yinboc.github.io/liif/.
+This project implements a neural network-based compression system specifically designed for 3D scientific simulation data. We have successfully implemented a **pure SWAE (Sliced-Wasserstein Autoencoder)** architecture for reconstructing 3D mathematical functions of the form `sin(2πk₁x)sin(2πk₂y)sin(2πk₃z)` with high fidelity compression.
 
-![Thera Implementation Results](image.png)
+## Current Implementation: SWAE 3D Architecture
 
-<img src="https://user-images.githubusercontent.com/10364424/102488232-b3c96080-40a6-11eb-905f-a1a21b7c6f8a.png" width="200">
+We have implemented a complete SWAE system based on the paper *"Exploring Autoencoder-based Error-bounded Compression for Scientific Data"* with the following architecture:
 
-### Citation
+```mermaid
+graph LR
+  %% Input Data
+  subgraph Input_Data ["Input Data"]
+    direction TB
+    A["3D Scientific Data<br/>(40×40×40)"]
+    B["Block Partitioning<br/>(8×8×8)"]
+    C["Input Block<br/>(B,1,8,8,8)"]
+    A --> B --> C
+  end
 
-If you find our work useful in your research, please cite:
+  %% Encoder
+  subgraph Encoder ["SWAE Encoder"]
+    direction TB
+    D["Conv3D Block 1<br/>1→32 ch, s=2<br/>4×4×4"]
+    E["Conv3D Block 2<br/>32→64 ch, s=2<br/>2×2×2"]
+    F["Conv3D Block 3<br/>64→128 ch, s=2<br/>1×1×1"]
+    G["FC Layer<br/>128→16"]
+    D --> E --> F --> G
+  end
+
+  %% Latent Space
+  subgraph Latent ["Latent Space"]
+    H["Compressed Code<br/>(B, 16)<br/>~32:1 compression"]
+  end
+
+  %% Decoder
+  subgraph Decoder ["SWAE Decoder"]
+    direction TB
+    I["FC + Reshape<br/>16→128"]
+    J["DeConv3D Block 1<br/>128→64 ch, s=2<br/>2×2×2"]
+    K["DeConv3D Block 2<br/>64→32 ch, s=2<br/>4×4×4"]
+    L["DeConv3D Block 3<br/>32→1 ch, s=2<br/>8×8×8"]
+    I --> J --> K --> L
+  end
+
+  %% Loss Function
+  subgraph Loss ["SWAE Loss Function"]
+    direction TB
+    M["Reconstruction Loss<br/>L_recon = MSE(x, x̂)"]
+    N["Sliced Wasserstein Distance<br/>L_SW = SW(z, z_prior)"]
+    O["Total Loss<br/>L = L_recon + λ·L_SW<br/>λ = 10.0"]
+    M --> O
+    N --> O
+  end
+
+  %% Output
+  subgraph Output ["Output"]
+    direction TB
+    P["Reconstructed Blocks<br/>(B,1,8,8,8)"]
+    Q["Block Assembly<br/>125 blocks → 40×40×40"]
+    R["Final Reconstruction<br/>(40×40×40)"]
+    P --> Q --> R
+  end
+
+  %% Inter-subgraph connections
+  Input_Data --> Encoder --> Latent --> Decoder --> Loss --> Output
+```
+
+### Key Features
+
+- **Pure SWAE Implementation**: Block-wise processing of 3D data (8×8×8 blocks)
+- **Sliced Wasserstein Distance**: O(n log n) complexity with 50 random projections
+- **High Compression Ratio**: ~32:1 compression (512 → 16 dimensions)
+- **Mathematical Function Reconstruction**: Specialized for `sin(2πk₁x)sin(2πk₂y)sin(2πk₃z)` functions
+- **Proven Architecture**: Based on established research with [32, 64, 128] channel configuration
+
+## Current Results
+
+We have achieved successful reconstruction of 3D mathematical functions with the following performance metrics:
+
+### Sample Results (128×128×128 Resolution)
+- **Original data range**: [-0.999771, 0.999771]
+- **Reconstructed data range**: [-1.257744, 1.342528]
+- **Mean Squared Error (MSE)**: 0.00684822
+- **Mean Absolute Error (MAE)**: 0.06383123
+- **Peak Signal-to-Noise Ratio (PSNR)**: 21.64 dB
+- **Structural Similarity (correlation)**: 0.972412
+
+### Generated Visualizations
+- `sample_009_128x128x128_comparison_slices.png`: Comprehensive slice comparison
+- `vti_comparison_slices.png`: VTI format visualization
+- Detailed axis-wise comparisons and error analysis
+
+## Data Format
+
+The system currently works with:
+- **3D Mathematical Functions**: `sin(2πk₁x)sin(2πk₂y)sin(2πk₃z)` with k ∈ {2,3,4,5,6}
+- **Volume Size**: 40×40×40 → 128×128×128 (validation)
+- **Block Processing**: 8×8×8 blocks (125 blocks per volume)
+- **Output Format**: VTI files for scientific visualization
+
+## Next Steps: Thera Integration
+
+We are planning to integrate **Thera Neural Heat Fields** for continuous upsampling, eliminating block assembly artifacts and providing anti-aliased reconstruction at arbitrary resolutions.
+
+### Planned SWAE + Thera Architecture
+
+```mermaid
+graph TD
+    A["Input Block<br/>(B,1,8,8,8)"] --> B["SWAE Encoder<br/>φ(x): (8×8×8) → z₁₆"]
+    B --> C["Latent Space<br/>(B, 16)"]
+    C --> D["Shared Decoder<br/>Backbone"]
+    D --> E["Shared Features<br/>(B, 32, 4, 4, 4)"]
+    
+    E --> F["Reconstruction Head<br/>→ (B,1,8,8,8)"]
+    E --> G["Thera Parameters Head<br/>→ b₁, W₂"]
+    
+    F --> H["8×8×8 Reconstruction<br/>(for auxiliary loss)"]
+    G --> I["3D Neural Heat Field<br/>Φ(x,y,z,t)"]
+    I --> J["Continuous Upsampling<br/>→ (40×40×40)"]
+    
+    %% Loss connections
+    H --> K["Auxiliary Loss<br/>L_aux = MSE(recon, target)"]
+    J --> L["Main Loss<br/>L_main = MSE(continuous, target)"]
+    C --> M["SWAE Loss<br/>L_SW"]
+    
+    K --> N["Total Loss<br/>L = L_main + α·L_aux + β·L_SW"]
+    L --> N
+    M --> N
+    
+    classDef encoder fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef decoder fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef thera fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef loss fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+    
+    class A,C encoder
+    class D,E,F,H decoder
+    class G,I,J thera
+    class K,L,M,N loss
+```
+
+### Thera Benefits
+- **Continuous Reconstruction**: No block assembly artifacts
+- **Anti-aliasing Guarantees**: Theoretically grounded upsampling
+- **Multi-scale Capability**: Single model for multiple resolutions
+- **Thermal Activation**: `ξ(z,ν,κ,t) = sin(z)·exp(-|ν|²κt)` for frequency control
+
+## Future Goals
+
+1. **GR Dataset Testing**: Evaluate SWAE architecture on General Relativity simulation data
+2. **Thera Implementation**: Integrate 3D Neural Heat Fields for continuous reconstruction
+3. **Multi-scale Evaluation**: Test reconstruction at various resolutions
+4. **Performance Optimization**: Improve compression ratios and reconstruction quality
+
+## Project Structure
 
 ```
-@inproceedings{chen2021learning,
-  title={Learning continuous image representation with local implicit image function},
-  author={Chen, Yinbo and Liu, Sifei and Wang, Xiaolong},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={8628--8638},
-  year={2021}
-}
+├── models/
+│   ├── swae_pure_3d.py          # Pure SWAE 3D implementation
+│   ├── swae.py                  # SWAE with LIIF integration
+│   ├── thera_3d.py              # 3D Thera neural heat fields
+│   └── liif_3d.py               # 3D LIIF framework
+├── datasets/
+│   ├── math_function_3d.py      # 3D mathematical function dataset
+│   └── swae_3d_dataset.py       # SWAE-specific dataset wrapper
+├── configs/
+│   └── train-3d/               # Training configurations
+├── validation_128_inference_results/  # 128³ validation results
+├── validation_inference_results/      # 40³ validation results
+├── train_swae_3d_pure.py        # Pure SWAE training script
+└── inference_swae_3d_128_validation.py  # Validation inference
 ```
 
-### Environment
-- Python 3
-- Pytorch 1.6.0
-- TensorboardX
-- yaml, numpy, tqdm, imageio
+## Installation
 
-## Quick Start
+```bash
+# Clone the repository
+git clone https://github.com/tahmidawal/NN-based-Compression-for-Scientific-Data.git
+cd NN-based-Compression-for-Scientific-Data
 
-1. Download a DIV2K pre-trained model.
-
-Model|File size|Download
-:-:|:-:|:-:
-EDSR-baseline-LIIF|18M|[Dropbox](https://www.dropbox.com/s/6f402wcn4v83w2v/edsr-baseline-liif.pth?dl=0) &#124; [Google Drive](https://drive.google.com/file/d/1wBHSrgPLOHL_QVhPAIAcDC30KSJLf67x/view?usp=sharing)
-RDN-LIIF|256M|[Dropbox](https://www.dropbox.com/s/mzha6ll9kb9bwy0/rdn-liif.pth?dl=0) &#124; [Google Drive](https://drive.google.com/file/d/1xaAx6lBVVw_PJ3YVp02h3k4HuOAXcUkt/view?usp=sharing)
-
-2. Convert your image to LIIF and present it in a given resolution (with GPU 0, `[MODEL_PATH]` denotes the `.pth` file)
-
-```
-python demo.py --input xxx.png --model [MODEL_PATH] --resolution [HEIGHT],[WIDTH] --output output.png --gpu 0
+# Install dependencies
+pip install torch torchvision torchaudio
+pip install vtk matplotlib numpy pyyaml
 ```
 
-## Reproducing Experiments
+## Usage
 
-### Data
+### Training SWAE Model
 
-`mkdir load` for putting the dataset folders.
+```bash
+python train_swae_3d_pure.py --config configs/train-3d/train_swae_thera_3d.yaml
+```
 
-- **DIV2K**: `mkdir` and `cd` into `load/div2k`. Download HR images and bicubic validation LR images from [DIV2K website](https://data.vision.ee.ethz.ch/cvl/DIV2K/) (i.e. [Train_HR](http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_HR.zip), [Valid_HR](http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_HR.zip), [Valid_LR_X2](http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X2.zip), [Valid_LR_X3](http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X3.zip), [Valid_LR_X4](http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X4.zip)). `unzip` these files to get the image folders.
+### Running Inference
 
-- **benchmark datasets**: `cd` into `load/`. Download and `tar -xf` the [benchmark datasets](https://cv.snu.ac.kr/research/EDSR/benchmark.tar) (provided by [this repo](https://github.com/thstkdgus35/EDSR-PyTorch)), get a `load/benchmark` folder with sub-folders `Set5/, Set14/, B100/, Urban100/`.
+```bash
+python inference_swae_3d_128_validation.py --model_path save/swae_3d_model.pth
+```
 
-- **celebAHQ**: `mkdir load/celebAHQ` and `cp scripts/resize.py load/celebAHQ/`, then `cd load/celebAHQ/`. Download and `unzip` data1024x1024.zip from the [Google Drive link](https://drive.google.com/drive/folders/11Vz0fqHS2rXDb5pprgTjpD7S2BAJhi1P?usp=sharing) (provided by [this repo](github.com/suvojit-0x55aa/celebA-HQ-dataset-download)). Run `python resize.py` and get image folders `256/, 128/, 64/, 32/`. Download the [split.json](https://www.dropbox.com/s/2qeijojdjzvp3b9/split.json?dl=0).
+### Generating Comparisons
 
-### Running the code
+```bash
+cd validation_128_inference_results
+python compare_vti_slices.py
+```
 
-**0. Preliminaries**
+## Technical Specifications
 
-- For `train_liif.py` or `test.py`, use `--gpu [GPU]` to specify the GPUs (e.g. `--gpu 0` or `--gpu 0,1`).
+- **Framework**: PyTorch
+- **Input Resolution**: 40×40×40 → 128×128×128
+- **Block Size**: 8×8×8 (as per SWAE paper Table VI)
+- **Latent Dimension**: 16
+- **Architecture Channels**: [32, 64, 128]
+- **Compression Ratio**: ~32:1
+- **Loss Components**: Reconstruction + Sliced Wasserstein (λ=10.0)
 
-- For `train_liif.py`, by default, the save folder is at `save/_[CONFIG_NAME]`. We can use `--name` to specify a name if needed.
+## Research Foundation
 
-- For dataset args in configs, `cache: in_memory` denotes pre-loading into memory (may require large memory, e.g. ~40GB for DIV2K), `cache: bin` denotes creating binary files (in a sibling folder) for the first time, `cache: none` denotes direct loading. We can modify it according to the hardware resources before running the training scripts.
+This implementation is based on:
+1. **"Exploring Autoencoder-based Error-bounded Compression for Scientific Data"** - SWAE architecture
+2. **"Thera: Aliasing-Free Arbitrary-Scale Super-Resolution with Neural Heat Fields"** - Continuous upsampling (planned)
+3. **"Learning Continuous Image Representation with Local Implicit Image Function"** - LIIF framework integration
 
-**1. DIV2K experiments**
+## Contributing
 
-**Train**: `python train_liif.py --config configs/train-div2k/train_edsr-baseline-liif.yaml` (with EDSR-baseline backbone, for RDN replace `edsr-baseline` with `rdn`). We use 1 GPU for training EDSR-baseline-LIIF and 4 GPUs for RDN-LIIF.
+This is an active research project. Contributions and suggestions for improving 3D scientific data compression are welcome!
 
-**Test**: `bash scripts/test-div2k.sh [MODEL_PATH] [GPU]` for div2k validation set, `bash scripts/test-benchmark.sh [MODEL_PATH] [GPU]` for benchmark datasets. `[MODEL_PATH]` is the path to a `.pth` file, we use `epoch-last.pth` in corresponding save folder.
+## License
 
-**2. celebAHQ experiments**
+[Add your license here]
 
-**Train**: `python train_liif.py --config configs/train-celebAHQ/[CONFIG_NAME].yaml`.
+---
 
-**Test**: `python test.py --config configs/test/test-celebAHQ-32-256.yaml --model [MODEL_PATH]` (or `test-celebAHQ-64-128.yaml` for another task). We use `epoch-best.pth` in corresponding save folder.
+**Status**: ✅ SWAE Implementation Complete | 🚧 Thera Integration In Progress | 📋 GR Dataset Testing Planned
