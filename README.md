@@ -14,9 +14,107 @@ This project implements a neural network-based compression system specifically d
 
 ## Current Implementation: SWAE 3D Architecture
 
-We have implemented a complete SWAE system based on the paper *"Exploring Autoencoder-based Error-bounded Compression for Scientific Data"* with the following architecture:
+We have implemented a complete SWAE system based on the paper *"Exploring Autoencoder-based Error-bounded Compression for Scientific Data"* with **two specialized architectures**:
+
+### 🔬 **NEW: 7×7×7 U_CHI Architecture (Current Focus)**
+
+The breakthrough results were achieved using our **optimized 7×7×7 SWAE architecture** specifically designed for U_CHI General Relativity simulation data:
 
 ```mermaid
+graph TD
+  %% Input Processing
+  subgraph Input_Processing ["🔄 Log-Scale Preprocessing"]
+    direction TB
+    A["U_CHI Raw Data<br/>(7×7×7)<br/>High Dynamic Range"]
+    B["Positive-Shift Transform<br/>data_shifted = data - min + ε<br/>log_data = log(data_shifted)"]
+    C["Normalized Input<br/>(B,1,7,7,7)<br/>Reduced Dynamic Range"]
+    A --> B --> C
+  end
+
+  %% Encoder Architecture
+  subgraph Encoder_7x7x7 ["🔍 SWAE 7×7×7 Encoder"]
+    direction TB
+    D["Conv3D Block 1<br/>1→32 ch, k=3, s=2, p=1<br/>Conv3D + Conv3D + BN + ReLU<br/>7×7×7 → 4×4×4"]
+    E["Conv3D Block 2<br/>32→64 ch, k=3, s=2, p=1<br/>Conv3D + Conv3D + BN + ReLU<br/>4×4×4 → 2×2×2"]
+    F["Conv3D Block 3<br/>64→128 ch, k=3, s=2, p=1<br/>Conv3D + Conv3D + BN + ReLU<br/>2×2×2 → 1×1×1"]
+    G["Flatten + FC<br/>128 → 16<br/>Latent Space"]
+    D --> E --> F --> G
+  end
+
+  %% Latent Space & SW Distance
+  subgraph Latent_Space ["⚡ Latent Space + Sliced Wasserstein"]
+    direction TB
+    H["Latent Code z<br/>(B, 16)<br/>21.4:1 Compression"]
+    I["Prior Samples<br/>N(0, I)<br/>Standard Normal"]
+    J["SW Distance<br/>50 projections<br/>λ = 0.9"]
+    H --> J
+    I --> J
+  end
+
+  %% Decoder Architecture
+  subgraph Decoder_7x7x7 ["🔧 SWAE 7×7×7 Decoder"]
+    direction TB
+    K["FC + Reshape<br/>16 → 128<br/>→ (128,1,1,1)"]
+    L["DeConv3D Block 1<br/>128→64 ch, k=3, s=2, p=1<br/>ConvTranspose3D + Conv3D + BN + ReLU<br/>1×1×1 → 2×2×2"]
+    M["DeConv3D Block 2<br/>64→32 ch, k=3, s=2, p=1<br/>ConvTranspose3D + Conv3D + BN + ReLU<br/>2×2×2 → 4×4×4"]
+    N["Final DeConv3D<br/>32→1 ch, k=4, s=1, p=0<br/>ConvTranspose3D (no activation)<br/>4×4×4 → 7×7×7"]
+    K --> L --> M --> N
+  end
+
+  %% Output Processing
+  subgraph Output_Processing ["🔄 Inverse Log-Scale Processing"]
+    direction TB
+    O["Reconstructed Log<br/>(B,1,7,7,7)<br/>Log-Scale Domain"]
+    P["Inverse Transform<br/>recovered = exp(log_data) - ε + min<br/>Perfect Round-trip"]
+    Q["Final Output<br/>(7×7×7)<br/>Original Scale"]
+    O --> P --> Q
+  end
+
+  %% Loss Function
+  subgraph Loss_Function ["📊 SWAE Loss"]
+    direction TB
+    R["Reconstruction Loss<br/>MSE(original, recovered)<br/>In original scale"]
+    S["SW Regularization<br/>λ × SW_distance<br/>λ = 0.9"]
+    T["Total Loss<br/>L = L_recon + λ × L_SW"]
+    R --> T
+    S --> T
+  end
+
+  %% Flow connections
+  Input_Processing --> Encoder_7x7x7 --> Latent_Space --> Decoder_7x7x7 --> Output_Processing
+  Latent_Space --> Loss_Function
+  Input_Processing --> Loss_Function
+  Output_Processing --> Loss_Function
+
+  %% Styling
+  classDef preprocessing fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+  classDef encoder fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+  classDef latent fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
+  classDef decoder fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000
+  classDef postprocessing fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+  classDef loss fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
+
+  class A,B,C preprocessing
+  class D,E,F,G encoder
+  class H,I,J latent
+  class K,L,M,N decoder
+  class O,P,Q postprocessing
+  class R,S,T loss
+```
+
+#### **Key Architectural Features of 7×7×7 SWAE:**
+
+- **📐 Input Size**: 7×7×7 blocks (343 values → 16 latent dimensions)
+- **🔄 Log-Scale Processing**: Positive-shift method for dynamic range reduction
+- **🏗️ Encoder**: 3 Conv3D blocks with [32, 64, 128] channels
+- **⚡ Latent Space**: 16-dimensional with 21.4:1 compression ratio
+- **🔧 Decoder**: Custom architecture with exact 7×7×7 reconstruction
+- **🎯 Final Layer**: ConvTranspose3D(k=4, s=1, p=0) for precise dimension matching
+- **📊 Loss**: Reconstruction (original scale) + Sliced Wasserstein (λ=0.9)
+
+### 📊 **Original: 8×8×8 Mathematical Functions Architecture**
+
+Our initial implementation for mathematical function reconstruction:
 graph LR
   %% Input Data
   subgraph Input_Data ["Input Data"]
@@ -291,6 +389,39 @@ The system currently works with:
 4. **📊 Multi-scale Evaluation**: Test reconstruction at various resolutions
 5. **🎯 Production Deployment**: Scale to full-size scientific datasets
 6. **📈 Performance Optimization**: Further architectural improvements for edge cases
+
+## 📁 Repository Structure & Data Management
+
+### ✅ **Files Included in Git Repository**
+- **Source Code**: All Python scripts, models, and utilities
+- **Configuration Files**: YAML configs, SLURM batch scripts
+- **Documentation**: README, markdown files, architecture diagrams  
+- **Analysis Results**: PNG images, visualization plots, metrics
+- **Small Data Files**: VTI files for visualization (< 10MB each)
+
+### 🚫 **Files Excluded from Repository** (619MB+ total)
+**Excluded by `.gitignore` to keep repository manageable:**
+
+#### **Large Model Files** (615MB)
+- `save/swae_u_chi_poslog_corrected_20250624_200538/`
+  - `final_model.pth` (15MB) - **Best trained model with 14.6 dB PSNR**
+  - `best_model.pth` (15MB) - Top performing checkpoint
+  - 40+ training checkpoints (15MB each) - Every 25 epochs
+  - Training logs and metrics
+
+#### **Data Files** 
+- `logscale_val_inference/*.hdf5` - 20 validation data samples
+- `logs/` - Training logs and tensorboard files (1.6MB)
+- Cache directories: `__pycache__/`, `models/__pycache__/`
+
+#### **File Types Excluded**
+- `*.pth` - PyTorch model checkpoints
+- `*.hdf5` - HDF5 scientific data files
+- `*.pkl`, `*.joblib` - Serialized objects
+- `*.log`, `*.out`, `*.err` - Log files
+- `*.npy`, `*.npz` - NumPy arrays
+
+**Note**: The trained models achieving **14.6 dB PSNR breakthrough** are stored locally in `save/` directory. Contact repository owner for access to trained model weights.
 4. **Performance Optimization**: Improve compression ratios and reconstruction quality
 5. **GR Dataset Optimization**: Fine-tune for U_CHI variable characteristics
 
