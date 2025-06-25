@@ -21,85 +21,65 @@ We have implemented a complete SWAE system based on the paper *"Exploring Autoen
 The breakthrough results were achieved using our **optimized 7×7×7 SWAE architecture** specifically designed for U_CHI General Relativity simulation data:
 
 ```mermaid
-graph TD
+graph LR
   %% Input Processing
-  subgraph Input_Processing ["🔄 Log-Scale Preprocessing"]
+  subgraph Input_Data ["🔄 Log-Scale Preprocessing"]
     direction TB
     A["U_CHI Raw Data<br/>(7×7×7)<br/>High Dynamic Range"]
     B["Positive-Shift Transform<br/>data_shifted = data - min + ε<br/>log_data = log(data_shifted)"]
-    C["Normalized Input<br/>(B,1,7,7,7)<br/>Reduced Dynamic Range"]
+    C["Preprocessed Input<br/>(B,1,7,7,7)<br/>Reduced Dynamic Range"]
     A --> B --> C
   end
 
-  %% Encoder Architecture
-  subgraph Encoder_7x7x7 ["🔍 SWAE 7×7×7 Encoder"]
+  %% Encoder
+  subgraph Encoder ["🔍 SWAE 7×7×7 Encoder"]
     direction TB
-    D["Conv3D Block 1<br/>1→32 ch, k=3, s=2, p=1<br/>Conv3D + Conv3D + BN + ReLU<br/>7×7×7 → 4×4×4"]
-    E["Conv3D Block 2<br/>32→64 ch, k=3, s=2, p=1<br/>Conv3D + Conv3D + BN + ReLU<br/>4×4×4 → 2×2×2"]
-    F["Conv3D Block 3<br/>64→128 ch, k=3, s=2, p=1<br/>Conv3D + Conv3D + BN + ReLU<br/>2×2×2 → 1×1×1"]
-    G["Flatten + FC<br/>128 → 16<br/>Latent Space"]
+    D["Conv3D Block 1<br/>1→32 ch, s=2<br/>7×7×7 → 4×4×4"]
+    E["Conv3D Block 2<br/>32→64 ch, s=2<br/>4×4×4 → 2×2×2"]
+    F["Conv3D Block 3<br/>64→128 ch, s=2<br/>2×2×2 → 1×1×1"]
+    G["FC Layer<br/>128→16"]
     D --> E --> F --> G
   end
 
-  %% Latent Space & SW Distance
-  subgraph Latent_Space ["⚡ Latent Space + Sliced Wasserstein"]
-    direction TB
-    H["Latent Code z<br/>(B, 16)<br/>21.4:1 Compression"]
-    I["Prior Samples<br/>N(0, I)<br/>Standard Normal"]
-    J["SW Distance<br/>50 projections<br/>λ = 0.9"]
-    H --> J
-    I --> J
+  %% Latent Space
+  subgraph Latent ["⚡ Latent Space"]
+    H["Compressed Code<br/>(B, 16)<br/>21.4:1 compression"]
+    I["SW Distance<br/>50 projections<br/>λ = 0.9"]
+    H --> I
   end
 
-  %% Decoder Architecture
-  subgraph Decoder_7x7x7 ["🔧 SWAE 7×7×7 Decoder"]
+  %% Decoder
+  subgraph Decoder ["🔧 SWAE 7×7×7 Decoder"]
     direction TB
-    K["FC + Reshape<br/>16 → 128<br/>→ (128,1,1,1)"]
-    L["DeConv3D Block 1<br/>128→64 ch, k=3, s=2, p=1<br/>ConvTranspose3D + Conv3D + BN + ReLU<br/>1×1×1 → 2×2×2"]
-    M["DeConv3D Block 2<br/>64→32 ch, k=3, s=2, p=1<br/>ConvTranspose3D + Conv3D + BN + ReLU<br/>2×2×2 → 4×4×4"]
-    N["Final DeConv3D<br/>32→1 ch, k=4, s=1, p=0<br/>ConvTranspose3D (no activation)<br/>4×4×4 → 7×7×7"]
-    K --> L --> M --> N
+    J["FC + Reshape<br/>16→128"]
+    K["DeConv3D Block 1<br/>128→64 ch, s=2<br/>1×1×1 → 2×2×2"]
+    L["DeConv3D Block 2<br/>64→32 ch, s=2<br/>2×2×2 → 4×4×4"]
+    M["Final DeConv3D<br/>32→1 ch, k=4<br/>4×4×4 → 7×7×7"]
+    J --> K --> L --> M
   end
 
   %% Output Processing
-  subgraph Output_Processing ["🔄 Inverse Log-Scale Processing"]
+  subgraph Output ["🔄 Inverse Transform"]
     direction TB
-    O["Reconstructed Log<br/>(B,1,7,7,7)<br/>Log-Scale Domain"]
-    P["Inverse Transform<br/>recovered = exp(log_data) - ε + min<br/>Perfect Round-trip"]
-    Q["Final Output<br/>(7×7×7)<br/>Original Scale"]
-    O --> P --> Q
+    N["Reconstructed Log<br/>(B,1,7,7,7)"]
+    O["Inverse Transform<br/>exp(log_data) - ε + min"]
+    P["Final Output<br/>(7×7×7)"]
+    N --> O --> P
   end
 
   %% Loss Function
-  subgraph Loss_Function ["📊 SWAE Loss"]
+  subgraph Loss ["📊 SWAE Loss Function"]
     direction TB
-    R["Reconstruction Loss<br/>MSE(original, recovered)<br/>In original scale"]
-    S["SW Regularization<br/>λ × SW_distance<br/>λ = 0.9"]
-    T["Total Loss<br/>L = L_recon + λ × L_SW"]
-    R --> T
-    S --> T
+    Q["Reconstruction Loss<br/>L_recon = MSE(x, x̂)"]
+    R["Sliced Wasserstein Loss<br/>L_SW = SW(z, z_prior)"]
+    S["Total Loss<br/>L = L_recon + λ·L_SW<br/>λ = 0.9"]
+    Q --> S
+    R --> S
   end
 
-  %% Flow connections
-  Input_Processing --> Encoder_7x7x7 --> Latent_Space --> Decoder_7x7x7 --> Output_Processing
-  Latent_Space --> Loss_Function
-  Input_Processing --> Loss_Function
-  Output_Processing --> Loss_Function
-
-  %% Styling
-  classDef preprocessing fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
-  classDef encoder fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
-  classDef latent fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
-  classDef decoder fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000
-  classDef postprocessing fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
-  classDef loss fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
-
-  class A,B,C preprocessing
-  class D,E,F,G encoder
-  class H,I,J latent
-  class K,L,M,N decoder
-  class O,P,Q postprocessing
-  class R,S,T loss
+  %% Inter-subgraph connections
+  Input_Data --> Encoder --> Latent --> Decoder --> Output --> Loss
+  Latent --> Loss
 ```
 
 #### **Key Architectural Features of 7×7×7 SWAE:**
@@ -115,6 +95,8 @@ graph TD
 ### 📊 **Original: 8×8×8 Mathematical Functions Architecture**
 
 Our initial implementation for mathematical function reconstruction:
+
+```mermaid
 graph LR
   %% Input Data
   subgraph Input_Data ["Input Data"]
