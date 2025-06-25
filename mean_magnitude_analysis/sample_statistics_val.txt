@@ -1,0 +1,32 @@
+U_CHI VAL Dataset Sample Statistics
+==================================================
+
+Total samples: 5792
+
+Sample Means:
+  Min: 7.462896e-03
+  Max: 9.962854e-01
+  Mean: 5.903193e-01
+  Std: 2.585778e-01
+
+Sample Mean Magnitudes:
+  Min: 7.462896e-03
+  Max: 9.962854e-01
+  Mean: 5.903193e-01
+  Std: 2.585778e-01
+
+Overall Data Range:
+  Global min: 1.000000e-04
+  Global max: 9.965267e-01
+  Global dynamic range: 9.97e+03
+
+Sample Mean Magnitude Percentiles:
+   1%: 5.449386e-02
+   5%: 1.773649e-01
+  10%: 2.643159e-01
+  25%: 3.926197e-01
+  50%: 5.723713e-01
+  75%: 8.163128e-01
+  90%: 9.867471e-01
+  95%: 9.941120e-01
+  99%: 9.957167e-01

@@ -1,0 +1,32 @@
+U_CHI TRAIN Dataset Sample Statistics
+==================================================
+
+Total samples: 23168
+
+Sample Means:
+  Min: 7.009747e-03
+  Max: 9.962854e-01
+  Mean: 5.913920e-01
+  Std: 2.568013e-01
+
+Sample Mean Magnitudes:
+  Min: 7.009747e-03
+  Max: 9.962854e-01
+  Mean: 5.913920e-01
+  Std: 2.568013e-01
+
+Overall Data Range:
+  Global min: 1.000000e-04
+  Global max: 9.965267e-01
+  Global dynamic range: 9.97e+03
+
+Sample Mean Magnitude Percentiles:
+   1%: 6.404134e-02
+   5%: 1.798956e-01
+  10%: 2.658540e-01
+  25%: 3.974842e-01
+  50%: 5.730833e-01
+  75%: 8.140796e-01
+  90%: 9.890003e-01
+  95%: 9.941119e-01
+  99%: 9.957167e-01
