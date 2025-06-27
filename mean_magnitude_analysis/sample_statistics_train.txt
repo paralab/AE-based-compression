@@ -1,32 +1,79 @@
 U_CHI TRAIN Dataset Sample Statistics
-==================================================
+======================================================================
 
 Total samples: 23168
+Successfully log-transformed: 23168
+
+==================================================
+RAW DATA STATISTICS
+==================================================
 
 Sample Means:
-  Min: 7.009747e-03
+  Min: 7.009748e-03
   Max: 9.962854e-01
-  Mean: 5.913920e-01
-  Std: 2.568013e-01
+  Mean: 5.902246e-01
+  Std: 2.566113e-01
 
 Sample Mean Magnitudes:
-  Min: 7.009747e-03
+  Min: 7.009748e-03
   Max: 9.962854e-01
-  Mean: 5.913920e-01
-  Std: 2.568013e-01
+  Mean: 5.902246e-01
+  Std: 2.566113e-01
 
-Overall Data Range:
+Overall Raw Data Range:
   Global min: 1.000000e-04
   Global max: 9.965267e-01
   Global dynamic range: 9.97e+03
 
-Sample Mean Magnitude Percentiles:
-   1%: 6.404134e-02
-   5%: 1.798956e-01
-  10%: 2.658540e-01
-  25%: 3.974842e-01
-  50%: 5.730833e-01
-  75%: 8.140796e-01
-  90%: 9.890003e-01
-  95%: 9.941119e-01
+Raw Sample Mean Magnitude Percentiles:
+   1%: 6.043272e-02
+   5%: 1.787493e-01
+  10%: 2.658188e-01
+  25%: 3.972845e-01
+  50%: 5.716855e-01
+  75%: 8.090606e-01
+  90%: 9.867471e-01
+  95%: 9.941118e-01
   99%: 9.957167e-01
+
+==================================================
+LOG-SCALED DATA STATISTICS (Positive-Shift Method)
+==================================================
+
+Sample Means (Log-scaled):
+  Min: -8.405853
+  Max: -3.261500
+  Mean: -4.500391
+  Std: 1.103075
+
+Sample Mean Magnitudes (Log-scaled):
+  Min: 3.261500
+  Max: 8.405853
+  Mean: 4.500391
+  Std: 1.103075
+
+Overall Log-Scaled Data Range:
+  Global min: -17.727533
+  Global max: -2.386085
+  Global range span: 15.341449
+
+Log-Scaled Sample Mean Magnitude Percentiles:
+   1%: 3.369899
+   5%: 3.510194
+  10%: 3.631338
+  25%: 3.886523
+  50%: 4.182872
+  75%: 4.564385
+  90%: 5.991647
+  95%: 7.644780
+  99%: 8.143826
+
+==================================================
+TRANSFORMATION QUALITY METRICS
+==================================================
+
+Transformation success rate: 100.0%
+Raw vs Log correlation: 0.697836
+Dynamic range reduction: 6.50e+02
+Positive-shift method: data_shifted = data - data_min + epsilon
+Log transformation: log_data = log(data_shifted + epsilon)

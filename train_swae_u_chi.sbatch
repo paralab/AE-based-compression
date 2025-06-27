@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=swae_u_chi_7x7x7_poslog
+#SBATCH --job-name=swae_u_chi_7x7x7_poslog_fixed
 #SBATCH --output=logs/swae_u_chi_%j.out
 #SBATCH --error=logs/swae_u_chi_%j.err
 #SBATCH --partition=gpuA100x4
@@ -48,27 +48,36 @@ nvidia-smi
 
 echo "Starting SWAE training on U_CHI dataset (7x7x7 blocks)"
 echo "Dataset: /u/tawal/0620-NN-based-compression-thera/tt_q01/"
-echo "Total samples: ~29K (23K train, 6K val)"
+echo "Data splits: 80% train (~23K), 15% val (~4K), 5% test (~1.5K)"
+echo "🔒 Test set (5%) held out for final unbiased evaluation"
 echo "Compression ratio: 21.4:1 (343 -> 16 dimensions)"
-echo "Normalization: pos_log (corrected implementation)"
+echo "Normalization: pos_log (FIXED per-sample implementation)"
+echo "⚠️  CRITICAL FIX: Per-sample log transformation for correct statistical properties"
+echo "   Expected: mean~4.5, std~1.1 (was incorrectly mean~-0.66, std~0.6)"
 
-# Run U_CHI SWAE training with corrected pos_log normalization
+# Run U_CHI SWAE training with FIXED per-sample pos_log normalization
+# ADJUSTED HYPERPARAMETERS for new data distribution:
+# - Reduced learning rate from 2e-4 to 1e-4 (more stable for new distribution)
+# - Increased gradient clipping from 1.0 to 2.0 (handle larger gradients) 
+# - Reduced batch size from 128 to 64 (more stable training)
+# - Keep lambda_reg at 0.9 (should still work well)
 python train_swae_u_chi.py \
     --data-folder /u/tawal/0620-NN-based-compression-thera/tt_q01/ \
     --normalize \
     --normalize-method pos_log \
     --latent-dim 16 \
     --lambda-reg 0.9 \
-    --batch-size 128 \
+    --batch-size 64 \
     --epochs 1000 \
-    --lr 2e-4 \
+    --lr 1e-4 \
     --train-split 0.8 \
     --num-workers 8 \
     --device auto \
-    --save-dir ./save/swae_u_chi_poslog_corrected_$(date +%Y%m%d_%H%M%S) \
+    --save-dir ./save/swae_u_chi_poslog_FIXED_$(date +%Y%m%d_%H%M%S) \
     --eval-interval 10 \
     --save-interval 25
 
 echo "Training completed at $(date)"
 echo "Check results in save directory"
-echo "Model trained with corrected pos_log normalization (exact match with visualize_uchi_log_scale.py)" 
+echo "🎯 Model trained with FIXED per-sample pos_log normalization"
+echo "🎯 Expected improvements: Proper statistical properties and better reconstruction quality" 

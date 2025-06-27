@@ -84,8 +84,8 @@ def train_epoch(model, train_loader, optimizer, device, epoch, writer=None):
         # Backward pass
         loss.backward()
         
-        # Gradient clipping for stability
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        # Gradient clipping for stability (increased for new data distribution)
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=2.0)
         
         optimizer.step()
         
@@ -182,10 +182,10 @@ def evaluate_reconstruction_quality(model, val_dataset, device, num_samples=10):
             original = sample.cpu().numpy().squeeze()
             reconstructed = x_recon.cpu().numpy().squeeze()
             
-            # Denormalize if needed
+            # Denormalize if needed (FIXED: use correct sample index)
             if hasattr(val_dataset, 'denormalize'):
-                original = val_dataset.denormalize(original)
-                reconstructed = val_dataset.denormalize(reconstructed)
+                original = val_dataset.denormalize(original, sample_idx=i)
+                reconstructed = val_dataset.denormalize(reconstructed, sample_idx=i)
             
             # Calculate metrics
             mse = np.mean((original - reconstructed) ** 2)
@@ -248,7 +248,7 @@ def main():
     parser.add_argument('--lr', type=float, default=2e-4,
                         help='Learning rate')
     parser.add_argument('--train-split', type=float, default=0.8,
-                        help='Train/validation split ratio')
+                        help='Training data ratio (val=0.15, test=0.05 - FIXED 5% test set)')
     
     # System parameters
     parser.add_argument('--num-workers', type=int, default=4,
@@ -285,14 +285,19 @@ def main():
     else:
         writer = None
     
-    # Create datasets
+    # Create datasets with proper train/val/test split
     print("Creating U_CHI datasets...")
-    train_dataset, val_dataset = create_u_chi_datasets(
+    train_dataset, val_dataset, test_dataset = create_u_chi_datasets(
         data_folder=args.data_folder,
         train_ratio=args.train_split,
+        val_ratio=0.15,  # 15% for validation during training
         normalize=args.normalize,
         normalize_method=args.normalize_method
     )
+    
+    print(f"🔄 Data splits: Train={len(train_dataset)} (80%), Val={len(val_dataset)} (15%), Test={len(test_dataset)} (5%)")
+    print(f"⚠️  CRITICAL: Test set (5%) is held out for final unbiased evaluation - NEVER seen during training")
+    print(f"🔒 Using deterministic split (seed=42) to ensure consistent test set")
     
     # Create data loaders
     train_loader = DataLoader(

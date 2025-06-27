@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=swae_u_chi_inference_poslog
+#SBATCH --job-name=swae_u_chi_TEST_FIXED
 #SBATCH --output=logs/swae_u_chi_inference_%j.out
 #SBATCH --error=logs/swae_u_chi_inference_%j.err
 #SBATCH --time=02:00:00
@@ -54,8 +54,12 @@ python -c "import torch; print(f'PyTorch: {torch.__version__}'); print(f'CUDA av
 # Run the inference script
 echo "Starting SWAE U_CHI validation inference with dual plots and VTI output..."
 
-# Look for the latest corrected pos_log model
-latest_model_dir=$(ls -td ./save/swae_u_chi_poslog_corrected_* 2>/dev/null | head -1)
+# Look for the latest FIXED pos_log model first, then corrected
+latest_model_dir=$(ls -td ./save/swae_u_chi_poslog_FIXED_* 2>/dev/null | head -1)
+if [ -z "$latest_model_dir" ]; then
+    # Fallback to corrected model
+    latest_model_dir=$(ls -td ./save/swae_u_chi_poslog_corrected_* 2>/dev/null | head -1)
+fi
 if [ -n "$latest_model_dir" ]; then
     latest_model="$latest_model_dir/best_model.pth"
 else
@@ -71,25 +75,30 @@ if [ ! -f "$latest_model" ]; then
 fi
 
 echo "Using model checkpoint: $latest_model"
-echo "Using model trained with corrected pos_log normalization"
+echo "🎯 Using model trained with FIXED per-sample pos_log normalization"
+echo "🎯 Expected: Proper statistical properties and improved reconstruction quality"
 
 # Run inference with dual plot generation (normalized + denormalized)
 python inference_swae_u_chi_validation.py \
     --model-path "$latest_model" \
     --data-folder /u/tawal/0620-NN-based-compression-thera/tt_q01/ \
-    --output-dir validation_u_chi_results_poslog_$(date +%Y%m%d_%H%M%S) \
+    --output-dir test_u_chi_results_FIXED_$(date +%Y%m%d_%H%M%S) \
     --normalize-method pos_log \
-    --batch-size 64 \
-    --num-samples 10 \
+    --batch-size 32 \
+    --num-samples 20 \
     --num-vti-samples 5 \
     --device auto
 
 echo "Job completed at: $(date)"
 echo ""
-echo "Results include:"
-echo "  - Dual comparison plots for all 50 samples:"
+echo "🎯 Results from FIXED model on HELD-OUT TEST SET (5%):"
+echo "  - Unbiased evaluation on data NEVER seen during training"
+echo "  - Dual comparison plots for all 20 test samples:"
 echo "    * normalized scale (log pos) - as model sees data"
 echo "    * denormalized scale (original units) - physical interpretation"
-echo "  - VTI files (normalized scale) for 5 random samples"
+echo "  - VTI files (normalized scale) for 5 random test samples"
 echo "  - Average metrics summary (calculated on denormalized data)"
-echo "  - No HDF5 files (removed for efficiency)" 
+echo "  - Compression/decompression speed benchmarking in GBps"
+echo "  - Relative error analysis with percentile breakdown"
+echo "  - Expected improvements: PSNR 14+ dB, Correlation 0.85+"
+echo "🔒 Test set is deterministic and consistent across all runs" 
