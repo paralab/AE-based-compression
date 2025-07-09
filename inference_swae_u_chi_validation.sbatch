@@ -81,7 +81,7 @@ echo "🎯 Expected: Proper statistical properties and improved reconstruction q
 # Run inference with dual plot generation (normalized + denormalized)
 python inference_swae_u_chi_validation.py \
     --model-path "$latest_model" \
-    --data-folder /u/tawal/0620-NN-based-compression-thera/tt_q01/ \
+    --data-folder /u/tawal/BSSN-Extracted-Data/tt_q01/ \
     --output-dir test_u_chi_results_FIXED_$(date +%Y%m%d_%H%M%S) \
     --normalize-method pos_log \
     --batch-size 32 \

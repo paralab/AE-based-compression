@@ -14,7 +14,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-import copy
 
 # Try to import tensorboard, make it optional
 try:
@@ -55,7 +54,7 @@ def calculate_compression_ratio():
     Calculate theoretical compression ratio
     Original: 7x7x7 = 343 values
     Compressed: 16 latent dimensions
-    Compression ratio: 343/16 ≈ 21.4:1
+    Compression ratio: 343/16 approximately 21.4 to 1
     """
     original_size = 7 * 7 * 7  # 343
     compressed_size = 16       # latent dimension
@@ -227,7 +226,7 @@ def main():
     
     # Data parameters
     parser.add_argument('--data-folder', type=str, 
-                        default='/u/tawal/BSSN Extracted Data/tt_q01/',
+                        default='/u/tawal/0703-NN-based-compression-AE/BSSN Extracted Data/tt_q01/',
                         help='Path to folder containing HDF5 files')
     parser.add_argument('--normalize', action='store_true', default=True,
                         help='Normalize the data')
@@ -240,8 +239,8 @@ def main():
                         help='Latent dimension (16 as per Table VI)')
     parser.add_argument('--lambda-reg', type=float, default=0.9,
                         help='Regularization weight for SW distance')
-    parser.add_argument('--encoder-channels', type=str, default='32,64,128,256',
-                        help='Encoder channel configuration (comma-separated, e.g., "32,64,128,256")')
+    parser.add_argument('--encoder-channels', type=str, default='32,64,128',
+                        help='Encoder channel configuration (comma-separated, e.g., "32,64,128")')
     
     # Training parameters
     parser.add_argument('--batch-size', type=int, default=64,
@@ -251,11 +250,7 @@ def main():
     parser.add_argument('--lr', type=float, default=2e-4,
                         help='Learning rate')
     parser.add_argument('--train-split', type=float, default=0.8,
-                        help='Training data ratio (val=0.15, test=0.05 - FIXED 5% test set)')
-    parser.add_argument('--early-stopping-patience', type=int, default=40,
-                        help='Number of epochs to wait for improvement before stopping')
-    parser.add_argument('--early-stopping-min-delta', type=float, default=1e-4,
-                        help='Minimum change in validation loss to qualify as an improvement')
+                        help='Training data ratio (val=0.15, test=0.05 - FIXED 5%% test set)')
     
     # System parameters
     parser.add_argument('--num-workers', type=int, default=4,
@@ -270,8 +265,20 @@ def main():
                         help='Evaluate reconstruction quality every N epochs')
     parser.add_argument('--save-interval', type=int, default=20,
                         help='Save model every N epochs')
+    parser.add_argument('--early-stopping-patience', type=int, default=None,
+                        help='Early stopping patience (epochs without improvement, None to disable)')
     
     args = parser.parse_args()
+    
+    # Parse encoder channels
+    try:
+        encoder_channels = [int(c.strip()) for c in args.encoder_channels.split(',')]
+        if len(encoder_channels) < 2:
+            raise ValueError("Need at least 2 channel values")
+    except ValueError as e:
+        print(f"Error parsing encoder channels '{args.encoder_channels}': {e}")
+        print("Using default channels [32, 64, 128]")
+        encoder_channels = [32, 64, 128]
     
     # Setup device
     if args.device == 'auto':
@@ -281,6 +288,7 @@ def main():
     
     print(f"Using device: {device}")
     print(f"Data folder: {args.data_folder}")
+    print(f"Encoder channels: {encoder_channels}")
     print(f"Theoretical compression ratio: {calculate_compression_ratio():.1f}:1")
     
     # Create save directory
@@ -328,14 +336,10 @@ def main():
     
     # Create model
     print("Creating SWAE 3D 7x7x7 model...")
-    # Parse encoder channels from string to list of integers
-    encoder_channels = [int(c) for c in args.encoder_channels.split(',')]
-    print(f"Using encoder channels: {encoder_channels}")
-    
     model = create_swae_3d_7x7x7_model(
         latent_dim=args.latent_dim,
         lambda_reg=args.lambda_reg,
-        encoder_channels=encoder_channels
+        channels=encoder_channels
     ).to(device)
     
     # Print model info
@@ -346,7 +350,7 @@ def main():
     print(f"Model settings: latent_dim={args.latent_dim}, lambda_reg={args.lambda_reg}, channels={encoder_channels}")
     print(f"Training settings: lr={args.lr}, batch_size={args.batch_size}")
     if args.early_stopping_patience:
-        print(f"Early stopping: enabled (patience={args.early_stopping_patience}, min_delta={args.early_stopping_min_delta})")
+        print(f"Early stopping: enabled (patience={args.early_stopping_patience})")
     else:
         print(f"Early stopping: disabled")
     
@@ -360,7 +364,6 @@ def main():
     print(f"\nStarting training for {args.epochs} epochs...")
     best_val_loss = float('inf')
     early_stopping_counter = 0
-    best_model_state = None
     
     for epoch in range(1, args.epochs + 1):
         epoch_start_time = time.time()
@@ -374,26 +377,10 @@ def main():
         # Update learning rate
         scheduler.step()
         
-        # Early stopping check
-        current_val_loss = val_losses["loss"]
-        if current_val_loss < best_val_loss - args.early_stopping_min_delta:
-            best_val_loss = current_val_loss
-            early_stopping_counter = 0
-            # Save best model state
-            best_model_state = copy.deepcopy(model.state_dict())
-        else:
-            early_stopping_counter += 1
-            if early_stopping_counter >= args.early_stopping_patience:
-                print(f'\nEarly stopping triggered after {epoch} epochs')
-                # Restore best model
-                model.load_state_dict(best_model_state)
-                break
-        
         # Log epoch results
         epoch_time = time.time() - epoch_start_time
         print(f'Epoch {epoch} completed in {epoch_time:.1f}s')
         print(f'Train Loss: {train_losses["loss"]:.6f}, Val Loss: {val_losses["loss"]:.6f}')
-        print(f'Early stopping counter: {early_stopping_counter}/{args.early_stopping_patience}')
         
         if writer:
             writer.add_scalar('Train/EpochLoss', train_losses['loss'], epoch)
@@ -401,9 +388,10 @@ def main():
             writer.add_scalar('Train/EpochSWLoss', train_losses['sw_loss'], epoch)
             writer.add_scalar('Learning_Rate', scheduler.get_last_lr()[0], epoch)
         
-        # Save best model
+        # Save best model and early stopping
         if val_losses['loss'] < best_val_loss:
             best_val_loss = val_losses['loss']
+            early_stopping_counter = 0  # Reset counter
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),
@@ -414,6 +402,12 @@ def main():
                 'args': args
             }, os.path.join(args.save_dir, 'best_model.pth'))
             print(f'New best model saved (val_loss: {best_val_loss:.6f})')
+        else:
+            early_stopping_counter += 1
+            if args.early_stopping_patience and early_stopping_counter >= args.early_stopping_patience:
+                print(f'\nEarly stopping triggered! No improvement for {args.early_stopping_patience} epochs.')
+                print(f'Best validation loss: {best_val_loss:.6f}')
+                break
         
         # Evaluate reconstruction quality
         if epoch % args.eval_interval == 0:

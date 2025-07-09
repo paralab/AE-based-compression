@@ -464,7 +464,7 @@ def main():
     
     # Data parameters
     parser.add_argument('--data-folder', type=str, 
-                        default='/u/tawal/0620-NN-based-compression-thera/tt_q01/',
+                        default='/u/tawal/BSSN-Extracted-Data/tt_q01/',
                         help='Path to folder containing HDF5 files')
     parser.add_argument('--model-path', type=str, required=True,
                         help='Path to trained model checkpoint')

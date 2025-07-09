@@ -66,53 +66,56 @@ class Conv3DBlock(nn.Module):
 
 
 class DeConv3DBlock(nn.Module):
-    """3D Deconvolutional block as specified in the paper"""
-    def __init__(self, in_channels, out_channels, stride=2, final_layer=False):
+    """3D Deconvolution block with batch norm and ReLU"""
+    def __init__(self, in_channels, out_channels, stride=2):
         super(DeConv3DBlock, self).__init__()
-        self.deconv1 = nn.ConvTranspose3d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, output_padding=1)
-        self.deconv2 = nn.Conv3d(out_channels, out_channels, kernel_size=3, stride=1, padding=1)
-        self.final_layer = final_layer
         
-        if not final_layer:
-            # Use BatchNorm instead of iGDN for better stability
-            self.bn = nn.BatchNorm3d(out_channels)
-            self.relu = nn.ReLU(inplace=True)
+        # For stride=1, we don't need output padding
+        output_padding = 1 if stride > 1 else 0
+        
+        self.deconv1 = nn.ConvTranspose3d(
+            in_channels, out_channels,
+            kernel_size=3, stride=stride,
+            padding=1, output_padding=output_padding
+        )
+        self.bn1 = nn.BatchNorm3d(out_channels)
+        self.relu = nn.ReLU(inplace=True)
         
     def forward(self, x):
         x = self.deconv1(x)
-        x = self.deconv2(x)
-        if not self.final_layer:
-            x = self.bn(x)
-            x = self.relu(x)
+        x = self.bn1(x)
+        x = self.relu(x)
         return x
 
 
 class SWAE3DEncoder7x7x7(nn.Module):
     """3D SWAE Encoder for 7x7x7 blocks"""
-    def __init__(self, channels=[32, 64, 128], latent_dim=16):
+    def __init__(self, channels=[32, 64, 128, 256], latent_dim=16):
         super(SWAE3DEncoder7x7x7, self).__init__()
         
         # Input: 7x7x7x1 -> Conv blocks
         self.conv_blocks = nn.ModuleList()
         
-        # First block: 1 -> 32 channels
+        # First block: 1 -> first channel
         self.conv_blocks.append(Conv3DBlock(1, channels[0], stride=2))  # 7x7x7 -> 4x4x4
         
-        # Second block: 32 -> 64 channels  
-        self.conv_blocks.append(Conv3DBlock(channels[0], channels[1], stride=2))  # 4x4x4 -> 2x2x2
-        
-        # Third block: 64 -> 128 channels
-        self.conv_blocks.append(Conv3DBlock(channels[1], channels[2], stride=2))  # 2x2x2 -> 1x1x1
+        # Remaining blocks
+        for i in range(len(channels)-1):
+            if i < len(channels)-2:
+                # Middle blocks use stride=2
+                self.conv_blocks.append(Conv3DBlock(channels[i], channels[i+1], stride=2))
+            else:
+                # Last block uses stride=1 to maintain spatial dimensions
+                self.conv_blocks.append(Conv3DBlock(channels[i], channels[i+1], stride=1))
         
         # Fully connected layer to latent space
-        self.fc = nn.Linear(channels[2], latent_dim)
+        self.fc = nn.Linear(channels[-1], latent_dim)
         
     def forward(self, x):
         # x: (B, 1, 7, 7, 7)
         for block in self.conv_blocks:
             x = block(x)
         
-        # x: (B, 128, 1, 1, 1)
         x = x.view(x.size(0), -1)  # Flatten
         x = self.fc(x)  # (B, latent_dim)
         
@@ -121,7 +124,7 @@ class SWAE3DEncoder7x7x7(nn.Module):
 
 class SWAE3DDecoder7x7x7(nn.Module):
     """3D SWAE Decoder for 7x7x7 blocks"""
-    def __init__(self, channels=[128, 64, 32], latent_dim=16):
+    def __init__(self, channels=[256, 128, 64, 32], latent_dim=16):
         super(SWAE3DDecoder7x7x7, self).__init__()
         
         # Fully connected layer from latent space
@@ -130,24 +133,25 @@ class SWAE3DDecoder7x7x7(nn.Module):
         # Deconv blocks (reverse of encoder)
         self.deconv_blocks = nn.ModuleList()
         
-        # First deconv block: 128 -> 64 channels
-        self.deconv_blocks.append(DeConv3DBlock(channels[0], channels[1], stride=2))  # 1x1x1 -> 2x2x2
+        # Build deconv blocks
+        for i in range(len(channels)-1):
+            if i < len(channels)-2:
+                # Middle blocks use stride=2
+                self.deconv_blocks.append(DeConv3DBlock(channels[i], channels[i+1], stride=2))
+            else:
+                # Last block uses stride=1 to maintain spatial dimensions
+                self.deconv_blocks.append(DeConv3DBlock(channels[i], channels[i+1], stride=1))
         
-        # Second deconv block: 64 -> 32 channels
-        self.deconv_blocks.append(DeConv3DBlock(channels[1], channels[2], stride=2))  # 2x2x2 -> 4x4x4
-        
-        # Final deconv block: 32 -> 1 channel (no activation)
+        # Final deconv block: last_channel -> 1 channel
         # Directly go from 4x4x4 to 7x7x7 using kernel_size=4, stride=1, padding=0
-        # Formula: out = (in-1)*stride - 2*padding + kernel_size + output_padding
-        # For in=4, stride=1, padding=0, kernel_size=4 => (4-1)*1 - 0 + 4 = 7
-        self.final_deconv = nn.ConvTranspose3d(channels[2], 1, kernel_size=4, stride=1, padding=0)  # 4x4x4 -> 7x7x7
+        self.final_deconv = nn.ConvTranspose3d(channels[-1], 1, kernel_size=4, stride=1, padding=0)
         
     def forward(self, x):
         # x: (B, latent_dim)
-        x = self.fc(x)  # (B, 128)
-        x = x.view(x.size(0), -1, 1, 1, 1)  # (B, 128, 1, 1, 1)
+        x = self.fc(x)  # (B, channels[0])
+        x = x.view(x.size(0), -1, 1, 1, 1)  # (B, channels[0], 1, 1, 1)
         
-        # Apply first two deconv blocks
+        # Apply deconv blocks
         for block in self.deconv_blocks:
             x = block(x)
         
@@ -187,7 +191,7 @@ class SWAE3D7x7x7(nn.Module):
     Pure SWAE 3D Autoencoder for 7x7x7 U_CHI Data
     Based on "Exploring Autoencoder-based Error-bounded Compression for Scientific Data"
     """
-    def __init__(self, channels=[32, 64, 128], latent_dim=16, lambda_reg=0.9):
+    def __init__(self, channels=[32, 64, 128, 256], latent_dim=16, lambda_reg=0.9):
         super(SWAE3D7x7x7, self).__init__()
         
         self.encoder = SWAE3DEncoder7x7x7(channels, latent_dim)
@@ -250,22 +254,24 @@ class SWAE3D7x7x7(nn.Module):
         return x_recon
 
 
-def create_swae_3d_7x7x7_model(latent_dim=16, lambda_reg=10.0):
+def create_swae_3d_7x7x7_model(latent_dim=16, lambda_reg=10.0, encoder_channels=None):
     """
     Create SWAE 3D model for 7x7x7 blocks
     
     Args:
         latent_dim: Latent vector dimension (16 as per Table VI)
         lambda_reg: Regularization weight for SW distance (10.0 default)
+        encoder_channels: List of channel sizes for the encoder (will be reversed for decoder)
     
     Returns:
         SWAE3D7x7x7 model
     """
-    # Channels as specified in Table VI for 3D data: [32, 64, 128]
-    channels = [32, 64, 128]
+    # Default channels if not specified
+    if encoder_channels is None:
+        encoder_channels = [32, 64, 128, 256]
     
     model = SWAE3D7x7x7(
-        channels=channels,
+        channels=encoder_channels,
         latent_dim=latent_dim,
         lambda_reg=lambda_reg
     )

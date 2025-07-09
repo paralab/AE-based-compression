@@ -47,7 +47,7 @@ echo "Working Directory: $(pwd)"
 nvidia-smi
 
 echo "Starting SWAE training on U_CHI dataset (7x7x7 blocks)"
-echo "Dataset: /u/tawal/0620-NN-based-compression-thera/tt_q01/"
+echo "Dataset: /u/tawal/BSSN-Extracted-Data/tt_q01/"
 echo "Data splits: 80% train (~23K), 15% val (~4K), 5% test (~1.5K)"
 echo "🔒 Test set (5%) held out for final unbiased evaluation"
 echo "Compression ratio: 21.4:1 (343 -> 16 dimensions)"
@@ -61,12 +61,15 @@ echo "   Expected: mean~4.5, std~1.1 (was incorrectly mean~-0.66, std~0.6)"
 # - Increased gradient clipping from 1.0 to 2.0 (handle larger gradients) 
 # - Reduced batch size from 128 to 64 (more stable training)
 # - Keep lambda_reg at 0.9 (should still work well)
+# - Using deeper architecture with channels [32,64,128,256]
+# - Early stopping with 40 epochs patience
 python train_swae_u_chi.py \
-    --data-folder /u/tawal/0620-NN-based-compression-thera/tt_q01/ \
+    --data-folder /u/tawal/BSSN-Extracted-Data/tt_q01/ \
     --normalize \
     --normalize-method pos_log \
     --latent-dim 16 \
     --lambda-reg 0.9 \
+    --encoder-channels "32,64,128,256" \
     --batch-size 64 \
     --epochs 1000 \
     --lr 1e-4 \
@@ -75,9 +78,11 @@ python train_swae_u_chi.py \
     --device auto \
     --save-dir ./save/swae_u_chi_poslog_FIXED_$(date +%Y%m%d_%H%M%S) \
     --eval-interval 10 \
-    --save-interval 25
+    --save-interval 25 \
+    --early-stopping-patience 40 \
+    --early-stopping-min-delta 1e-4
 
 echo "Training completed at $(date)"
 echo "Check results in save directory"
 echo "🎯 Model trained with FIXED per-sample pos_log normalization"
-echo "🎯 Expected improvements: Proper statistical properties and better reconstruction quality" 
+echo "🎯 Expected improvements: Proper statistical properties, better reconstruction quality, and deeper architecture" 

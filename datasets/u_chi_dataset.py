@@ -331,7 +331,7 @@ def create_u_chi_datasets(data_folder, train_ratio=0.8, val_ratio=0.15, normaliz
 
 if __name__ == "__main__":
     # Test the dataset
-    data_folder = "/u/tawal/0620-NN-based-compression-thera/tt_q01/"
+    data_folder = "/u/tawal/BSSN-Extracted-Data/tt_q01/"
     
     print("Testing U_CHI dataset...")
     train_dataset, val_dataset, test_dataset = create_u_chi_datasets(
