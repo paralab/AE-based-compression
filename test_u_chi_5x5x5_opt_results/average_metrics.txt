@@ -1,0 +1,85 @@
+🎯 5x5x5 MODEL Validation Metrics:
+========================================
+Model: SWAE 3D 5x5x5 with FIXED per-sample pos_log normalization
+Timestamp: ['opt', 'results']
+
+Core Quality Metrics:
+--------------------
+mse: 3.8134965052449843e-07
+psnr: 33.14452845429835
+mae: 0.00027889356715604663
+correlation: 0.9971153654783919
+
+Relative Error Analysis:
+-------------------------
+mean_relative_error_percent: 0.12%
+max_relative_error_percent: 1.23%
+median_relative_error: 0.08%
+p95_relative_error: 0.34%
+p99_relative_error: 0.74%
+global_relative_error_percent: 0.21%
+rms_relative_error_percent: 0.20%
+
+All Metrics (Complete):
+-------------------------
+mse: 3.8134965052449843e-07
+psnr: 33.14452845429835
+mae: 0.00027889356715604663
+correlation: 0.9971153654783919
+min_error: -0.002269168384373188
+max_error: 0.0019586572889238596
+mean_error: -2.8534592274809256e-05
+std_error: 0.0004380214959383011
+mean_relative_error: 0.0011871516471728683
+mean_relative_error_percent: 0.1187151714848369
+max_relative_error: 0.012339361011981964
+max_relative_error_percent: 1.2339359919569688
+std_relative_error: 0.0015910436632111669
+median_relative_error: 0.0007935288716998911
+p95_relative_error: 0.0033542762301549374
+p99_relative_error: 0.007390049133796134
+global_relative_error: 0.0021360099314579896
+global_relative_error_percent: 0.21360099314579897
+rms_relative_error: 0.0019946421962231398
+rms_relative_error_percent: 0.1994642160661897
+
+Model Configuration:
+--------------------
+Compression Ratio: 15.6:1
+Latent Dimension: 8
+Lambda Regularization: 1.0
+
+Speed Performance Analysis:
+------------------------------
+Device: CUDA
+Batch Size: 32
+Total Batches Tested: 3
+
+Data Sizes:
+Original sample: 500 bytes (0.5 KB)
+Compressed (latent): 64 bytes
+Compression ratio: 7.8:1
+
+Compression (Encoding) Speed:
+Average: 0.164 ± 0.002 GBps
+Range: 0.163 - 0.167 GBps
+Average time: 0.10 ± 0.00 ms
+
+Decompression (Decoding) Speed:
+Average: 0.170 ± 0.001 GBps
+Range: 0.168 - 0.171 GBps
+Average time: 0.09 ± 0.00 ms
+
+Comparison Analysis:
+--------------------
+7x7x7 Model: 21.4:1 compression ratio
+5x5x5 Model: 7.8:1 compression ratio
+Trade-off: Lower compression but potentially better reconstruction quality
+
+Speed Performance Summary:
+-------------------------
+Compression Speed: 0.164 GBps
+Decompression Speed: 0.170 GBps
+Total throughput for round-trip: 0.164 GBps
+Samples/second (compression): 328,352
+Samples/second (decompression): 340,509
