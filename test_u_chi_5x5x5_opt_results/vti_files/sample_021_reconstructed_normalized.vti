@@ -3,13 +3,13 @@
   <ImageData WholeExtent="0 4 0 4 0 4" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
     <Piece Extent="0 4 0 4 0 4"                                                       >
       <PointData Scalars="U_CHI_Normalized_LogPos">
-        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-17.902257919"        RangeMax="-3.0732767582"        offset="0"                   />
+        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-17.822105408"        RangeMax="-3.0192444324"        offset="0"                   />
       </PointData>
       <CellData>
       </CellData>
     </Piece>
   </ImageData>
   <AppendedData encoding="base64">
-   _AQAAAACAAAD0AQAA5gEAAA==eJwN0dtLUwEAwGG6DQc+BbOCgiKDHrKHyBkVtcQyk9l0HXXOsbNLQ5d4mrimW7i1Rt6mS5sVzWChieSDWj4MS/gVaKJmQVFm0kOhIXQRW5Pu9f0LX9tAFu89uUy+y0E/ks0n4SjLCCyka1jeo6bm6QkObjjG9OeTRJ5piX/UUNmt5oUil6m1IqKlmGS/lokkDV0ZapR/BE7t0BFQFrKlVItiLI8kSeDyax3Z7kJisQJsFXl8XzGz0mdEdknPZLSIr0EtQoGVOaOF8nMistOlLKYXscZcRs5tG5EqKz6VSLOshF2SnlrRxnq/lQG5CUWXHml/OaaXZ3gctPGtzoxhwsCdI07S/jrYOC8hKcsxb7WQmPMwk+bmps7JryaJElcZ8d9ehFQfmt1u1NEqprZXYPS0ktLrZfGwh/nRat7ulBgfD+KYvYC19jwVmS4SxyU81Y24HfW43AH6V/lw9NfwJD+EQdVCX3IT08MBXg15ked3oPrQxo+ZFpbkDWwb87PvTQcpq8PcC4eofNRIblYAe/QKYjjMA3srip8NxM8GqNbcoK75FiF5hL1X2xk8FOTAlxjDFwdYGunBPh0htaSdhHOBTXOjrBu8iymzm0TnNZ5nhB521s8ypLv//62HzcXX+QcwvhX5
+   _AQAAAACAAAD0AQAA4wEAAA==eJwFwVlI0wEAwOEGYkZYpD4IYUWRHQghTCKUyqC1q+k25+bR1pjNMfNhOrzDf3PodLF2uMVSHEZphgvEHowp/UI6pB4qKvbQgUSZDxlENlZGfV+XIEG/WYU4oSStknPdKkHZIOFvm5KfdgVFKSk566cxqHXMF1Vie64ilqmkuF/G2dJygp0aYlotrvEKIgY51T/qmT+qZY9MQ1WxirdH5KjTav5d03HgdRUfHVqM3yr5YDci8tezPlZL0Us9pwJavsssZMbNFH4yUvegDttSNbX7GtGbrYSnLASXziFeruHMk1Y2Zdu5u2Ghu9vEzuEanC/Os8tkY/vqBcSzZnrzTJjSLajKHfw+1kxqwkYibkGX7CQn1Y5J1IrsazOyLBslK708Tl5idrCdmUkHaw1N7L7djzz3Mu+FHhoHnWxpusjcUy+HRQK5ZT1kRzo4mdFCLOohvnWAxXd9WD8LDO/o4kSVj4KsKywEPORfdSPKFEhLQwj7A4yueclbHECa7+KGO0iqJExFjR9zzIM36kJY9lOqj6KwhpnT+Fk5OMT06ggSxukYHWXoTpiNiI+RNwn2GmY4rp9EKBhj258QGdovCIceMeW+h855i8KFKNMh38O+tiTPFPcpG7vJq19h/gPkfQ61
   </AppendedData>
 </VTKFile>

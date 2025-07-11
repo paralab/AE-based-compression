@@ -3,13 +3,13 @@
   <ImageData WholeExtent="0 4 0 4 0 4" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
     <Piece Extent="0 4 0 4 0 4"                                                       >
       <PointData Scalars="U_CHI_Normalized_LogPos">
-        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-17.651483536"        RangeMax="-3.9679186344"        offset="0"                   />
+        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-17.651483536"        RangeMax="-3.9679181576"        offset="0"                   />
       </PointData>
       <CellData>
       </CellData>
     </Piece>
   </ImageData>
   <AppendedData encoding="base64">
-   _AQAAAACAAAD0AQAA4AEAAA==eJwFwVlIkwEAwHEsVhFB+VCkHUQHFJY9LMoKlzF6EcpYGiIUhFBkx8xWUpC1b3PHt0M31zZtbs1tzk1rkyTLOfoP7RwKRWijViSBjSyjXhv2+w02QcmWUToWDzOUi7Nvfz/aah+Xy+7j9njZXudhHW7ma+z8K7Yjf9TO03ttXNJZWCIXKXphYOCjHktSx7XnrZz5c4vQdYHoazWlK9QsV9xBum2Skf5XhFXA3DCxi3Hy53qRnQ8yOulHMHh5+KmLus67LDI5uFnWwdhRG2uzVo58EGkrFUkpjCQ3GljI6khZdegaNLxdrUF5ReBYk5rDmRmqtFNMb06TnHhGRPIYZSpCTyJMYSJIs9TP2LJupM0ufuudHEw56J6246xop7bATNZhQmoROeQ3ElhqoPyCnj15DaE1Gp60CBRa1VRkJKne3Tka5qeYrXlJjyzB7dkBqsNR5NIwua0BCia8BKbdXP3uYr3ESV7i4McuG40/zZw6bcYWMfGtWMReZUAVFzig0CJs0NJZqyEWEyjfa0mdtSywKfSFvso0tvejnDz+gJloP9aRPt7tCOJJ+/i8s4v6Xy5uvHESL3IwFLExOCaSUZoZbzHx94SIbJWRlV+1zDW2UuLTUqnSYBxX8x9JECYn
+   _AQAAAACAAAD0AQAA3wEAAA==eJwNz9lL0wEAwHEkRgUFeynSyocOosMCF+UeNGEQEV3MBiJREESXzLLR6CFrv9/uS7fmttbanG7NuZbDopFb+F3ZuRIfwik5wijSDgVfy6zPf/AZaIVtG3O4lmQYmEmzV55EPB5GXdOFNxhiS1OQtfiZVbn5XeFG8bCDzJ12mo0OJAor5S/NJD+asD81onlh4NT8dWJXBRJvdFSt0LFceZPqzSM8Sb4mpoGhnxlSzWkWzt6j9nyUwZEIgjlEajJA0+1OymwertXcIn/YxZqSk/3jVpw7reSVFnKVZv6WjOA0YrggMrpKRH1Z4FCrjn0TnzmiH6O4oUD2/RC9kseo8wm6s3Gk2ShaWYRny+5SrfUxZ/Iiz3sIFt101nfQWGZn0mND5rBSF7HQvdRM7UUTuxdEoqtFMm0CUqeO+glJPrZrhnNzY3xVvaKrLsuNb/dpiPehkMWZ3tTD4rsQPUU/V6Z9rJN4+SPx8L3KRcsvOydO2nElbHypsOI6akaTFpAr9Qjr9fgbRR70C9TuceTPOBapjH0ifrBA+4ccqmMppvqSOAZ7Gd0aJVAIU9oR4PSsD+1bL/3lHh4lXKSfWxlvsTPcZmO+4f9FamHllJ4flwxsD+s5oBExD+v4B39hJrY=
   </AppendedData>
 </VTKFile>

@@ -5,10 +5,10 @@ Timestamp: ['opt', 'results']
 
 Core Quality Metrics:
 --------------------
-mse: 3.8134965052449843e-07
-psnr: 33.14452845429835
-mae: 0.00027889356715604663
-correlation: 0.9971153654783919
+mse: 3.8134927882974764e-07
+psnr: 33.14449691399575
+mae: 0.000278893414064659
+correlation: 0.9971154066681326
 
 Relative Error Analysis:
 -------------------------
@@ -22,26 +22,26 @@ rms_relative_error_percent: 0.20%
 
 All Metrics (Complete):
 -------------------------
-mse: 3.8134965052449843e-07
-psnr: 33.14452845429835
-mae: 0.00027889356715604663
-correlation: 0.9971153654783919
-min_error: -0.002269168384373188
-max_error: 0.0019586572889238596
-mean_error: -2.8534592274809256e-05
-std_error: 0.0004380214959383011
-mean_relative_error: 0.0011871516471728683
-mean_relative_error_percent: 0.1187151714848369
-max_relative_error: 0.012339361011981964
-max_relative_error_percent: 1.2339359919569688
-std_relative_error: 0.0015910436632111669
-median_relative_error: 0.0007935288716998911
-p95_relative_error: 0.0033542762301549374
-p99_relative_error: 0.007390049133796134
-global_relative_error: 0.0021360099314579896
-global_relative_error_percent: 0.21360099314579897
-rms_relative_error: 0.0019946421962231398
-rms_relative_error_percent: 0.1994642160661897
+mse: 3.8134927882974764e-07
+psnr: 33.14449691399575
+mae: 0.000278893414064659
+correlation: 0.9971154066681326
+min_error: -0.0022691672114888207
+max_error: 0.0019586558113223874
+mean_error: -2.853496837383702e-05
+std_error: 0.0004380210930904287
+mean_relative_error: 0.001187152120317267
+mean_relative_error_percent: 0.1187152120317267
+max_relative_error: 0.01233935676361039
+max_relative_error_percent: 1.2339356763610387
+std_relative_error: 0.0015910428422966944
+median_relative_error: 0.0007935328143089017
+p95_relative_error: 0.0033542760505046033
+p99_relative_error: 0.007390035063521543
+global_relative_error: 0.0021360095886145593
+global_relative_error_percent: 0.21360095886145594
+rms_relative_error: 0.0019946417579248784
+rms_relative_error_percent: 0.19946417579248782
 
 Model Configuration:
 --------------------
@@ -61,14 +61,14 @@ Compressed (latent): 64 bytes
 Compression ratio: 7.8:1
 
 Compression (Encoding) Speed:
-Average: 0.164 ± 0.002 GBps
-Range: 0.163 - 0.167 GBps
+Average: 0.160 ± 0.001 GBps
+Range: 0.159 - 0.161 GBps
 Average time: 0.10 ± 0.00 ms
 
 Decompression (Decoding) Speed:
-Average: 0.170 ± 0.001 GBps
-Range: 0.168 - 0.171 GBps
-Average time: 0.09 ± 0.00 ms
+Average: 0.162 ± 0.001 GBps
+Range: 0.161 - 0.162 GBps
+Average time: 0.10 ± 0.00 ms
 
 Comparison Analysis:
 --------------------
@@ -78,8 +78,8 @@ Trade-off: Lower compression but potentially better reconstruction quality
 
 Speed Performance Summary:
 -------------------------
-Compression Speed: 0.164 GBps
-Decompression Speed: 0.170 GBps
-Total throughput for round-trip: 0.164 GBps
-Samples/second (compression): 328,352
-Samples/second (decompression): 340,509
+Compression Speed: 0.160 GBps
+Decompression Speed: 0.162 GBps
+Total throughput for round-trip: 0.160 GBps
+Samples/second (compression): 320,268
+Samples/second (decompression): 323,041

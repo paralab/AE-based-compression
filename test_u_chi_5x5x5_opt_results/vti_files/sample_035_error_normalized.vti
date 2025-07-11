@@ -3,13 +3,13 @@
   <ImageData WholeExtent="0 4 0 4 0 4" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
     <Piece Extent="0 4 0 4 0 4"                                                       >
       <PointData Scalars="U_CHI_Normalized_LogPos">
-        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-0.13497233391"       RangeMax="0.20576000214"        offset="0"                   />
+        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-0.13497281075"       RangeMax="0.20576000214"        offset="0"                   />
       </PointData>
       <CellData>
       </CellData>
     </Piece>
   </ImageData>
   <AppendedData encoding="base64">
-   _AQAAAACAAAD0AQAAygEAAA==eJwNkD1oU1EUgD8L9Q+LWS0OUcSCQU1Fi+a9JxGFSgfxJ0IHKbVGjGCtXQKGClcNUWITJIutIir+FUWoUrB591zzilCpBNGQqkMHdXJRWxTMYME7nOnAOd/3qb4NRnmbDflrQtDYpULLvWB2xDDfoRnOuCqHx+B1l6m6kGkRDh4TUmmH+GKZRpvLiQcCZaFsJ9Yu0Y6Vr/h+Wth0RViaEj77Osg9NGr9VkP1t/AjK3RlXB6XXNbOOWRzDuFlMVSXRt468Hwn469jdLdpqkeEQ0Xh6BNh4Z6w4pGQOCdBT8EjkRfi85redT69KhbvLJp48plhzx9h+1NNZcwl3+TS6HQY/+XzZcGntkaIGofQS4fui5pgSDPZbxlHhZvHhUXLHPqg2d8q3LE/Pr0TVW02RCrC6lEJXhzeHewbNmTrDtP3XXUq4hG1LqVWlyDh8/6v5tsO26joMFZxSN6wfJc1S24LX0vCQM42bhL6bANnSoL+GUPTKkPd7lMDgrpQJrhlVLjdY0vBhbOWZaPmknWqHbB3lc/5gpAeEs6MuNRskwnrmnwjfJyRoKVmmP0n7P0pNE8Ld0+KSkcMPduEuUFhckLU1bD5D5HA0bw=
+   _AQAAAACAAAD0AQAAxQEAAA==eJwVkUtIVFEYx38NVINYuGhRriaKXMxEGSQ191wxegguQnrhImKyMaywdFNglzhhjFM5Im5SKjJ6SRFEBDH3fEdvDzKjhGqYWriIFtHKlKJcJHRafPCHD/5PWtda6tdb+i4LDfNbdVXcpzxkma0z5LsVOXy6BhTPS0KwTGg+KLSc9tALRX7XKI7cFhYVhdCdqpXmuooxvh8Tkr1CvF2YDg29dyxrNlimfgozF4RdjvfeoGLltEeQ80gsTZNvMsgbDx5tYeRFmvYaw9u9Tq9fOHBfmLspVNx1uFP0oYLP/kvCjlmDXh3SoNNRY7/V2YeWbb+cjweGsVFFPqaYb/SIfoR8mQsprRJS1qPyqUfmvOF1YAg7hM/DwrXDwoLzvOK9oalauOE0Pk0J7xZbUuNC1bBEj/fUs7PPEpQ8Xt5S+mjSZ6PLMlCtiPY5/j+Gb5v/e/YYHffIXjFkewyx68LXQaEzJ0QxodV1oJ5J1DFpdazSUnL/46cEzhWJrloStT6pgiJ+0tCyztDjMpV2CxkdcrYgdAfCiSHFR9eJuKxtE0J5Ulj+wVL+K2yfEZa8EkbaRJ9JWjKb3A5dbqMnwsWE/QePD8wQ
   </AppendedData>
 </VTKFile>

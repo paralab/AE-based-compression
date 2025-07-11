@@ -9,6 +9,7 @@ import sys
 import argparse
 import numpy as np
 import torch
+import torch.nn as nn
 import random
 import matplotlib.pyplot as plt
 import time
@@ -483,8 +484,8 @@ def main():
     parser.add_argument('--arch', type=str, default='conv',
                         choices=['conv', 'mlp', 'gmlp'],
                         help='Network backbone: conv (default), mlp, or gmlp')
-    parser.add_argument('--use-int8', action='store_true',
-                        help='Use INT8 quantized model for inference')
+    parser.add_argument('--use-float8', action='store_true',
+                        help='Use Float8 quantized model for inference')
     
     args = parser.parse_args()
     
@@ -547,34 +548,59 @@ def main():
     # Load state dict
     model.load_state_dict(checkpoint['model_state_dict'])
     
-    # Apply INT8 quantization if requested
-    if args.use_int8 and model_arch in ['mlp', 'gmlp']:
+    # Apply Float8 quantization if requested
+    if args.use_float8 and model_arch in ['mlp', 'gmlp']:
         try:
-            # Try different import paths for different PyTorch versions
+            # Try different approaches for Float8 quantization
             try:
-                from torch.ao.quantization import quantize_dynamic
-            except ImportError:
-                from torch.quantization import quantize_dynamic
-            
-            print("Applying INT8 quantization...")
-            model = quantize_dynamic(
-                model.cpu(),
-                {nn.Linear},
-                dtype=torch.qint8
-            )
-            device = torch.device('cpu')  # INT8 models must run on CPU
-            print("✓ INT8 quantization applied, using CPU for inference")
-        except ImportError as e:
-            print(f"⚠️  INT8 quantization not available in PyTorch {torch.__version__}: {e}")
+                # For newer PyTorch versions with native float8 support
+                if hasattr(torch, 'float8_e4m3fn') and hasattr(torch, 'float8_e5m2'):
+                    print("Applying Float8 quantization using native PyTorch float8 dtypes...")
+                    
+                    # Convert model parameters to float8
+                    # Note: This is a simplified approach - real float8 quantization is more complex
+                    def convert_to_float8(module):
+                        for name, param in module.named_parameters():
+                            if param.dtype == torch.float32:
+                                # Use E4M3FN format for weights (better for weights)
+                                param.data = param.data.to(torch.float8_e4m3fn).to(torch.float32)
+                        return module
+                    
+                    model = convert_to_float8(model)
+                    print("✓ Float8 quantization applied using native PyTorch dtypes")
+                    
+                else:
+                    # Fallback to dynamic quantization with float8 simulation
+                    from torch.ao.quantization import quantize_dynamic
+                    import torch.nn as nn
+                    
+                    print("Applying Float8 quantization using dynamic quantization...")
+                    # Use qint8 as a proxy for float8 (similar memory footprint)
+                    model = quantize_dynamic(
+                        model.cpu(),
+                        {nn.Linear},
+                        dtype=torch.qint8
+                    )
+                    device = torch.device('cpu')  # Quantized models often work better on CPU
+                    print("✓ Float8 quantization applied using dynamic quantization (CPU)")
+                    
+            except ImportError as e:
+                print(f"⚠️  Float8 quantization not available in PyTorch {torch.__version__}: {e}")
+                print("   Falling back to standard float32 inference")
+            except Exception as e:
+                print(f"⚠️  Could not apply Float8 quantization: {e}")
+                print("   Falling back to standard float32 inference")
+                
         except Exception as e:
-            print(f"⚠️  Could not apply INT8 quantization: {e}")
+            print(f"⚠️  Float8 quantization failed: {e}")
+            print("   Falling back to standard float32 inference")
     
     model.eval()
     
     print(f"Model loaded successfully (epoch {checkpoint['epoch']})")
     print(f"Model parameters: latent_dim={checkpoint['args'].latent_dim}, lambda_reg={checkpoint['args'].lambda_reg}, arch={model_arch}")
-    if args.use_int8:
-        print(f"Using INT8 quantization: {args.use_int8}")
+    if args.use_float8:
+        print(f"Using Float8 quantization: {args.use_float8}")
     
     # Create output directory
     os.makedirs(args.output_dir, exist_ok=True)

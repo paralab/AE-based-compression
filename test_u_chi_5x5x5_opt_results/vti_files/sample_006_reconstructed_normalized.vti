@@ -3,13 +3,13 @@
   <ImageData WholeExtent="0 4 0 4 0 4" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
     <Piece Extent="0 4 0 4 0 4"                                                       >
       <PointData Scalars="U_CHI_Normalized_LogPos">
-        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-17.71710968"         RangeMax="-5.2492160797"        offset="0"                   />
+        <DataArray type="Float32" Name="U_CHI_Normalized_LogPos" format="appended" RangeMin="-17.717111588"        RangeMax="-5.2492160797"        offset="0"                   />
       </PointData>
       <CellData>
       </CellData>
     </Piece>
   </ImageData>
   <AppendedData encoding="base64">
-   _AQAAAACAAAD0AQAA3wEAAA==eJwFwUtIkwEAwPHCUlkPOgQrK6p5Kc0OWh4GRT4IL5KrYLVoEhR2cAWJQR1UFgRSg6ACDz0ojG3qHp/ft1f7/PrPbWw6W61pgVNBnHVoo7A3y9Xvd2urRE2dRMOgSM4rIHa5ydhe8UsfpOTjSw589XPH5mN08wSX62O06qOc04U5lYCTqnkyWzLk+j+gmNLU/EsyKFtCDSfUofqlstCFtwXSHXkOur10LAtUbBI4etuFttpJcmeAPbV+eo0+4ju8uCWJM31hNOvGcWtCDIQVnBYZb3WaaV2K3t9J9Nun2KCL8+T7X64UV3jd8xlVVZbHyhx3d7toNrmwhJ00vXOwPznMapmX09c8tFglrh8TefZCYLFLQShVWDXKlJQGOZ/zEzieQPt8grM/Ysz0R4lGxmlsmae9bYEbkVkGpBk6TSnKV+zY1Q4MSyMc1gxjaBxi7yGRb6ZRdGYBp8HNJ72LS6ogX4IBzG4/ld0+YqKHySNRlOkwhWKItethVh6jTk7T50nR0/YG7f0pbmbjPPhjJVc5hP+9nUcRG/mCFeOyyELMRW2zk2y7A6l7hIvbFJJPPbQ+lKhaI2JOCPzMygj5MTrTMk3qIPskPxUbJ5krxim/GuNeIsKuxRD/ATVeN2I=
+   _AQAAAACAAAD0AQAA3QEAAA==eJwFwU1IUwEAwPHCciUWHYJlHyTuUo0kTHYwhLQRXqStglWDVQfRg0NIJOrgSiIQGQTVQUiiSLap+3i+tw97z/mf29hstrK1AnWCOOvQRmHfrFa/353dEvXHJVqeiRQDAmKvj2XnDD9NMhUfnnP0S4ghZxBx5xxdugTtpjhmY5RzKThblWNp1xKFwfeErRnq/6UZVeyRljPqiG5NFbn6ukSms8gxX4CudYG9OwSa73o5ofWQ3j9FbUMImyVIcl8AnyRx4VYUzZZZhLoIw9EwHrtCUJsha1zA9iuNqWaeamOSR9/+0FPe4GX/J7YfyTMSXmbooBe91Ys96uHUGzeH0+OUVQHOX/PT5pC4flLkyajAam+Yycowfy0KFZUylkII+XSKpqdzXPyeIDsYJxabpbUtxxXDCjdiiwxLWbqtC2zbcOFSuzGvTaCrG8fcOkZto8hX6ySGAQHPJR8fTV46qmQ+y1MM+EJo+oIkRD+p5jgzb6OUyhE2b4VFZZpGJYPNv0C/4RVN9+e5mU/y4LeDgmaM4DsXIzEnxZIDy7rISsJLg95D/rIbqW+Cjj1h0o/9tD+U0G4SuZ0S+JFXEIrTdGcU9GqZQ1KImuoX5MpJVD0J7qViHFiN8B9V9jd7
   </AppendedData>
 </VTKFile>
