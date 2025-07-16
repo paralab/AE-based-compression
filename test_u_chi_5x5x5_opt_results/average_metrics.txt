@@ -61,13 +61,13 @@ Compressed (latent): 64 bytes
 Compression ratio: 7.8:1
 
 Compression (Encoding) Speed:
-Average: 0.160 ± 0.001 GBps
-Range: 0.159 - 0.161 GBps
-Average time: 0.10 ± 0.00 ms
+Average: 0.151 ± 0.001 GBps
+Range: 0.150 - 0.153 GBps
+Average time: 0.11 ± 0.00 ms
 
 Decompression (Decoding) Speed:
-Average: 0.162 ± 0.001 GBps
-Range: 0.161 - 0.162 GBps
+Average: 0.153 ± 0.001 GBps
+Range: 0.152 - 0.154 GBps
 Average time: 0.10 ± 0.00 ms
 
 Comparison Analysis:
@@ -78,8 +78,8 @@ Trade-off: Lower compression but potentially better reconstruction quality
 
 Speed Performance Summary:
 -------------------------
-Compression Speed: 0.160 GBps
-Decompression Speed: 0.162 GBps
-Total throughput for round-trip: 0.160 GBps
-Samples/second (compression): 320,268
-Samples/second (decompression): 323,041
+Compression Speed: 0.151 GBps
+Decompression Speed: 0.153 GBps
+Total throughput for round-trip: 0.151 GBps
+Samples/second (compression): 302,216
+Samples/second (decompression): 305,815
