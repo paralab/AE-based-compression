@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-SWAE 3D Training Script for U_ Variables Dataset (5x5x5 Version)
-Trains on 5x5x5 blocks extracted from GR simulation data for all U_ variables (excluding C_ variables)
-Based on "Exploring Autoencoder-based Error-bounded Compression for Scientific Data"
-"""
 
 import os
 import sys

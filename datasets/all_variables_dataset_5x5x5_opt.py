@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-"""
-All Variables Dataset for SWAE 3D Training (5x5x5 Version)
-Loads all variables from GR simulation HDF5 files and extracts 5x5x5 center crop
-Data shape: (num_samples, num_vars, 5, 5, 5) extracted from original (num_samples, num_vars, 7, 7, 7)
-"""
+
 
 import os
 import glob
