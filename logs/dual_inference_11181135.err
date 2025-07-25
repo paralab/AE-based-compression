@@ -1,0 +1,24 @@
+  Processing U_ALPHA:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_ALPHA:   7%|▋         | 1/14 [00:00<00:01,  9.07it/s]  Processing U_ALPHA: 100%|██████████| 14/14 [00:00<00:00, 79.19it/s]
+  Processing U_CHI:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_CHI: 100%|██████████| 14/14 [00:00<00:00, 186.11it/s]
+  Processing U_K:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_K: 100%|██████████| 14/14 [00:00<00:00, 194.06it/s]
+  Processing U_GT0:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_GT0: 100%|██████████| 14/14 [00:00<00:00, 193.02it/s]
+  Processing U_GT1:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_GT1: 100%|██████████| 14/14 [00:00<00:00, 194.48it/s]
+  Processing U_GT2:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_GT2: 100%|██████████| 14/14 [00:00<00:00, 277.54it/s]
+  Processing U_BETA0:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_BETA0: 100%|██████████| 14/14 [00:00<00:00, 194.73it/s]
+  Processing U_BETA1:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_BETA1: 100%|██████████| 14/14 [00:00<00:00, 192.82it/s]
+  Processing U_BETA2:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_BETA2: 100%|██████████| 14/14 [00:00<00:00, 196.80it/s]
+  Processing U_B0:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_B0: 100%|██████████| 14/14 [00:00<00:00, 194.16it/s]
+  Processing U_B1:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_B1: 100%|██████████| 14/14 [00:00<00:00, 191.08it/s]
+  Processing U_B2:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_B2: 100%|██████████| 14/14 [00:00<00:00, 298.28it/s]
+  Processing U_SYMGT0:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMGT0: 100%|██████████| 14/14 [00:00<00:00, 194.90it/s]
+  Processing U_SYMGT1:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMGT1: 100%|██████████| 14/14 [00:00<00:00, 193.81it/s]
+  Processing U_SYMGT2:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMGT2: 100%|██████████| 14/14 [00:00<00:00, 299.86it/s]
+  Processing U_SYMGT3:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMGT3: 100%|██████████| 14/14 [00:00<00:00, 194.98it/s]
+  Processing U_SYMGT4:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMGT4: 100%|██████████| 14/14 [00:00<00:00, 195.48it/s]
+  Processing U_SYMGT5:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMGT5: 100%|██████████| 14/14 [00:00<00:00, 194.43it/s]
+  Processing U_SYMAT0:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMAT0: 100%|██████████| 14/14 [00:00<00:00, 193.81it/s]
+  Processing U_SYMAT1:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMAT1: 100%|██████████| 14/14 [00:00<00:00, 184.95it/s]
+  Processing U_SYMAT2:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMAT2: 100%|██████████| 14/14 [00:00<00:00, 293.76it/s]
+  Processing U_SYMAT3:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMAT3: 100%|██████████| 14/14 [00:00<00:00, 280.74it/s]
+  Processing U_SYMAT4:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMAT4: 100%|██████████| 14/14 [00:00<00:00, 291.72it/s]
+  Processing U_SYMAT5:   0%|          | 0/14 [00:00<?, ?it/s]  Processing U_SYMAT5: 100%|██████████| 14/14 [00:00<00:00, 193.51it/s]

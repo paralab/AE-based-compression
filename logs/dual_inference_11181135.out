@@ -1,0 +1,179 @@
+Tue Jul 22 23:06:26 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A40                     On  |   00000000:85:00.0 Off |                    0 |
+|  0%   29C    P0             56W /  300W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Starting Dual Model Inference
+============================
+Job ID: 11181135
+Node: gpub017
+
+Input file: /u/tawal/BSSN-Extracted-Data/tt_q08/bssn_gr_11200_extracted.hdf5
+Output file: ./reconstructed/bssn_gr_11200_dual_reconstructed.hdf5
+Poslog model: ./save/swae_dual_transform/poslog/best_model.pth
+Asinh model: ./save/swae_dual_transform/asinh/best_model.pth
+
+Using device: cuda
+Loading dual models...
+✓ Loaded poslog model from epoch 101
+✓ Loaded asinh model from epoch 108
+
+Processing /u/tawal/BSSN-Extracted-Data/tt_q08/bssn_gr_11200_extracted.hdf5...
+Found 24 U_ variables to process
+  Standard variables (poslog): 18
+  Problematic variables (asinh): 6
+
+Processing U_ALPHA...
+  Using poslog model for U_ALPHA
+  Metrics: PSNR=74.10 dB, MSE=0.000000, MAE=0.000053, RelErr=0.02%
+
+Processing U_CHI...
+  Using poslog model for U_CHI
+  Metrics: PSNR=75.55 dB, MSE=0.000000, MAE=0.000054, RelErr=0.02%
+
+Processing U_K...
+  Using poslog model for U_K
+  Metrics: PSNR=70.51 dB, MSE=0.000000, MAE=0.000027, RelErr=31.20%
+
+Processing U_GT0...
+  Using poslog model for U_GT0
+  Metrics: PSNR=71.20 dB, MSE=0.000000, MAE=0.000072, RelErr=47.14%
+
+Processing U_GT1...
+  Using poslog model for U_GT1
+  Metrics: PSNR=70.98 dB, MSE=0.000000, MAE=0.000076, RelErr=48.59%
+
+Processing U_GT2...
+  Using asinh model for U_GT2
+  Metrics: PSNR=56.55 dB, MSE=0.000000, MAE=0.000061, RelErr=3649.21%
+
+Processing U_BETA0...
+  Using poslog model for U_BETA0
+  Metrics: PSNR=74.27 dB, MSE=0.000000, MAE=0.000022, RelErr=56.21%
+
+Processing U_BETA1...
+  Using poslog model for U_BETA1
+  Metrics: PSNR=73.49 dB, MSE=0.000000, MAE=0.000024, RelErr=52.08%
+
+Processing U_BETA2...
+  Using poslog model for U_BETA2
+  Metrics: PSNR=55.40 dB, MSE=0.000000, MAE=0.000022, RelErr=28.82%
+
+Processing U_B0...
+  Using poslog model for U_B0
+  Metrics: PSNR=65.73 dB, MSE=0.000000, MAE=0.000009, RelErr=33.57%
+
+Processing U_B1...
+  Using poslog model for U_B1
+  Metrics: PSNR=66.20 dB, MSE=0.000000, MAE=0.000009, RelErr=32.59%
+
+Processing U_B2...
+  Using asinh model for U_B2
+  Metrics: PSNR=58.22 dB, MSE=0.000000, MAE=0.000009, RelErr=2926.75%
+
+Processing U_SYMGT0...
+  Using poslog model for U_SYMGT0
+  Metrics: PSNR=71.04 dB, MSE=0.000000, MAE=0.000036, RelErr=0.00%
+
+Processing U_SYMGT1...
+  Using poslog model for U_SYMGT1
+  Metrics: PSNR=68.39 dB, MSE=0.000000, MAE=0.000046, RelErr=0.52%
+
+Processing U_SYMGT2...
+  Using asinh model for U_SYMGT2
+  Metrics: PSNR=63.48 dB, MSE=0.000000, MAE=0.000028, RelErr=2739.29%
+
+Processing U_SYMGT3...
+  Using poslog model for U_SYMGT3
+  Metrics: PSNR=70.44 dB, MSE=0.000000, MAE=0.000042, RelErr=0.00%
+
+Processing U_SYMGT4...
+  Using poslog model for U_SYMGT4
+  Metrics: PSNR=56.61 dB, MSE=0.000000, MAE=0.000044, RelErr=4.56%
+
+Processing U_SYMGT5...
+  Using poslog model for U_SYMGT5
+  Metrics: PSNR=67.49 dB, MSE=0.000000, MAE=0.000021, RelErr=0.00%
+
+Processing U_SYMAT0...
+  Using poslog model for U_SYMAT0
+  Metrics: PSNR=46.37 dB, MSE=0.000317, MAE=0.000670, RelErr=4.88%
+
+Processing U_SYMAT1...
+  Using poslog model for U_SYMAT1
+  Metrics: PSNR=44.44 dB, MSE=0.000551, MAE=0.000689, RelErr=3.30%
+
+Processing U_SYMAT2...
+  Using asinh model for U_SYMAT2
+  Metrics: PSNR=56.58 dB, MSE=0.000031, MAE=0.000304, RelErr=63233.20%
+
+Processing U_SYMAT3...
+  Using asinh model for U_SYMAT3
+  Metrics: PSNR=48.93 dB, MSE=0.000196, MAE=0.002242, RelErr=2087.28%
+
+Processing U_SYMAT4...
+  Using asinh model for U_SYMAT4
+  Metrics: PSNR=56.97 dB, MSE=0.000029, MAE=0.000297, RelErr=19072.66%
+
+Processing U_SYMAT5...
+  Using poslog model for U_SYMAT5
+  Metrics: PSNR=35.67 dB, MSE=0.003551, MAE=0.000974, RelErr=2.73%
+
+Saving reconstructed data to ./reconstructed/bssn_gr_11200_dual_reconstructed.hdf5...
+Saving latent codes to ./reconstructed/bssn_gr_11200_latent_codes.npz...
+
+================================================================================
+RECONSTRUCTION SUMMARY
+================================================================================
+
+Poslog Model Variables:
+  U_ALPHA: PSNR=74.10 dB, MSE=0.000000
+  U_B0: PSNR=65.73 dB, MSE=0.000000
+  U_B1: PSNR=66.20 dB, MSE=0.000000
+  U_BETA0: PSNR=74.27 dB, MSE=0.000000
+  U_BETA1: PSNR=73.49 dB, MSE=0.000000
+  U_BETA2: PSNR=55.40 dB, MSE=0.000000
+  U_CHI: PSNR=75.55 dB, MSE=0.000000
+  U_GT0: PSNR=71.20 dB, MSE=0.000000
+  U_GT1: PSNR=70.98 dB, MSE=0.000000
+  U_K: PSNR=70.51 dB, MSE=0.000000
+  U_SYMAT0: PSNR=46.37 dB, MSE=0.000317
+  U_SYMAT1: PSNR=44.44 dB, MSE=0.000551
+  U_SYMAT5: PSNR=35.67 dB, MSE=0.003551
+  U_SYMGT0: PSNR=71.04 dB, MSE=0.000000
+  U_SYMGT1: PSNR=68.39 dB, MSE=0.000000
+  U_SYMGT3: PSNR=70.44 dB, MSE=0.000000
+  U_SYMGT4: PSNR=56.61 dB, MSE=0.000000
+  U_SYMGT5: PSNR=67.49 dB, MSE=0.000000
+
+Asinh Model Variables:
+  U_B2: PSNR=58.22 dB, MSE=0.000000
+  U_GT2: PSNR=56.55 dB, MSE=0.000000
+  U_SYMAT2: PSNR=56.58 dB, MSE=0.000031
+  U_SYMAT3: PSNR=48.93 dB, MSE=0.000196
+  U_SYMAT4: PSNR=56.97 dB, MSE=0.000029
+  U_SYMGT2: PSNR=63.48 dB, MSE=0.000000
+
+Overall Performance:
+  Average PSNR: 62.44 dB
+  Average MSE: 0.000195
+  Total time: 11.9 seconds
+
+Inference completed!
+Reconstructed file: ./reconstructed/bssn_gr_11200_dual_reconstructed.hdf5
+Latent codes: ./reconstructed/bssn_gr_11200_latent_codes.npz

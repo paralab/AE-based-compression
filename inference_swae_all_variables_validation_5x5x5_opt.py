@@ -471,7 +471,7 @@ def main():
     
     # Data parameters
     parser.add_argument('--data-folder', type=str, 
-                        default='/u/tawal/BSSN-Extracted-Data/tt_q01/',
+                        default='/u/tawal/BSSN-Extracted-Data/tt_q08/',
                         help='Path to folder containing HDF5 files')
     parser.add_argument('--model-path', type=str, required=True,
                         help='Path to trained model checkpoint')
@@ -479,7 +479,7 @@ def main():
                         help='Directory to save test results (5%% held-out set)')
     parser.add_argument('--num-samples', type=int, default=100,
                         help='Number of test samples to process (from 5%% held-out set)')
-    parser.add_argument('--samples-per-variable', type=int, default=20,
+    parser.add_argument('--samples-per-variable', type=int, default=5,
                         help='Number of samples to process per variable type')
     parser.add_argument('--num-vti-samples', type=int, default=5,
                         help='Number of random samples to save as VTI files')
@@ -634,7 +634,7 @@ def main():
     print("      1. Normalized (log pos) scale - as model sees the data")
     print("      2. Denormalized (original) scale - in physical units")
     print("      VTI files will be saved in normalized (log pos) scale")
-    print("      Metrics are calculated on denormalized (original physical units) data")
+    print("      Metrics are calculated on normalized (log pos scale) data")
     all_metrics = []
     per_variable_metrics = {}
     
@@ -678,7 +678,10 @@ def main():
                 original_normalized = sample.cpu().numpy().squeeze()
                 reconstructed_normalized = x_recon.cpu().numpy().squeeze()
             
-                # Denormalize for metrics calculation (ensures proper PSNR, MSE etc.)
+                # Calculate metrics on normalized data (log pos scale)
+                metrics = calculate_metrics(original_normalized, reconstructed_normalized)
+                
+                # Denormalize for visualization purposes only
                 # FIXED: Use correct sample index for per-sample denormalization
                 if hasattr(eval_dataset, 'denormalize'):
                     original_denorm = eval_dataset.denormalize(original_normalized, sample_idx=sample_idx)
@@ -686,9 +689,6 @@ def main():
                 else:
                     original_denorm = original_normalized
                     reconstructed_denorm = reconstructed_normalized
-                
-                # Calculate metrics on denormalized data (original physical units)
-                metrics = calculate_metrics(original_denorm, reconstructed_denorm)
             
                 # For VTI files and plots, use normalized data (log pos scale)
                 original = original_normalized
@@ -721,9 +721,9 @@ def main():
                 print(f"  Sample {i+1}/{len(selected_indices)} for {var_name}:")
                 print(f"    Normalized (log pos) range: [{original.min():.6f}, {original.max():.6f}]")
                 print(f"    Denormalized (original) range: [{original_denorm.min():.6f}, {original_denorm.max():.6f}]")
-                print(f"    MSE (on denormalized): {metrics['mse']:.6f}")
-                print(f"    PSNR (on denormalized): {metrics['psnr']:.2f} dB")
-                print(f"    MAE (on denormalized): {metrics['mae']:.6f}")
+                print(f"    MSE (on normalized): {metrics['mse']:.6f}")
+                print(f"    PSNR (on normalized): {metrics['psnr']:.2f} dB")
+                print(f"    MAE (on normalized): {metrics['mae']:.6f}")
                 print(f"    Mean Relative Error: {metrics['mean_relative_error_percent']:.2f}%")
                 if save_vti:
                     print(f"    ✓ Saved VTI files in normalized (log pos) scale")
@@ -737,7 +737,7 @@ def main():
     }
     
     print("\n" + "="*50)
-    print("🎯 FINAL VALIDATION METRICS (5x5x5 MODEL):")
+    print("🎯 FINAL VALIDATION METRICS (5x5x5 MODEL) - Calculated on Normalized Values:")
     print("="*50)
     print(f"Average MSE: {avg_metrics['mse']:.6f}")
     print(f"Average PSNR: {avg_metrics['psnr']:.2f} dB")
@@ -774,7 +774,7 @@ def main():
     # Sort by MSE (best to worst)
     sorted_vars = sorted(per_var_avg_metrics.items(), key=lambda x: x[1]['mse'])
     
-    print(f"\nMetrics by variable (sorted by MSE, best to worst):")
+    print(f"\nMetrics by variable (sorted by MSE, best to worst) - calculated on normalized values:")
     print(f"{'Variable':<15} {'MSE':<12} {'PSNR (dB)':<12} {'MAE':<12} {'Mean Rel Err':<15} {'Samples':<10}")
     print("-" * 85)
     
@@ -822,12 +822,13 @@ def main():
     # Save average metrics
     metrics_file = os.path.join(args.output_dir, 'average_metrics.txt')
     with open(metrics_file, 'w') as f:
-        f.write("🎯 5x5x5 MODEL Validation Metrics:\n")
+        f.write("🎯 5x5x5 MODEL Validation Metrics (Calculated on Normalized Values):\n")
         f.write("="*40 + "\n")
         f.write("Model: SWAE 3D 5x5x5 with FIXED per-sample pos_log normalization\n")
+        f.write("NOTE: All metrics are calculated on normalized (log pos scale) values\n")
         f.write(f"Timestamp: {args.output_dir.split('_')[-2:]}\n\n")
         
-        f.write("Core Quality Metrics:\n")
+        f.write("Core Quality Metrics (on normalized data):\n")
         f.write("-"*20 + "\n")
         core_metrics = ['mse', 'psnr', 'mae', 'correlation']
         for key in core_metrics:

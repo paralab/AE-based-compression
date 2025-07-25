@@ -1,0 +1,74 @@
+Tue Jul 22 20:46:25 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A40                     On  |   00000000:85:00.0 Off |                    0 |
+|  0%   29C    P0             40W /  300W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Starting SWAE 3D training for problematic variables with improved transformations
+Job ID: 11180341
+Node: gpub083
+Variables: U_B2, U_SYMAT2, U_GT2, U_SYMGT2, U_SYMAT4, U_SYMAT3
+Transformation: Automatic (symlog/asinh based on variable)
+Warning: tensorboard not available, logging will be disabled
+Using device: cuda
+
+Creating datasets for problematic variables...
+Found 38 HDF5 files
+Loading variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+🔒 Applied deterministic shuffle with seed=42
+Applying automatic transformations based on variable type...
+Applied automatic transformations to 406406 samples
+Problematic Variables Dataset (5x5x5) initialized:
+  Split: train
+  Data shape: (406406, 1, 5, 5, 5)
+  Variables included: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+  Data range: [-5.338817, 4.076392]
+  Data mean: 0.129854
+  Data std: 0.702826
+Found 38 HDF5 files
+Loading variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+🔒 Applied deterministic shuffle with seed=42
+Applying automatic transformations based on variable type...
+Applied automatic transformations to 76201 samples
+Problematic Variables Dataset (5x5x5) initialized:
+  Split: val
+  Data shape: (76201, 1, 5, 5, 5)
+  Variables included: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+  Data range: [-5.220959, 4.070490]
+  Data mean: 0.131377
+  Data std: 0.702416
+Found 38 HDF5 files
+Loading variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+🔒 Applied deterministic shuffle with seed=42
+Applying automatic transformations based on variable type...
+Applied automatic transformations to 25401 samples
+Problematic Variables Dataset (5x5x5) initialized:
+  Split: test
+  Data shape: (25401, 1, 5, 5, 5)
+  Variables included: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+  Data range: [-5.272032, 4.038133]
+  Data mean: 0.126910
+  Data std: 0.707149
+
+Dataset sizes:
+  Train: 406406 samples
+  Val: 76201 samples
+  Test: 25401 samples
+
+Creating SWAE model (architecture: mlp)...
+Training completed!
+Model saved in: ./save/swae_problematic_vars_improved

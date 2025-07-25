@@ -1,0 +1,294 @@
+{
+  "scaling_params": {
+    "U_ALPHA": {
+      "scale_type": "percentile",
+      "scale_factor": 10.029113287139982,
+      "shift": 0.0,
+      "typical_magnitude": 0.6920959386941941,
+      "original_min": 0.009486388778638551,
+      "original_max": 0.9982231985899604
+    },
+    "U_CHI": {
+      "scale_type": "percentile",
+      "scale_factor": 10.058309354232428,
+      "shift": 0.0,
+      "typical_magnitude": 0.6105065437856534,
+      "original_min": 0.0001,
+      "original_max": 0.9964500025069103
+    },
+    "U_K": {
+      "scale_type": "percentile",
+      "scale_factor": 60.724554779407164,
+      "shift": 0.0,
+      "typical_magnitude": 0.010490058715911629,
+      "original_min": -0.12024328374447268,
+      "original_max": 0.7868535023034985
+    },
+    "U_GT0": {
+      "scale_type": "percentile",
+      "scale_factor": 17.96953887899811,
+      "shift": 0.0,
+      "typical_magnitude": 0.0706348951597065,
+      "original_min": -0.8181600917157197,
+      "original_max": 0.8181600921028831
+    },
+    "U_GT1": {
+      "scale_type": "percentile",
+      "scale_factor": 19.94087140586696,
+      "shift": 0.0,
+      "typical_magnitude": 0.06651061671082772,
+      "original_min": -0.7617467550249187,
+      "original_max": 0.7617467549658521
+    },
+    "U_GT2": {
+      "scale_type": "percentile",
+      "scale_factor": 194.4002977050806,
+      "shift": 0.0,
+      "typical_magnitude": 0.008697155243562096,
+      "original_min": -0.0024541439715425497,
+      "original_max": 0.13020975419565148
+    },
+    "U_BETA0": {
+      "scale_type": "percentile",
+      "scale_factor": 48.89825404779385,
+      "shift": 0.0,
+      "typical_magnitude": 0.024944039875941456,
+      "original_min": -0.30463244374203446,
+      "original_max": 0.3046324437966444
+    },
+    "U_BETA1": {
+      "scale_type": "percentile",
+      "scale_factor": 54.84149379041762,
+      "shift": 0.0,
+      "typical_magnitude": 0.023992551763899517,
+      "original_min": -0.2821866713907729,
+      "original_max": 0.282186671461188
+    },
+    "U_BETA2": {
+      "scale_type": "percentile",
+      "scale_factor": 513.9837629125025,
+      "shift": 0.0,
+      "typical_magnitude": 0.0031300482106322853,
+      "original_min": -0.000810162339903311,
+      "original_max": 0.08386329671349965
+    },
+    "U_B0": {
+      "scale_type": "percentile",
+      "scale_factor": 434.43082100848824,
+      "shift": 0.0,
+      "typical_magnitude": 0.0027554448885502196,
+      "original_min": -0.11155322356917773,
+      "original_max": 0.11155322356916976
+    },
+    "U_B1": {
+      "scale_type": "percentile",
+      "scale_factor": 415.76794930447295,
+      "shift": 0.0,
+      "typical_magnitude": 0.0031718249811458097,
+      "original_min": -0.11435597344587765,
+      "original_max": 0.11435597344587431
+    },
+    "U_B2": {
+      "scale_type": "percentile",
+      "scale_factor": 3783.9584441357633,
+      "shift": 0.0,
+      "typical_magnitude": 0.0002260473596102609,
+      "original_min": -0.10413070483178054,
+      "original_max": 0.02945773324104429
+    },
+    "U_SYMGT0": {
+      "scale_type": "percentile",
+      "scale_factor": 8.541007053798335,
+      "shift": 0.0,
+      "typical_magnitude": 1.0,
+      "original_min": 0.7752569130256101,
+      "original_max": 1.3158036219919174
+    },
+    "U_SYMGT1": {
+      "scale_type": "percentile",
+      "scale_factor": 51.63643424893635,
+      "shift": 0.0,
+      "typical_magnitude": 0.06588951449389344,
+      "original_min": -0.2666861798033327,
+      "original_max": 0.28212901611299146
+    },
+    "U_SYMGT2": {
+      "scale_type": "percentile",
+      "scale_factor": 504.11134793710823,
+      "shift": 0.0,
+      "typical_magnitude": 0.0031954451817006384,
+      "original_min": -0.08594613701767884,
+      "original_max": 0.08594613693801902
+    },
+    "U_SYMGT3": {
+      "scale_type": "percentile",
+      "scale_factor": 7.923211590663495,
+      "shift": 0.0,
+      "typical_magnitude": 1.0202796394758225,
+      "original_min": 0.8291090109219224,
+      "original_max": 1.4209626359636778
+    },
+    "U_SYMGT4": {
+      "scale_type": "percentile",
+      "scale_factor": 524.874815856281,
+      "shift": 0.0,
+      "typical_magnitude": 0.0034713813146186145,
+      "original_min": -0.0739779440379308,
+      "original_max": 0.07397794415727305
+    },
+    "U_SYMGT5": {
+      "scale_type": "percentile",
+      "scale_factor": 9.986669124078139,
+      "shift": 0.0,
+      "typical_magnitude": 0.9723392552114306,
+      "original_min": 0.8583721849440165,
+      "original_max": 1.027893211590434
+    },
+    "U_SYMAT0": {
+      "scale_type": "percentile",
+      "scale_factor": 23.36990521380978,
+      "shift": 0.0,
+      "typical_magnitude": 0.024721663020568968,
+      "original_min": -1.509909187493624,
+      "original_max": 0.8485208786621308
+    },
+    "U_SYMAT1": {
+      "scale_type": "percentile",
+      "scale_factor": 25.061866237540126,
+      "shift": 0.0,
+      "typical_magnitude": 0.029363131031403936,
+      "original_min": -1.200255905906162,
+      "original_max": 1.2086577486179
+    },
+    "U_SYMAT2": {
+      "scale_type": "percentile",
+      "scale_factor": 126.61610693764162,
+      "shift": 0.0,
+      "typical_magnitude": 0.002716893164674396,
+      "original_min": -1.3208473985729186,
+      "original_max": 1.3208473985729117
+    },
+    "U_SYMAT3": {
+      "scale_type": "percentile",
+      "scale_factor": 21.26532122363417,
+      "shift": 0.0,
+      "typical_magnitude": 0.0293208105225439,
+      "original_min": -1.6636841287503012,
+      "original_max": 0.914745861159894
+    },
+    "U_SYMAT4": {
+      "scale_type": "percentile",
+      "scale_factor": 120.74804765202428,
+      "shift": 0.0,
+      "typical_magnitude": 0.003189861173249224,
+      "original_min": -1.3522140790361334,
+      "original_max": 1.3522140838885166
+    },
+    "U_SYMAT5": {
+      "scale_type": "percentile",
+      "scale_factor": 30.27724986643992,
+      "shift": 0.0,
+      "typical_magnitude": 0.03427427881484019,
+      "original_min": -1.7172252940148203,
+      "original_max": 0.7019810968473073
+    }
+  },
+  "poslog_params": {
+    "U_SYMAT4": {
+      "min_value": 0.15616737132397596,
+      "epsilon": 1e-08
+    },
+    "U_SYMAT2": {
+      "min_value": 0.049089420275805234,
+      "epsilon": 1e-08
+    },
+    "U_ALPHA": {
+      "min_value": 9.474905691194545,
+      "epsilon": 1e-08
+    },
+    "U_GT2": {
+      "min_value": 2.3061034529035975,
+      "epsilon": 1e-08
+    },
+    "U_B1": {
+      "min_value": -2.913260016561723,
+      "epsilon": 1e-08
+    },
+    "U_B0": {
+      "min_value": -5.845563480548584,
+      "epsilon": 1e-08
+    },
+    "U_BETA2": {
+      "min_value": -0.00015744469862614334,
+      "epsilon": 1e-08
+    },
+    "U_BETA1": {
+      "min_value": -7.402549323861275e-05,
+      "epsilon": 1e-08
+    },
+    "U_SYMAT5": {
+      "min_value": 7.608089775872718,
+      "epsilon": 1e-08
+    },
+    "U_GT0": {
+      "min_value": -1.21323163852955e-07,
+      "epsilon": 1e-08
+    },
+    "U_SYMAT1": {
+      "min_value": 5.986018852651803,
+      "epsilon": 1e-08
+    },
+    "U_SYMAT0": {
+      "min_value": -2.9113696361507175,
+      "epsilon": 1e-08
+    },
+    "U_K": {
+      "min_value": 0.3483170076819797,
+      "epsilon": 1e-08
+    },
+    "U_CHI": {
+      "min_value": 7.495742022376101,
+      "epsilon": 1e-08
+    },
+    "U_SYMGT4": {
+      "min_value": -12.410601582795325,
+      "epsilon": 1e-08
+    },
+    "U_SYMGT2": {
+      "min_value": -1.0000502402625635,
+      "epsilon": 1e-08
+    },
+    "U_BETA0": {
+      "min_value": 0.00904012600499209,
+      "epsilon": 1e-08
+    },
+    "U_SYMGT3": {
+      "min_value": 7.400658703956379,
+      "epsilon": 1e-08
+    },
+    "U_B2": {
+      "min_value": 0.5555840606418565,
+      "epsilon": 1e-08
+    },
+    "U_SYMGT1": {
+      "min_value": -4.281136208272752,
+      "epsilon": 1e-08
+    },
+    "U_GT1": {
+      "min_value": -11.943191729358439,
+      "epsilon": 1e-08
+    },
+    "U_SYMGT5": {
+      "min_value": 9.654452307444936,
+      "epsilon": 1e-08
+    },
+    "U_SYMGT0": {
+      "min_value": 8.88504440322986,
+      "epsilon": 1e-08
+    },
+    "U_SYMAT3": {
+      "min_value": 2.6932696886521517,
+      "epsilon": 1e-08
+    }
+  }
+}

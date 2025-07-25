@@ -1,0 +1,211 @@
+Analysis Date: 2025-07-22 21:07:14
+
+================================================================================
+DATA METRICS FOR SPECIFIC VARIABLES
+================================================================================
+
+U_B2:
+----
+  Shape: (84668, 5, 5, 5)
+  Total elements: 10,583,500
+  Data type: float64
+
+  Statistical Metrics:
+    Mean:          0.00000200
+    Std Dev:       0.00325078
+    Variance:      0.00001057
+    Min:          -0.10413070
+    Max:           0.02945773
+    Range:         0.13358844
+
+  Percentiles:
+      1%:         -0.01367575
+      5%:         -0.00045783
+     25%:         -0.00000000
+     50%:          0.00007453
+     75%:          0.00058671
+     95%:          0.00193176
+     99%:          0.00311051
+
+  Additional Metrics:
+    Skewness:     -9.28602614
+    Kurtosis:    122.48365854
+
+  Value Distribution:
+    Zeros:         281000 (  2.66%)
+    Negative:     3643894 ( 34.43%)
+    Positive:     6658606 ( 62.91%)
+    NaN:                0 (  0.00%)
+    Inf:                0 (  0.00%)
+
+U_SYMAT2:
+--------
+  Shape: (84668, 5, 5, 5)
+  Total elements: 10,583,500
+  Data type: float64
+
+  Statistical Metrics:
+    Mean:         -0.00000000
+    Std Dev:       0.06360482
+    Variance:      0.00404557
+    Min:          -1.32084740
+    Max:           1.32084740
+    Range:         2.64169480
+
+  Percentiles:
+      1%:         -0.17328889
+      5%:         -0.03949041
+     25%:         -0.00271658
+     50%:         -0.00000000
+     75%:          0.00271658
+     95%:          0.03949041
+     99%:          0.17328889
+
+  Additional Metrics:
+    Skewness:     -0.00000001
+    Kurtosis:     88.25521907
+
+  Value Distribution:
+    Zeros:              0 (  0.00%)
+    Negative:     5291750 ( 50.00%)
+    Positive:     5291750 ( 50.00%)
+    NaN:                0 (  0.00%)
+    Inf:                0 (  0.00%)
+
+U_GT2:
+-----
+  Shape: (84668, 5, 5, 5)
+  Total elements: 10,583,500
+  Data type: float64
+
+  Statistical Metrics:
+    Mean:          0.01415842
+    Std Dev:       0.01845499
+    Variance:      0.00034059
+    Min:          -0.00245414
+    Max:           0.13020975
+    Range:         0.13266390
+
+  Percentiles:
+      1%:         -0.00014464
+      5%:         -0.00000033
+     25%:          0.00057091
+     50%:          0.00801322
+     75%:          0.01988467
+     95%:          0.05144025
+     99%:          0.09016890
+
+  Additional Metrics:
+    Skewness:      2.30094359
+    Kurtosis:      6.65436463
+
+  Value Distribution:
+    Zeros:         281000 (  2.66%)
+    Negative:     1661524 ( 15.70%)
+    Positive:     8640976 ( 81.65%)
+    NaN:                0 (  0.00%)
+    Inf:                0 (  0.00%)
+
+U_SYMGT2:
+--------
+  Shape: (84668, 5, 5, 5)
+  Total elements: 10,583,500
+  Data type: float64
+
+  Statistical Metrics:
+    Mean:          0.00000000
+    Std Dev:       0.00910068
+    Variance:      0.00008282
+    Min:          -0.08594614
+    Max:           0.08594614
+    Range:         0.17189227
+
+  Percentiles:
+      1%:         -0.02780375
+      5%:         -0.01465133
+     25%:         -0.00302960
+     50%:          0.00000000
+     75%:          0.00302960
+     95%:          0.01465133
+     99%:          0.02780375
+
+  Additional Metrics:
+    Skewness:      0.00000001
+    Kurtosis:      5.75000169
+
+  Value Distribution:
+    Zeros:         281000 (  2.66%)
+    Negative:     5151250 ( 48.67%)
+    Positive:     5151250 ( 48.67%)
+    NaN:                0 (  0.00%)
+    Inf:                0 (  0.00%)
+
+U_SYMAT4:
+--------
+  Shape: (84668, 5, 5, 5)
+  Total elements: 10,583,500
+  Data type: float64
+
+  Statistical Metrics:
+    Mean:         -0.00000000
+    Std Dev:       0.06660394
+    Variance:      0.00443608
+    Min:          -1.35221408
+    Max:           1.35221408
+    Range:         2.70442816
+
+  Percentiles:
+      1%:         -0.18170603
+      5%:         -0.04118456
+     25%:         -0.00318982
+     50%:         -0.00000000
+     75%:          0.00318982
+     95%:          0.04118456
+     99%:          0.18170603
+
+  Additional Metrics:
+    Skewness:     -0.00000001
+    Kurtosis:     87.93561087
+
+  Value Distribution:
+    Zeros:              0 (  0.00%)
+    Negative:     5291750 ( 50.00%)
+    Positive:     5291750 ( 50.00%)
+    NaN:                0 (  0.00%)
+    Inf:                0 (  0.00%)
+
+U_SYMAT3:
+--------
+  Shape: (84668, 5, 5, 5)
+  Total elements: 10,583,500
+  Data type: float64
+
+  Statistical Metrics:
+    Mean:         -0.05919772
+    Std Dev:       0.19484292
+    Variance:      0.03796376
+    Min:          -1.66368413
+    Max:           0.91474586
+    Range:         2.57842999
+
+  Percentiles:
+      1%:         -0.81883981
+      5%:         -0.44464980
+     25%:         -0.08148707
+     50%:         -0.00073837
+     75%:          0.00249703
+     95%:          0.15212775
+     99%:          0.37211385
+
+  Additional Metrics:
+    Skewness:     -1.80923006
+    Kurtosis:      7.13267619
+
+  Value Distribution:
+    Zeros:              0 (  0.00%)
+    Negative:     6485694 ( 61.28%)
+    Positive:     4097806 ( 38.72%)
+    NaN:                0 (  0.00%)
+    Inf:                0 (  0.00%)
+
+================================================================================

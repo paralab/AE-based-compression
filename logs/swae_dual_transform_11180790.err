@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/u/tawal/0722-NN-based-compression-AE/train_swae_5x5x5_problematic_variables.py", line 33, in <module>
+    from models.swae_relative_error_3d_5x5x5 import create_swae_relative_error_model
+  File "/u/tawal/0722-NN-based-compression-AE/models/swae_relative_error_3d_5x5x5.py", line 9, in <module>
+    from .swae_pure_3d_5x5x5_opt import SWAE3D5x5x5Optimized
+ImportError: cannot import name 'SWAE3D5x5x5Optimized' from 'models.swae_pure_3d_5x5x5_opt' (/u/tawal/0722-NN-based-compression-AE/models/swae_pure_3d_5x5x5_opt.py)

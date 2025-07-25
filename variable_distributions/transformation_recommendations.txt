@@ -1,0 +1,45 @@
+BEST TRANSFORMATIONS FOR EACH VARIABLE
+================================================================================
+
+U_B2:
+  Best: asinh_0.001
+  Score: 31.57
+  Parameters: {'scale': 0.001}
+  Skewness after: 1.852
+  Kurtosis after: 9.526
+
+U_SYMAT2:
+  Best: asinh_0.01
+  Score: -4.28
+  Parameters: {'scale': 0.01}
+  Skewness after: 0.000
+  Kurtosis after: 3.073
+
+U_GT2:
+  Best: asinh_0.001
+  Score: 3.05
+  Parameters: {'scale': 0.001}
+  Skewness after: 0.305
+  Kurtosis after: 1.218
+
+U_SYMGT2:
+  Best: asinh_0.01
+  Score: -5.00
+  Parameters: {'scale': 0.01}
+  Skewness after: 0.000
+  Kurtosis after: 1.129
+
+U_SYMAT4:
+  Best: asinh_0.01
+  Score: -4.40
+  Parameters: {'scale': 0.01}
+  Skewness after: 0.000
+  Kurtosis after: 2.850
+
+U_SYMAT3:
+  Best: asinh_0.01
+  Score: -3.79
+  Parameters: {'scale': 0.01}
+  Skewness after: 0.070
+  Kurtosis after: 0.693
+

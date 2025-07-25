@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/u/tawal/0722-NN-based-compression-AE/train_swae_5x5x5_problematic_variables.py", line 594, in <module>
+    main() 
+  File "/u/tawal/0722-NN-based-compression-AE/train_swae_5x5x5_problematic_variables.py", line 502, in main
+    eval_results = evaluate_reconstruction_quality_dual(models, val_datasets, device)
+  File "/u/tawal/0722-NN-based-compression-AE/train_swae_5x5x5_problematic_variables.py", line 210, in evaluate_reconstruction_quality_dual
+    original = val_dataset.denormalize(original, sample_idx=i)
+TypeError: ProblematicVariablesDataset5x5x5.denormalize() got an unexpected keyword argument 'sample_idx'

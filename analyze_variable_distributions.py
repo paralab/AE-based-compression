@@ -147,6 +147,61 @@ def plot_distributions(variable_data, output_dir="variable_distributions"):
     
     print(f"\nPlots saved to {output_dir}/")
 
+def print_variable_metrics(variable_data, target_vars):
+    """Print detailed metrics for specific variables."""
+    print("\n" + "="*80)
+    print("DATA METRICS FOR SPECIFIC VARIABLES")
+    print("="*80)
+    
+    for var_name in target_vars:
+        if var_name in variable_data and variable_data[var_name].size > 0:
+            data = variable_data[var_name]
+            data_flat = data.flatten()
+            
+            print(f"\n{var_name}:")
+            print("-" * len(var_name))
+            print(f"  Shape: {data.shape}")
+            print(f"  Total elements: {data.size:,}")
+            print(f"  Data type: {data.dtype}")
+            print(f"\n  Statistical Metrics:")
+            print(f"    Mean:     {np.mean(data_flat):15.8f}")
+            print(f"    Std Dev:  {np.std(data_flat):15.8f}")
+            print(f"    Variance: {np.var(data_flat):15.8f}")
+            print(f"    Min:      {np.min(data_flat):15.8f}")
+            print(f"    Max:      {np.max(data_flat):15.8f}")
+            print(f"    Range:    {np.max(data_flat) - np.min(data_flat):15.8f}")
+            
+            # Percentiles
+            percentiles = [1, 5, 25, 50, 75, 95, 99]
+            print(f"\n  Percentiles:")
+            for p in percentiles:
+                val = np.percentile(data_flat, p)
+                print(f"    {p:3d}%:     {val:15.8f}")
+            
+            # Additional metrics
+            print(f"\n  Additional Metrics:")
+            print(f"    Skewness: {np.mean(((data_flat - np.mean(data_flat)) / np.std(data_flat))**3):15.8f}")
+            print(f"    Kurtosis: {np.mean(((data_flat - np.mean(data_flat)) / np.std(data_flat))**4) - 3:15.8f}")
+            
+            # Check for special values
+            n_zeros = np.sum(data_flat == 0)
+            n_negative = np.sum(data_flat < 0)
+            n_positive = np.sum(data_flat > 0)
+            n_nan = np.sum(np.isnan(data_flat))
+            n_inf = np.sum(np.isinf(data_flat))
+            
+            print(f"\n  Value Distribution:")
+            print(f"    Zeros:     {n_zeros:10d} ({100*n_zeros/data.size:6.2f}%)")
+            print(f"    Negative:  {n_negative:10d} ({100*n_negative/data.size:6.2f}%)")
+            print(f"    Positive:  {n_positive:10d} ({100*n_positive/data.size:6.2f}%)")
+            print(f"    NaN:       {n_nan:10d} ({100*n_nan/data.size:6.2f}%)")
+            print(f"    Inf:       {n_inf:10d} ({100*n_inf/data.size:6.2f}%)")
+            
+        else:
+            print(f"\n{var_name}: NOT FOUND in dataset")
+    
+    print("\n" + "="*80)
+
 def main():
     # Data folder path (adjust if needed)
     data_folder = "/u/tawal/BSSN-Extracted-Data/tt_q01/"
@@ -162,8 +217,14 @@ def main():
     
     print(f"Loading data from: {data_folder}")
     
+    # Define the specific variables to analyze
+    target_variables = ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+    
     # Load all variables except U_CHI
     variable_data = load_all_variables(data_folder, exclude_vars=['U_CHI'])
+    
+    # Print metrics for the specific variables
+    print_variable_metrics(variable_data, target_variables)
     
     # Plot distributions
     plot_distributions(variable_data)

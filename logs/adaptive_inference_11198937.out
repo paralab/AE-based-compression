@@ -1,0 +1,578 @@
+Wed Jul 23 14:48:26 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A40                     On  |   00000000:C7:00.0 Off |                    0 |
+|  0%   29C    P0             39W /  300W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Starting Adaptive Scaling Model Inference
+========================================
+Job ID: 11198937
+Node: gpub020
+
+Input file: /u/tawal/BSSN-Extracted-Data/tt_q08/bssn_gr_11200_extracted.hdf5
+Output file: ./reconstructed/bssn_gr_11200_adaptive_reconstructed.hdf5
+Model checkpoint: ./save/swae_adaptive_scaling/final_model.pth
+Scaling parameters: ./scaling_params_complete.json
+
+Using device: cuda
+Loading adaptive scaling model...
+✓ Loaded model from epoch 200
+✓ Validation loss: 0.112193
+✓ Loaded scaling parameters for 2 variables
+
+Processing /u/tawal/BSSN-Extracted-Data/tt_q08/bssn_gr_11200_extracted.hdf5...
+Found 24 U_ variables to process
+
+Processing U_ALPHA...
+  Processing U_ALPHA...
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+Warning: No scaling params for U_ALPHA, using identity
+  Metrics: PSNR=45.36 dB, MSE=2.872484e-05, MAE=2.523343e-03, RelErr=0.42%
+
+Processing U_CHI...
+  Processing U_CHI...
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+Warning: No scaling params for U_CHI, using identity
+  Metrics: PSNR=45.98 dB, MSE=2.502936e-05, MAE=2.325579e-03, RelErr=0.51%
+
+Processing U_K...
+  Processing U_K...
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+Warning: No scaling params for U_K, using identity
+  Metrics: PSNR=50.26 dB, MSE=5.641740e-06, MAE=1.033574e-03, RelErr=5360985.63%
+
+Processing U_GT0...
+  Processing U_GT0...
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+Warning: No scaling params for U_GT0, using identity
+  Metrics: PSNR=51.56 dB, MSE=1.318684e-05, MAE=1.542656e-03, RelErr=8122899.35%
+
+Processing U_GT1...
+  Processing U_GT1...
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+Warning: No scaling params for U_GT1, using identity
+  Metrics: PSNR=50.77 dB, MSE=1.697384e-05, MAE=1.758564e-03, RelErr=8483765.42%
+
+Processing U_GT2...
+  Processing U_GT2...
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+Warning: No scaling params for U_GT2, using identity
+  Metrics: PSNR=38.95 dB, MSE=2.091882e-06, MAE=7.358813e-04, RelErr=4188730.80%
+
+Processing U_BETA0...
+  Processing U_BETA0...
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+Warning: No scaling params for U_BETA0, using identity
+  Metrics: PSNR=44.59 dB, MSE=8.901970e-06, MAE=1.230838e-03, RelErr=9728747.76%
+
+Processing U_BETA1...
+  Processing U_BETA1...
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+Warning: No scaling params for U_BETA1, using identity
+  Metrics: PSNR=43.80 dB, MSE=1.178951e-05, MAE=1.423000e-03, RelErr=9051944.26%
+
+Processing U_BETA2...
+  Processing U_BETA2...
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+Warning: No scaling params for U_BETA2, using identity
+  Metrics: PSNR=34.79 dB, MSE=1.559134e-06, MAE=6.628545e-04, RelErr=5181913.42%
+
+Processing U_B0...
+  Processing U_B0...
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+Warning: No scaling params for U_B0, using identity
+  Metrics: PSNR=41.94 dB, MSE=1.925332e-06, MAE=6.863341e-04, RelErr=5641879.68%
+
+Processing U_B1...
+  Processing U_B1...
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+Warning: No scaling params for U_B1, using identity
+  Metrics: PSNR=41.87 dB, MSE=1.958133e-06, MAE=6.868803e-04, RelErr=5562817.14%
+
+Processing U_B2...
+  Processing U_B2...
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+Warning: No scaling params for U_B2, using identity
+  Metrics: PSNR=36.74 dB, MSE=1.504171e-06, MAE=6.400106e-04, RelErr=3176735.55%
+
+Processing U_SYMGT0...
+  Processing U_SYMGT0...
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+Warning: No scaling params for U_SYMGT0, using identity
+  Metrics: PSNR=36.17 dB, MSE=5.407589e-05, MAE=3.643893e-03, RelErr=0.36%
+
+Processing U_SYMGT1...
+  Processing U_SYMGT1...
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+Warning: No scaling params for U_SYMGT1, using identity
+  Metrics: PSNR=43.39 dB, MSE=1.145049e-05, MAE=1.453996e-03, RelErr=11398.68%
+
+Processing U_SYMGT2...
+  Processing U_SYMGT2...
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+Warning: No scaling params for U_SYMGT2, using identity
+  Metrics: PSNR=39.56 dB, MSE=1.609713e-06, MAE=6.577208e-04, RelErr=212921.77%
+
+Processing U_SYMGT3...
+  Processing U_SYMGT3...
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+Warning: No scaling params for U_SYMGT3, using identity
+  Metrics: PSNR=36.72 dB, MSE=5.782019e-05, MAE=3.777227e-03, RelErr=0.36%
+
+Processing U_SYMGT4...
+  Processing U_SYMGT4...
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+Warning: No scaling params for U_SYMGT4, using identity
+  Metrics: PSNR=39.81 dB, MSE=1.617146e-06, MAE=6.498748e-04, RelErr=28247.88%
+
+Processing U_SYMGT5...
+  Processing U_SYMGT5...
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+Warning: No scaling params for U_SYMGT5, using identity
+  Metrics: PSNR=28.41 dB, MSE=4.799714e-05, MAE=3.408966e-03, RelErr=0.36%
+
+Processing U_SYMAT0...
+  Processing U_SYMAT0...
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+Warning: No scaling params for U_SYMAT0, using identity
+  Metrics: PSNR=53.81 dB, MSE=5.711920e-05, MAE=1.731529e-03, RelErr=582959.61%
+
+Processing U_SYMAT1...
+  Processing U_SYMAT1...
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+Warning: No scaling params for U_SYMAT1, using identity
+  Metrics: PSNR=56.34 dB, MSE=3.567378e-05, MAE=1.653878e-03, RelErr=345078.95%
+
+Processing U_SYMAT2...
+  Processing U_SYMAT2...
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+Warning: No scaling params for U_SYMAT2, using identity
+  Metrics: PSNR=57.41 dB, MSE=2.530673e-05, MAE=9.051741e-04, RelErr=5282850.00%
+
+Processing U_SYMAT3...
+  Processing U_SYMAT3...
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+Warning: No scaling params for U_SYMAT3, using identity
+  Metrics: PSNR=54.95 dB, MSE=4.907320e-05, MAE=1.758930e-03, RelErr=216223.28%
+
+Processing U_SYMAT4...
+  Processing U_SYMAT4...
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+Warning: No scaling params for U_SYMAT4, using identity
+  Metrics: PSNR=57.85 dB, MSE=2.371608e-05, MAE=9.058144e-04, RelErr=1450693.85%
+
+Processing U_SYMAT5...
+  Processing U_SYMAT5...
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+Warning: No scaling params for U_SYMAT5, using identity
+  Metrics: PSNR=53.52 dB, MSE=5.837987e-05, MAE=1.530180e-03, RelErr=334365.06%
+
+Saving reconstructed data to ./reconstructed/bssn_gr_11200_adaptive_reconstructed.hdf5...
+Saving latent codes to ./reconstructed/bssn_gr_11200_adaptive_latent_codes.npz...
+
+================================================================================
+RECONSTRUCTION SUMMARY
+================================================================================
+Variable     PSNR (dB)    MSE          MAE          Rel Error   
+------------------------------------------------------------
+U_ALPHA      45.36        2.872e-05    2.523e-03    0.42%       
+U_B0         41.94        1.925e-06    6.863e-04    5641879.68% 
+U_B1         41.87        1.958e-06    6.869e-04    5562817.14% 
+U_B2         36.74        1.504e-06    6.400e-04    3176735.55% 
+U_BETA0      44.59        8.902e-06    1.231e-03    9728747.76% 
+U_BETA1      43.80        1.179e-05    1.423e-03    9051944.26% 
+U_BETA2      34.79        1.559e-06    6.629e-04    5181913.42% 
+U_CHI        45.98        2.503e-05    2.326e-03    0.51%       
+U_GT0        51.56        1.319e-05    1.543e-03    8122899.35% 
+U_GT1        50.77        1.697e-05    1.759e-03    8483765.42% 
+U_GT2        38.95        2.092e-06    7.359e-04    4188730.80% 
+U_K          50.26        5.642e-06    1.034e-03    5360985.63% 
+U_SYMAT0     53.81        5.712e-05    1.732e-03    582959.61%  
+U_SYMAT1     56.34        3.567e-05    1.654e-03    345078.95%  
+U_SYMAT2     57.41        2.531e-05    9.052e-04    5282850.00% 
+U_SYMAT3     54.95        4.907e-05    1.759e-03    216223.28%  
+U_SYMAT4     57.85        2.372e-05    9.058e-04    1450693.85% 
+U_SYMAT5     53.52        5.838e-05    1.530e-03    334365.06%  
+U_SYMGT0     36.17        5.408e-05    3.644e-03    0.36%       
+U_SYMGT1     43.39        1.145e-05    1.454e-03    11398.68%   
+U_SYMGT2     39.56        1.610e-06    6.577e-04    212921.77%  
+U_SYMGT3     36.72        5.782e-05    3.777e-03    0.36%       
+U_SYMGT4     39.81        1.617e-06    6.499e-04    28247.88%   
+U_SYMGT5     28.41        4.800e-05    3.409e-03    0.36%       
+------------------------------------------------------------
+AVERAGE      45.19        2.263e-05    1.555e-03    3040215.00% 
+
+Total time: 10.7 seconds
+
+Inference completed!
+Reconstructed file: ./reconstructed/bssn_gr_11200_adaptive_reconstructed.hdf5
+Latent codes: ./reconstructed/bssn_gr_11200_adaptive_latent_codes.npz
+
+Creating visualization plots...
+==============================
+Loading data...
+Found 24 variables to plot
+
+Creating individual variable plots...
+  Plotting U_ALPHA...
+  Plotting U_CHI...
+  Plotting U_K...
+  Plotting U_GT0...
+  Plotting U_GT1...
+  Plotting U_GT2...
+  Plotting U_BETA0...
+  Plotting U_BETA1...
+  Plotting U_BETA2...
+  Plotting U_B0...
+  Plotting U_B1...
+  Plotting U_B2...
+  Plotting U_SYMGT0...
+  Plotting U_SYMGT1...
+  Plotting U_SYMGT2...
+  Plotting U_SYMGT3...
+  Plotting U_SYMGT4...
+  Plotting U_SYMGT5...
+  Plotting U_SYMAT0...
+  Plotting U_SYMAT1...
+  Plotting U_SYMAT2...
+  Plotting U_SYMAT3...
+  Plotting U_SYMAT4...
+  Plotting U_SYMAT5...
+
+Creating summary plot...
+
+Plots saved to: ./reconstruction_plots_adaptive
+Summary plot: ./reconstruction_plots_adaptive/performance_summary.png
+
+Variable assignments:
+Poslog model: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+Asinh model: ['U_GT2', 'U_B2', 'U_SYMGT2', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4']
+
+Creating focused plots for problematic variables...
+Loading data...
+Found 6 variables to plot
+
+Creating individual variable plots...
+  Plotting U_GT2...
+  Plotting U_B2...
+  Plotting U_SYMGT2...
+  Plotting U_SYMAT2...
+  Plotting U_SYMAT3...
+  Plotting U_SYMAT4...
+
+Creating summary plot...
+
+Plots saved to: ./reconstruction_plots_adaptive/problematic_vars
+Summary plot: ./reconstruction_plots_adaptive/problematic_vars/performance_summary.png
+
+Variable assignments:
+Poslog model: []
+Asinh model: ['U_GT2', 'U_B2', 'U_SYMGT2', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4']
+
+All processing completed!
+========================
+Reconstructed file: ./reconstructed/bssn_gr_11200_adaptive_reconstructed.hdf5
+Latent codes: ./reconstructed/bssn_gr_11200_adaptive_latent_codes.npz
+Plots saved to: ./reconstruction_plots_adaptive

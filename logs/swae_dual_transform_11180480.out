@@ -1,0 +1,833 @@
+Tue Jul 22 21:27:23 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A40                     On  |   00000000:46:00.0 Off |                    0 |
+|  0%   27C    P8             55W /  300W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Starting Dual-Model SWAE Training
+=================================
+Job ID: 11180480
+Node: gpub003
+
+Model 1 (poslog): Standard variables (U_ALPHA, U_K, U_GT0, U_GT1, etc.)
+Model 2 (asinh): Problematic variables (U_B2, U_SYMAT2, U_GT2, U_SYMGT2, U_SYMAT4, U_SYMAT3)
+
+Warning: tensorboard not available, logging will be disabled
+Using device: cuda
+Data folder: /u/tawal/BSSN-Extracted-Data/tt_q01/
+Theoretical compression ratio: 7.8:1
+✓ TF32 optimization enabled
+
+================================================================================
+Creating Dual Datasets:
+================================================================================
+
+1. Creating dataset for standard variables (poslog transformation)...
+🔒 Creating 5x5x5 datasets with FIXED splits: train=80.0%, val=15.0%, test=5.0%
+🎯 Using FIXED seed=42 to ensure test set is always the same samples
+⚠️  Warning: Test ratio is 5.0%, not the intended 5%
+Found 38 HDF5 files in /u/tawal/BSSN-Extracted-Data/tt_q01/
+Loading bssn_gr_0_extracted.hdf5...
+Available keys: ['centers', 'dx', 'dy', 'dz', 'levels', 'var_data', 'vars', 'vars_use']
+Available variables: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_GT2', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_B2', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT2', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4', 'U_SYMAT5', 'C_HAM', 'C_MOM0', 'C_MOM1', 'C_MOM2', 'C_PSI4_REAL', 'C_PSI4_IMG']
+Variables to load (U_ prefix only): ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+Excluded variables: ['U_GT2', 'U_B2', 'U_SYMGT2', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4', 'C_HAM', 'C_MOM0', 'C_MOM1', 'C_MOM2', 'C_PSI4_REAL', 'C_PSI4_IMG']
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_10000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_10400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40680
+Loading bssn_gr_10800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_11200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_11600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_12000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_1200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_12400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_12800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_13200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_13600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_14000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_14400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40356
+Loading bssn_gr_14800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_15200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39276
+Loading bssn_gr_15600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_16000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40680
+Loading bssn_gr_1600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_16400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_16800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_17200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39600
+Loading bssn_gr_17600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_18000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40356
+Loading bssn_gr_18400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_18800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_19200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39276
+Loading bssn_gr_19600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40572
+Loading bssn_gr_2000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 41112
+Loading bssn_gr_2400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_2800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_3200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39708
+Loading bssn_gr_3600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_4000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_4400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39168
+Loading bssn_gr_4800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_5200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Extracting 5x5x5 center crop from 7x7x7 data...
+Original data shape: (1524024, 7, 7, 7)
+Cropped data shape: (1524024, 5, 5, 5)
+Crop indices: [:, 1:6, 1:6, 1:6]
+Final data shape: (1524024, 1, 5, 5, 5)
+Created sample_var_mapping with 1524024 entries
+Sample variable distribution: {'U_ALPHA': 84668, 'U_B0': 84668, 'U_B1': 84668, 'U_BETA0': 84668, 'U_BETA1': 84668, 'U_BETA2': 84668, 'U_CHI': 84668, 'U_GT0': 84668, 'U_GT1': 84668, 'U_K': 84668, 'U_SYMAT0': 84668, 'U_SYMAT1': 84668, 'U_SYMAT5': 84668, 'U_SYMGT0': 84668, 'U_SYMGT1': 84668, 'U_SYMGT3': 84668, 'U_SYMGT4': 84668, 'U_SYMGT5': 84668}
+🔒 Applied deterministic shuffle with seed=42 for reproducible splits
+🔒 FIXED Data Split: 1524024 total → 1219219 train (80.0%), 228603 val (15.0%), 76202 test (5.0%)
+🎯 TEST SET: 76202 samples (5%) - NEVER seen during training/validation
+Using training data: (1219219, 1, 5, 5, 5)
+Applying per-sample positive-shift log normalization...
+Applied per-sample positive-shift log normalization:
+  epsilon=1e-08
+  Per-sample data_min range: [-1.717225, 1.410157]
+  Result should have mean~4.5, std~1.1 properties
+All Variables Dataset (5x5x5) initialized:
+  Split: train
+  Data shape: (1219219, 1, 5, 5, 5)
+  Variables included: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+  Number of variables: 18
+  Split ratios: train=80.0%, val=15.0%, test=5.0%
+  Data range: [-17.727534, 0.878889]
+  Data mean: -7.322778
+  Data std: 4.125557
+Found 38 HDF5 files in /u/tawal/BSSN-Extracted-Data/tt_q01/
+Loading bssn_gr_0_extracted.hdf5...
+Available keys: ['centers', 'dx', 'dy', 'dz', 'levels', 'var_data', 'vars', 'vars_use']
+Available variables: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_GT2', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_B2', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT2', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4', 'U_SYMAT5', 'C_HAM', 'C_MOM0', 'C_MOM1', 'C_MOM2', 'C_PSI4_REAL', 'C_PSI4_IMG']
+Variables to load (U_ prefix only): ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+Excluded variables: ['U_GT2', 'U_B2', 'U_SYMGT2', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4', 'C_HAM', 'C_MOM0', 'C_MOM1', 'C_MOM2', 'C_PSI4_REAL', 'C_PSI4_IMG']
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_10000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_10400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40680
+Loading bssn_gr_10800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_11200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_11600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_12000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_1200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_12400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_12800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_13200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_13600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_14000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_14400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40356
+Loading bssn_gr_14800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_15200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39276
+Loading bssn_gr_15600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_16000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40680
+Loading bssn_gr_1600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_16400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_16800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_17200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39600
+Loading bssn_gr_17600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_18000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40356
+Loading bssn_gr_18400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_18800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_19200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39276
+Loading bssn_gr_19600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40572
+Loading bssn_gr_2000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 41112
+Loading bssn_gr_2400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_2800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_3200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39708
+Loading bssn_gr_3600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_4000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_4400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39168
+Loading bssn_gr_4800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_5200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Extracting 5x5x5 center crop from 7x7x7 data...
+Original data shape: (1524024, 7, 7, 7)
+Cropped data shape: (1524024, 5, 5, 5)
+Crop indices: [:, 1:6, 1:6, 1:6]
+Final data shape: (1524024, 1, 5, 5, 5)
+Created sample_var_mapping with 1524024 entries
+Sample variable distribution: {'U_ALPHA': 84668, 'U_B0': 84668, 'U_B1': 84668, 'U_BETA0': 84668, 'U_BETA1': 84668, 'U_BETA2': 84668, 'U_CHI': 84668, 'U_GT0': 84668, 'U_GT1': 84668, 'U_K': 84668, 'U_SYMAT0': 84668, 'U_SYMAT1': 84668, 'U_SYMAT5': 84668, 'U_SYMGT0': 84668, 'U_SYMGT1': 84668, 'U_SYMGT3': 84668, 'U_SYMGT4': 84668, 'U_SYMGT5': 84668}
+🔒 Applied deterministic shuffle with seed=42 for reproducible splits
+🔒 FIXED Data Split: 1524024 total → 1219219 train (80.0%), 228603 val (15.0%), 76202 test (5.0%)
+🎯 TEST SET: 76202 samples (5%) - NEVER seen during training/validation
+Using validation data: (228603, 1, 5, 5, 5)
+Applying per-sample positive-shift log normalization...
+Applied per-sample positive-shift log normalization:
+  epsilon=1e-08
+  Per-sample data_min range: [-1.636714, 1.399813]
+  Result should have mean~4.5, std~1.1 properties
+All Variables Dataset (5x5x5) initialized:
+  Split: val
+  Data shape: (228603, 1, 5, 5, 5)
+  Variables included: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+  Number of variables: 18
+  Split ratios: train=80.0%, val=15.0%, test=5.0%
+  Data range: [-17.727534, 0.839129]
+  Data mean: -7.321440
+  Data std: 4.125980
+Found 38 HDF5 files in /u/tawal/BSSN-Extracted-Data/tt_q01/
+Loading bssn_gr_0_extracted.hdf5...
+Available keys: ['centers', 'dx', 'dy', 'dz', 'levels', 'var_data', 'vars', 'vars_use']
+Available variables: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_GT2', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_B2', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT2', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4', 'U_SYMAT5', 'C_HAM', 'C_MOM0', 'C_MOM1', 'C_MOM2', 'C_PSI4_REAL', 'C_PSI4_IMG']
+Variables to load (U_ prefix only): ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+Excluded variables: ['U_GT2', 'U_B2', 'U_SYMGT2', 'U_SYMAT2', 'U_SYMAT3', 'U_SYMAT4', 'C_HAM', 'C_MOM0', 'C_MOM1', 'C_MOM2', 'C_PSI4_REAL', 'C_PSI4_IMG']
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_10000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_10400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40680
+Loading bssn_gr_10800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_11200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_11600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_12000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_1200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_12400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_12800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_13200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_13600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_14000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_14400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40356
+Loading bssn_gr_14800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_15200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39276
+Loading bssn_gr_15600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_16000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40680
+Loading bssn_gr_1600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40464
+Loading bssn_gr_16400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_16800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40032
+Loading bssn_gr_17200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39600
+Loading bssn_gr_17600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_18000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40356
+Loading bssn_gr_18400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_18800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_19200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39276
+Loading bssn_gr_19600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40572
+Loading bssn_gr_2000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 41112
+Loading bssn_gr_2400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_2800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_3200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39708
+Loading bssn_gr_3600_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Loading bssn_gr_4000_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39816
+Loading bssn_gr_400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40248
+Loading bssn_gr_4400_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39168
+Loading bssn_gr_4800_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 39924
+Loading bssn_gr_5200_extracted.hdf5...
+  Loaded 18 variables, total samples in file: 40140
+Extracting 5x5x5 center crop from 7x7x7 data...
+Original data shape: (1524024, 7, 7, 7)
+Cropped data shape: (1524024, 5, 5, 5)
+Crop indices: [:, 1:6, 1:6, 1:6]
+Final data shape: (1524024, 1, 5, 5, 5)
+Created sample_var_mapping with 1524024 entries
+Sample variable distribution: {'U_ALPHA': 84668, 'U_B0': 84668, 'U_B1': 84668, 'U_BETA0': 84668, 'U_BETA1': 84668, 'U_BETA2': 84668, 'U_CHI': 84668, 'U_GT0': 84668, 'U_GT1': 84668, 'U_K': 84668, 'U_SYMAT0': 84668, 'U_SYMAT1': 84668, 'U_SYMAT5': 84668, 'U_SYMGT0': 84668, 'U_SYMGT1': 84668, 'U_SYMGT3': 84668, 'U_SYMGT4': 84668, 'U_SYMGT5': 84668}
+🔒 Applied deterministic shuffle with seed=42 for reproducible splits
+🔒 FIXED Data Split: 1524024 total → 1219219 train (80.0%), 228603 val (15.0%), 76202 test (5.0%)
+🎯 TEST SET: 76202 samples (5%) - NEVER seen during training/validation
+Using test data: (76202, 1, 5, 5, 5)
+Applying per-sample positive-shift log normalization...
+Applied per-sample positive-shift log normalization:
+  epsilon=1e-08
+  Per-sample data_min range: [-1.636714, 1.382351]
+  Result should have mean~4.5, std~1.1 properties
+All Variables Dataset (5x5x5) initialized:
+  Split: test
+  Data shape: (76202, 1, 5, 5, 5)
+  Variables included: ['U_ALPHA', 'U_CHI', 'U_K', 'U_GT0', 'U_GT1', 'U_BETA0', 'U_BETA1', 'U_BETA2', 'U_B0', 'U_B1', 'U_SYMGT0', 'U_SYMGT1', 'U_SYMGT3', 'U_SYMGT4', 'U_SYMGT5', 'U_SYMAT0', 'U_SYMAT1', 'U_SYMAT5']
+  Number of variables: 18
+  Split ratios: train=80.0%, val=15.0%, test=5.0%
+  Data range: [-17.727534, 0.832904]
+  Data mean: -7.333303
+  Data std: 4.142347
+
+2. Creating dataset for problematic variables (asinh transformation)...
+Found 38 HDF5 files
+Loading variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+🔒 Applied deterministic shuffle with seed=42
+Applying automatic transformations based on variable type...
+Applied automatic transformations to 406406 samples
+Problematic Variables Dataset (5x5x5) initialized:
+  Split: train
+  Data shape: (406406, 1, 5, 5, 5)
+  Variables included: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+  Data range: [-5.807361, 5.600074]
+  Data mean: 0.310717
+  Data std: 1.730115
+Found 38 HDF5 files
+Loading variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+🔒 Applied deterministic shuffle with seed=42
+Applying automatic transformations based on variable type...
+Applied automatic transformations to 76201 samples
+Problematic Variables Dataset (5x5x5) initialized:
+  Split: val
+  Data shape: (76201, 1, 5, 5, 5)
+  Variables included: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+  Data range: [-5.801740, 5.587035]
+  Data mean: 0.313734
+  Data std: 1.729157
+Found 38 HDF5 files
+Loading variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+🔒 Applied deterministic shuffle with seed=42
+Applying automatic transformations based on variable type...
+Applied automatic transformations to 25401 samples
+Problematic Variables Dataset (5x5x5) initialized:
+  Split: test
+  Data shape: (25401, 1, 5, 5, 5)
+  Variables included: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
+  Data range: [-5.800291, 5.588478]
+  Data mean: 0.304592
+  Data std: 1.730383
+
+Dataset sizes:
+  Standard variables (poslog): Train=1219219, Val=228603, Test=76202
+  Problematic variables (asinh): Train=406406, Val=76201, Test=25401
+
+Creating dual SWAE models...
+
+Creating poslog model...
+  poslog model: 145,549 parameters
+
+Creating asinh model...
+  asinh model: 145,549 parameters
+⚠️  torch.compile() not available in PyTorch 1.12.1+cu113 (requires 2.0+)
+
+Training settings:
+  Latent dimension: 16
+  Lambda regularization: 1.0
+  Architecture: mlp
+  Learning rate: 0.0002
+  Batch size: 256
+  Early stopping: enabled (patience=40, min_delta=0.0001)
+
+Starting dual-model training for 1000 epochs...
+
+================================================================================
+EPOCH 1/1000
+================================================================================
+[poslog] Train Epoch: 1 [0/1219219 (0%)]	Loss: 67.211487 (Recon: 65.078850, SW: 2.132636)
+[poslog] Train Epoch: 1 [25600/1219219 (2%)]	Loss: 9.174358 (Recon: 2.477968, SW: 6.696390)
+[poslog] Train Epoch: 1 [51200/1219219 (4%)]	Loss: 3.585490 (Recon: 1.756767, SW: 1.828723)
+[poslog] Train Epoch: 1 [76800/1219219 (6%)]	Loss: 2.579981 (Recon: 1.143834, SW: 1.436148)
+[poslog] Train Epoch: 1 [102400/1219219 (8%)]	Loss: 2.048106 (Recon: 0.791558, SW: 1.256549)
+[poslog] Train Epoch: 1 [128000/1219219 (10%)]	Loss: 1.875726 (Recon: 0.745430, SW: 1.130296)
+[poslog] Train Epoch: 1 [153600/1219219 (13%)]	Loss: 1.293231 (Recon: 0.547471, SW: 0.745761)
+[poslog] Train Epoch: 1 [179200/1219219 (15%)]	Loss: 1.149580 (Recon: 0.541749, SW: 0.607831)
+[poslog] Train Epoch: 1 [204800/1219219 (17%)]	Loss: 1.402845 (Recon: 0.746971, SW: 0.655874)
+[poslog] Train Epoch: 1 [230400/1219219 (19%)]	Loss: 1.038506 (Recon: 0.413634, SW: 0.624872)
+[poslog] Train Epoch: 1 [256000/1219219 (21%)]	Loss: 1.182810 (Recon: 0.398321, SW: 0.784489)
+[poslog] Train Epoch: 1 [281600/1219219 (23%)]	Loss: 1.016924 (Recon: 0.492906, SW: 0.524018)
+[poslog] Train Epoch: 1 [307200/1219219 (25%)]	Loss: 0.878698 (Recon: 0.316944, SW: 0.561754)
+[poslog] Train Epoch: 1 [332800/1219219 (27%)]	Loss: 0.652920 (Recon: 0.290467, SW: 0.362453)
+[poslog] Train Epoch: 1 [358400/1219219 (29%)]	Loss: 0.837915 (Recon: 0.424011, SW: 0.413904)
+[poslog] Train Epoch: 1 [384000/1219219 (31%)]	Loss: 0.733132 (Recon: 0.218539, SW: 0.514593)
+[poslog] Train Epoch: 1 [409600/1219219 (34%)]	Loss: 0.596792 (Recon: 0.218476, SW: 0.378316)
+[poslog] Train Epoch: 1 [435200/1219219 (36%)]	Loss: 0.708137 (Recon: 0.312281, SW: 0.395856)
+[poslog] Train Epoch: 1 [460800/1219219 (38%)]	Loss: 0.464620 (Recon: 0.160961, SW: 0.303658)
+[poslog] Train Epoch: 1 [486400/1219219 (40%)]	Loss: 0.569956 (Recon: 0.208621, SW: 0.361335)
+[poslog] Train Epoch: 1 [512000/1219219 (42%)]	Loss: 0.579568 (Recon: 0.275552, SW: 0.304015)
+[poslog] Train Epoch: 1 [537600/1219219 (44%)]	Loss: 0.409745 (Recon: 0.145188, SW: 0.264558)
+[poslog] Train Epoch: 1 [563200/1219219 (46%)]	Loss: 0.447807 (Recon: 0.170946, SW: 0.276862)
+[poslog] Train Epoch: 1 [588800/1219219 (48%)]	Loss: 0.458588 (Recon: 0.260340, SW: 0.198248)
+[poslog] Train Epoch: 1 [614400/1219219 (50%)]	Loss: 0.359611 (Recon: 0.142456, SW: 0.217154)
+[poslog] Train Epoch: 1 [640000/1219219 (52%)]	Loss: 0.377952 (Recon: 0.165837, SW: 0.212115)
+[poslog] Train Epoch: 1 [665600/1219219 (55%)]	Loss: 0.417321 (Recon: 0.201803, SW: 0.215519)
+[poslog] Train Epoch: 1 [691200/1219219 (57%)]	Loss: 0.326098 (Recon: 0.097360, SW: 0.228738)
+[poslog] Train Epoch: 1 [716800/1219219 (59%)]	Loss: 0.277178 (Recon: 0.108840, SW: 0.168338)
+[poslog] Train Epoch: 1 [742400/1219219 (61%)]	Loss: 0.306559 (Recon: 0.140165, SW: 0.166394)
+[poslog] Train Epoch: 1 [768000/1219219 (63%)]	Loss: 0.226930 (Recon: 0.086756, SW: 0.140173)
+[poslog] Train Epoch: 1 [793600/1219219 (65%)]	Loss: 0.285940 (Recon: 0.132725, SW: 0.153215)
+[poslog] Train Epoch: 1 [819200/1219219 (67%)]	Loss: 0.281723 (Recon: 0.131188, SW: 0.150535)
+[poslog] Train Epoch: 1 [844800/1219219 (69%)]	Loss: 0.235064 (Recon: 0.078132, SW: 0.156931)
+[poslog] Train Epoch: 1 [870400/1219219 (71%)]	Loss: 0.262148 (Recon: 0.111131, SW: 0.151017)
+[poslog] Train Epoch: 1 [896000/1219219 (73%)]	Loss: 0.218842 (Recon: 0.094014, SW: 0.124828)
+[poslog] Train Epoch: 1 [921600/1219219 (76%)]	Loss: 0.205481 (Recon: 0.087495, SW: 0.117985)
+[poslog] Train Epoch: 1 [947200/1219219 (78%)]	Loss: 0.225332 (Recon: 0.097809, SW: 0.127523)
+[poslog] Train Epoch: 1 [972800/1219219 (80%)]	Loss: 0.242698 (Recon: 0.115065, SW: 0.127633)
+[poslog] Train Epoch: 1 [998400/1219219 (82%)]	Loss: 0.178071 (Recon: 0.059411, SW: 0.118660)
+[poslog] Train Epoch: 1 [1024000/1219219 (84%)]	Loss: 0.203167 (Recon: 0.100965, SW: 0.102202)
+[poslog] Train Epoch: 1 [1049600/1219219 (86%)]	Loss: 0.181437 (Recon: 0.076282, SW: 0.105156)
+[poslog] Train Epoch: 1 [1075200/1219219 (88%)]	Loss: 0.159200 (Recon: 0.050891, SW: 0.108309)
+[poslog] Train Epoch: 1 [1100800/1219219 (90%)]	Loss: 0.148362 (Recon: 0.065599, SW: 0.082762)
+[poslog] Train Epoch: 1 [1126400/1219219 (92%)]	Loss: 0.148328 (Recon: 0.048315, SW: 0.100013)
+[poslog] Train Epoch: 1 [1152000/1219219 (94%)]	Loss: 0.146979 (Recon: 0.061093, SW: 0.085886)
+[poslog] Train Epoch: 1 [1177600/1219219 (97%)]	Loss: 0.131352 (Recon: 0.040309, SW: 0.091044)
+[poslog] Train Epoch: 1 [1203200/1219219 (99%)]	Loss: 0.134673 (Recon: 0.057216, SW: 0.077457)
+[asinh] Train Epoch: 1 [0/406406 (0%)]	Loss: 3.671278 (Recon: 3.039512, SW: 0.631766)
+[asinh] Train Epoch: 1 [25600/406406 (6%)]	Loss: 0.462760 (Recon: 0.064972, SW: 0.397788)
+[asinh] Train Epoch: 1 [51200/406406 (13%)]	Loss: 0.389398 (Recon: 0.059167, SW: 0.330231)
+[asinh] Train Epoch: 1 [76800/406406 (19%)]	Loss: 0.397946 (Recon: 0.082194, SW: 0.315752)
+[asinh] Train Epoch: 1 [102400/406406 (25%)]	Loss: 0.343592 (Recon: 0.010507, SW: 0.333084)
+[asinh] Train Epoch: 1 [128000/406406 (31%)]	Loss: 0.266868 (Recon: 0.005885, SW: 0.260983)
+[asinh] Train Epoch: 1 [153600/406406 (38%)]	Loss: 0.340159 (Recon: 0.042049, SW: 0.298110)
+[asinh] Train Epoch: 1 [179200/406406 (44%)]	Loss: 0.340685 (Recon: 0.030135, SW: 0.310551)
+[asinh] Train Epoch: 1 [204800/406406 (50%)]	Loss: 0.268768 (Recon: 0.004233, SW: 0.264535)
+[asinh] Train Epoch: 1 [230400/406406 (57%)]	Loss: 0.248744 (Recon: 0.002597, SW: 0.246148)
+[asinh] Train Epoch: 1 [256000/406406 (63%)]	Loss: 0.268017 (Recon: 0.003105, SW: 0.264912)
+[asinh] Train Epoch: 1 [281600/406406 (69%)]	Loss: 0.270525 (Recon: 0.002968, SW: 0.267557)
+[asinh] Train Epoch: 1 [307200/406406 (76%)]	Loss: 0.240272 (Recon: 0.006315, SW: 0.233958)
+[asinh] Train Epoch: 1 [332800/406406 (82%)]	Loss: 0.232969 (Recon: 0.005037, SW: 0.227933)
+[asinh] Train Epoch: 1 [358400/406406 (88%)]	Loss: 0.237526 (Recon: 0.003621, SW: 0.233905)
+[asinh] Train Epoch: 1 [384000/406406 (94%)]	Loss: 0.248905 (Recon: 0.004674, SW: 0.244231)
+[poslog] Validation Epoch: 1	Loss: 0.148575 (Recon: 0.056573, SW: 0.092002)
+[asinh] Validation Epoch: 1	Loss: 0.241709 (Recon: 0.007446, SW: 0.234263)
+
+Epoch 1 completed in 39.6s
+
+Model Performance Summary:
+  [poslog] Train Loss: 1.365234, Val Loss: 0.148575
+  [poslog] Early stopping counter: 0/40
+  [asinh] Train Loss: 0.353733, Val Loss: 0.241709
+  [asinh] Early stopping counter: 0/40
+[poslog] New best model saved (val_loss: 0.148575)
+[asinh] New best model saved (val_loss: 0.241709)
+
+================================================================================
+EPOCH 2/1000
+================================================================================
+[poslog] Train Epoch: 2 [0/1219219 (0%)]	Loss: 0.141461 (Recon: 0.050153, SW: 0.091308)
+[poslog] Train Epoch: 2 [25600/1219219 (2%)]	Loss: 0.130500 (Recon: 0.036303, SW: 0.094197)
+[poslog] Train Epoch: 2 [51200/1219219 (4%)]	Loss: 0.137760 (Recon: 0.039163, SW: 0.098597)
+[poslog] Train Epoch: 2 [76800/1219219 (6%)]	Loss: 0.141280 (Recon: 0.052787, SW: 0.088493)
+[poslog] Train Epoch: 2 [102400/1219219 (8%)]	Loss: 0.125295 (Recon: 0.037071, SW: 0.088223)
+[poslog] Train Epoch: 2 [128000/1219219 (10%)]	Loss: 0.125931 (Recon: 0.044237, SW: 0.081694)
+[poslog] Train Epoch: 2 [153600/1219219 (13%)]	Loss: 0.123334 (Recon: 0.043793, SW: 0.079540)
+[poslog] Train Epoch: 2 [179200/1219219 (15%)]	Loss: 0.123037 (Recon: 0.043952, SW: 0.079086)
+[poslog] Train Epoch: 2 [204800/1219219 (17%)]	Loss: 0.152317 (Recon: 0.052561, SW: 0.099756)
+[poslog] Train Epoch: 2 [230400/1219219 (19%)]	Loss: 0.129805 (Recon: 0.039188, SW: 0.090617)
+[poslog] Train Epoch: 2 [256000/1219219 (21%)]	Loss: 0.128200 (Recon: 0.051523, SW: 0.076677)
+[poslog] Train Epoch: 2 [281600/1219219 (23%)]	Loss: 0.154293 (Recon: 0.069720, SW: 0.084573)
+[poslog] Train Epoch: 2 [307200/1219219 (25%)]	Loss: 0.126084 (Recon: 0.041299, SW: 0.084785)
+[poslog] Train Epoch: 2 [332800/1219219 (27%)]	Loss: 0.118054 (Recon: 0.041345, SW: 0.076710)
+[poslog] Train Epoch: 2 [358400/1219219 (29%)]	Loss: 0.139927 (Recon: 0.072432, SW: 0.067495)
+[poslog] Train Epoch: 2 [384000/1219219 (31%)]	Loss: 0.117081 (Recon: 0.045384, SW: 0.071697)
+[poslog] Train Epoch: 2 [409600/1219219 (34%)]	Loss: 0.130406 (Recon: 0.045064, SW: 0.085342)
+[poslog] Train Epoch: 2 [435200/1219219 (36%)]	Loss: 0.159210 (Recon: 0.081730, SW: 0.077481)
+[poslog] Train Epoch: 2 [460800/1219219 (38%)]	Loss: 0.117461 (Recon: 0.041635, SW: 0.075825)
+[poslog] Train Epoch: 2 [486400/1219219 (40%)]	Loss: 0.123364 (Recon: 0.044633, SW: 0.078731)
+[poslog] Train Epoch: 2 [512000/1219219 (42%)]	Loss: 0.123008 (Recon: 0.044853, SW: 0.078156)
+[poslog] Train Epoch: 2 [537600/1219219 (44%)]	Loss: 0.131737 (Recon: 0.044450, SW: 0.087287)
+[poslog] Train Epoch: 2 [563200/1219219 (46%)]	Loss: 0.130369 (Recon: 0.049881, SW: 0.080489)
+[poslog] Train Epoch: 2 [588800/1219219 (48%)]	Loss: 0.106080 (Recon: 0.034477, SW: 0.071603)
+[poslog] Train Epoch: 2 [614400/1219219 (50%)]	Loss: 0.097464 (Recon: 0.032936, SW: 0.064528)
+[poslog] Train Epoch: 2 [640000/1219219 (52%)]	Loss: 0.106931 (Recon: 0.032723, SW: 0.074208)
+[poslog] Train Epoch: 2 [665600/1219219 (55%)]	Loss: 0.114075 (Recon: 0.038511, SW: 0.075564)
+[poslog] Train Epoch: 2 [691200/1219219 (57%)]	Loss: 0.101585 (Recon: 0.042191, SW: 0.059394)
+[poslog] Train Epoch: 2 [716800/1219219 (59%)]	Loss: 0.126952 (Recon: 0.038597, SW: 0.088355)
+[poslog] Train Epoch: 2 [742400/1219219 (61%)]	Loss: 0.115983 (Recon: 0.040350, SW: 0.075633)
+[poslog] Train Epoch: 2 [768000/1219219 (63%)]	Loss: 0.112044 (Recon: 0.046969, SW: 0.065076)
+[poslog] Train Epoch: 2 [793600/1219219 (65%)]	Loss: 0.099399 (Recon: 0.034043, SW: 0.065356)
+[poslog] Train Epoch: 2 [819200/1219219 (67%)]	Loss: 0.104123 (Recon: 0.045761, SW: 0.058363)
+[poslog] Train Epoch: 2 [844800/1219219 (69%)]	Loss: 0.100218 (Recon: 0.024873, SW: 0.075344)
+[poslog] Train Epoch: 2 [870400/1219219 (71%)]	Loss: 0.109818 (Recon: 0.039595, SW: 0.070223)
+[poslog] Train Epoch: 2 [896000/1219219 (73%)]	Loss: 0.093167 (Recon: 0.033475, SW: 0.059692)
+[poslog] Train Epoch: 2 [921600/1219219 (76%)]	Loss: 0.103735 (Recon: 0.036943, SW: 0.066792)
+[poslog] Train Epoch: 2 [947200/1219219 (78%)]	Loss: 0.095658 (Recon: 0.034959, SW: 0.060699)
+[poslog] Train Epoch: 2 [972800/1219219 (80%)]	Loss: 0.123115 (Recon: 0.043218, SW: 0.079897)
+[poslog] Train Epoch: 2 [998400/1219219 (82%)]	Loss: 0.104797 (Recon: 0.033281, SW: 0.071516)
+[poslog] Train Epoch: 2 [1024000/1219219 (84%)]	Loss: 0.088729 (Recon: 0.029282, SW: 0.059447)
+[poslog] Train Epoch: 2 [1049600/1219219 (86%)]	Loss: 0.097906 (Recon: 0.036898, SW: 0.061008)
+[poslog] Train Epoch: 2 [1075200/1219219 (88%)]	Loss: 0.092653 (Recon: 0.034052, SW: 0.058601)
+[poslog] Train Epoch: 2 [1100800/1219219 (90%)]	Loss: 0.119508 (Recon: 0.042031, SW: 0.077477)
+[poslog] Train Epoch: 2 [1126400/1219219 (92%)]	Loss: 0.123291 (Recon: 0.035835, SW: 0.087456)
+[poslog] Train Epoch: 2 [1152000/1219219 (94%)]	Loss: 0.113659 (Recon: 0.047227, SW: 0.066431)
+[poslog] Train Epoch: 2 [1177600/1219219 (97%)]	Loss: 0.095606 (Recon: 0.037269, SW: 0.058337)
+[poslog] Train Epoch: 2 [1203200/1219219 (99%)]	Loss: 0.087160 (Recon: 0.028966, SW: 0.058194)
+[asinh] Train Epoch: 2 [0/406406 (0%)]	Loss: 0.248926 (Recon: 0.009834, SW: 0.239092)
+[asinh] Train Epoch: 2 [25600/406406 (6%)]	Loss: 0.222003 (Recon: 0.002729, SW: 0.219274)
+[asinh] Train Epoch: 2 [51200/406406 (13%)]	Loss: 0.214541 (Recon: 0.005008, SW: 0.209533)
+[asinh] Train Epoch: 2 [76800/406406 (19%)]	Loss: 0.258509 (Recon: 0.003145, SW: 0.255364)
+[asinh] Train Epoch: 2 [102400/406406 (25%)]	Loss: 0.261638 (Recon: 0.007908, SW: 0.253730)
+[asinh] Train Epoch: 2 [128000/406406 (31%)]	Loss: 0.219527 (Recon: 0.003918, SW: 0.215609)
+[asinh] Train Epoch: 2 [153600/406406 (38%)]	Loss: 0.217193 (Recon: 0.011949, SW: 0.205244)
+[asinh] Train Epoch: 2 [179200/406406 (44%)]	Loss: 0.218226 (Recon: 0.003463, SW: 0.214763)
+[asinh] Train Epoch: 2 [204800/406406 (50%)]	Loss: 0.210553 (Recon: 0.005156, SW: 0.205397)
+[asinh] Train Epoch: 2 [230400/406406 (57%)]	Loss: 0.253929 (Recon: 0.003498, SW: 0.250431)
+[asinh] Train Epoch: 2 [256000/406406 (63%)]	Loss: 0.230662 (Recon: 0.006143, SW: 0.224519)
+[asinh] Train Epoch: 2 [281600/406406 (69%)]	Loss: 0.234608 (Recon: 0.011528, SW: 0.223080)
+[asinh] Train Epoch: 2 [307200/406406 (76%)]	Loss: 0.251411 (Recon: 0.013344, SW: 0.238067)
+[asinh] Train Epoch: 2 [332800/406406 (82%)]	Loss: 0.271625 (Recon: 0.017958, SW: 0.253667)
+[asinh] Train Epoch: 2 [358400/406406 (88%)]	Loss: 0.220777 (Recon: 0.020082, SW: 0.200696)
+[asinh] Train Epoch: 2 [384000/406406 (94%)]	Loss: 0.235296 (Recon: 0.006562, SW: 0.228734)
+[poslog] Validation Epoch: 2	Loss: 0.098045 (Recon: 0.034465, SW: 0.063580)
+[asinh] Validation Epoch: 2	Loss: 0.220240 (Recon: 0.007276, SW: 0.212965)
+
+Epoch 2 completed in 37.7s
+
+Model Performance Summary:
+  [poslog] Train Loss: 0.117558, Val Loss: 0.098045
+  [poslog] Early stopping counter: 0/40
+  [asinh] Train Loss: 0.233488, Val Loss: 0.220240
+  [asinh] Early stopping counter: 0/40
+[poslog] New best model saved (val_loss: 0.098045)
+[asinh] New best model saved (val_loss: 0.220240)
+
+================================================================================
+EPOCH 3/1000
+================================================================================
+[poslog] Train Epoch: 3 [0/1219219 (0%)]	Loss: 0.084986 (Recon: 0.039024, SW: 0.045962)
+[poslog] Train Epoch: 3 [25600/1219219 (2%)]	Loss: 0.089638 (Recon: 0.027403, SW: 0.062235)
+[poslog] Train Epoch: 3 [51200/1219219 (4%)]	Loss: 0.096092 (Recon: 0.040740, SW: 0.055351)
+[poslog] Train Epoch: 3 [76800/1219219 (6%)]	Loss: 0.092643 (Recon: 0.029410, SW: 0.063233)
+[poslog] Train Epoch: 3 [102400/1219219 (8%)]	Loss: 0.094481 (Recon: 0.025045, SW: 0.069437)
+[poslog] Train Epoch: 3 [128000/1219219 (10%)]	Loss: 0.093137 (Recon: 0.033033, SW: 0.060104)
+[poslog] Train Epoch: 3 [153600/1219219 (13%)]	Loss: 0.087624 (Recon: 0.028127, SW: 0.059497)
+[poslog] Train Epoch: 3 [179200/1219219 (15%)]	Loss: 0.088267 (Recon: 0.026175, SW: 0.062093)
+[poslog] Train Epoch: 3 [204800/1219219 (17%)]	Loss: 0.085198 (Recon: 0.028851, SW: 0.056347)
+[poslog] Train Epoch: 3 [230400/1219219 (19%)]	Loss: 0.109370 (Recon: 0.033477, SW: 0.075894)
+[poslog] Train Epoch: 3 [256000/1219219 (21%)]	Loss: 0.099791 (Recon: 0.043137, SW: 0.056655)
+[poslog] Train Epoch: 3 [281600/1219219 (23%)]	Loss: 0.099723 (Recon: 0.025509, SW: 0.074214)
+[poslog] Train Epoch: 3 [307200/1219219 (25%)]	Loss: 0.085976 (Recon: 0.020563, SW: 0.065413)
+[poslog] Train Epoch: 3 [332800/1219219 (27%)]	Loss: 0.085100 (Recon: 0.022639, SW: 0.062461)
+[poslog] Train Epoch: 3 [358400/1219219 (29%)]	Loss: 0.084483 (Recon: 0.029924, SW: 0.054559)
+[poslog] Train Epoch: 3 [384000/1219219 (31%)]	Loss: 0.073878 (Recon: 0.029152, SW: 0.044726)
+[poslog] Train Epoch: 3 [409600/1219219 (34%)]	Loss: 0.099029 (Recon: 0.031738, SW: 0.067292)
+[poslog] Train Epoch: 3 [435200/1219219 (36%)]	Loss: 0.077196 (Recon: 0.018819, SW: 0.058377)
+[poslog] Train Epoch: 3 [460800/1219219 (38%)]	Loss: 0.098501 (Recon: 0.047968, SW: 0.050533)
+[poslog] Train Epoch: 3 [486400/1219219 (40%)]	Loss: 0.091187 (Recon: 0.019863, SW: 0.071324)
+[poslog] Train Epoch: 3 [512000/1219219 (42%)]	Loss: 0.091380 (Recon: 0.030659, SW: 0.060720)
+[poslog] Train Epoch: 3 [537600/1219219 (44%)]	Loss: 0.069094 (Recon: 0.024339, SW: 0.044755)
+[poslog] Train Epoch: 3 [563200/1219219 (46%)]	Loss: 0.085249 (Recon: 0.022995, SW: 0.062254)
+[poslog] Train Epoch: 3 [588800/1219219 (48%)]	Loss: 0.093690 (Recon: 0.025282, SW: 0.068409)
+[poslog] Train Epoch: 3 [614400/1219219 (50%)]	Loss: 0.095581 (Recon: 0.027219, SW: 0.068362)
+[poslog] Train Epoch: 3 [640000/1219219 (52%)]	Loss: 0.086111 (Recon: 0.015044, SW: 0.071067)
+[poslog] Train Epoch: 3 [665600/1219219 (55%)]	Loss: 0.104072 (Recon: 0.043532, SW: 0.060540)
+[poslog] Train Epoch: 3 [691200/1219219 (57%)]	Loss: 0.090244 (Recon: 0.031740, SW: 0.058504)
+[poslog] Train Epoch: 3 [716800/1219219 (59%)]	Loss: 0.094626 (Recon: 0.040409, SW: 0.054216)
+[poslog] Train Epoch: 3 [742400/1219219 (61%)]	Loss: 0.067442 (Recon: 0.016882, SW: 0.050560)
+[poslog] Train Epoch: 3 [768000/1219219 (63%)]	Loss: 0.085928 (Recon: 0.016808, SW: 0.069120)
+[poslog] Train Epoch: 3 [793600/1219219 (65%)]	Loss: 0.076628 (Recon: 0.023330, SW: 0.053298)
+[poslog] Train Epoch: 3 [819200/1219219 (67%)]	Loss: 0.073268 (Recon: 0.021142, SW: 0.052125)
+[poslog] Train Epoch: 3 [844800/1219219 (69%)]	Loss: 0.086538 (Recon: 0.033606, SW: 0.052932)
+[poslog] Train Epoch: 3 [870400/1219219 (71%)]	Loss: 0.075518 (Recon: 0.019755, SW: 0.055763)
+[poslog] Train Epoch: 3 [896000/1219219 (73%)]	Loss: 0.069153 (Recon: 0.021096, SW: 0.048057)
+[poslog] Train Epoch: 3 [921600/1219219 (76%)]	Loss: 0.083272 (Recon: 0.024957, SW: 0.058315)
+[poslog] Train Epoch: 3 [947200/1219219 (78%)]	Loss: 0.070133 (Recon: 0.025137, SW: 0.044996)
+[poslog] Train Epoch: 3 [972800/1219219 (80%)]	Loss: 0.077524 (Recon: 0.024635, SW: 0.052889)
+[poslog] Train Epoch: 3 [998400/1219219 (82%)]	Loss: 0.079989 (Recon: 0.035536, SW: 0.044453)
+[poslog] Train Epoch: 3 [1024000/1219219 (84%)]	Loss: 0.081725 (Recon: 0.031295, SW: 0.050430)
+[poslog] Train Epoch: 3 [1049600/1219219 (86%)]	Loss: 0.083264 (Recon: 0.023821, SW: 0.059443)
+[poslog] Train Epoch: 3 [1075200/1219219 (88%)]	Loss: 0.098674 (Recon: 0.023404, SW: 0.075270)
+[poslog] Train Epoch: 3 [1100800/1219219 (90%)]	Loss: 0.081816 (Recon: 0.037697, SW: 0.044120)
+[poslog] Train Epoch: 3 [1126400/1219219 (92%)]	Loss: 0.094217 (Recon: 0.038503, SW: 0.055714)
+[poslog] Train Epoch: 3 [1152000/1219219 (94%)]	Loss: 0.084255 (Recon: 0.028203, SW: 0.056052)
+[poslog] Train Epoch: 3 [1177600/1219219 (97%)]	Loss: 0.109947 (Recon: 0.031046, SW: 0.078900)
+[poslog] Train Epoch: 3 [1203200/1219219 (99%)]	Loss: 0.078252 (Recon: 0.030306, SW: 0.047946)
+[asinh] Train Epoch: 3 [0/406406 (0%)]	Loss: 0.225667 (Recon: 0.011817, SW: 0.213849)
+[asinh] Train Epoch: 3 [25600/406406 (6%)]	Loss: 0.219110 (Recon: 0.005109, SW: 0.214002)
+[asinh] Train Epoch: 3 [51200/406406 (13%)]	Loss: 0.185061 (Recon: 0.005116, SW: 0.179945)
+[asinh] Train Epoch: 3 [76800/406406 (19%)]	Loss: 0.228923 (Recon: 0.004906, SW: 0.224017)
+[asinh] Train Epoch: 3 [102400/406406 (25%)]	Loss: 0.250488 (Recon: 0.028560, SW: 0.221928)
+[asinh] Train Epoch: 3 [128000/406406 (31%)]	Loss: 0.238374 (Recon: 0.003741, SW: 0.234633)
+[asinh] Train Epoch: 3 [153600/406406 (38%)]	Loss: 0.235588 (Recon: 0.003299, SW: 0.232289)
+[asinh] Train Epoch: 3 [179200/406406 (44%)]	Loss: 0.240725 (Recon: 0.012782, SW: 0.227943)
+[asinh] Train Epoch: 3 [204800/406406 (50%)]	Loss: 0.204904 (Recon: 0.002679, SW: 0.202225)
+[asinh] Train Epoch: 3 [230400/406406 (57%)]	Loss: 0.288705 (Recon: 0.019380, SW: 0.269326)
+[asinh] Train Epoch: 3 [256000/406406 (63%)]	Loss: 0.168694 (Recon: 0.003865, SW: 0.164829)
+[asinh] Train Epoch: 3 [281600/406406 (69%)]	Loss: 0.216444 (Recon: 0.010869, SW: 0.205575)
+[asinh] Train Epoch: 3 [307200/406406 (76%)]	Loss: 0.224862 (Recon: 0.004842, SW: 0.220019)
+[asinh] Train Epoch: 3 [332800/406406 (82%)]	Loss: 0.206810 (Recon: 0.002299, SW: 0.204510)
+[asinh] Train Epoch: 3 [358400/406406 (88%)]	Loss: 0.219731 (Recon: 0.005380, SW: 0.214352)
+[asinh] Train Epoch: 3 [384000/406406 (94%)]	Loss: 0.230936 (Recon: 0.006903, SW: 0.224033)
+[poslog] Validation Epoch: 3	Loss: 0.079156 (Recon: 0.026252, SW: 0.052904)
+[asinh] Validation Epoch: 3	Loss: 0.203513 (Recon: 0.007151, SW: 0.196362)
+
+Epoch 3 completed in 40.1s
+
+Model Performance Summary:
+  [poslog] Train Loss: 0.086377, Val Loss: 0.079156
+  [poslog] Early stopping counter: 0/40
+  [asinh] Train Loss: 0.211580, Val Loss: 0.203513
+  [asinh] Early stopping counter: 0/40
+[poslog] New best model saved (val_loss: 0.079156)
+[asinh] New best model saved (val_loss: 0.203513)
+
+================================================================================
+EPOCH 4/1000
+================================================================================
+[poslog] Train Epoch: 4 [0/1219219 (0%)]	Loss: 0.081100 (Recon: 0.022571, SW: 0.058529)
+[poslog] Train Epoch: 4 [25600/1219219 (2%)]	Loss: 0.095862 (Recon: 0.023713, SW: 0.072148)
+[poslog] Train Epoch: 4 [51200/1219219 (4%)]	Loss: 0.081950 (Recon: 0.024512, SW: 0.057437)
+[poslog] Train Epoch: 4 [76800/1219219 (6%)]	Loss: 0.077867 (Recon: 0.022437, SW: 0.055430)
+[poslog] Train Epoch: 4 [102400/1219219 (8%)]	Loss: 0.076207 (Recon: 0.017946, SW: 0.058261)
+[poslog] Train Epoch: 4 [128000/1219219 (10%)]	Loss: 0.066291 (Recon: 0.022980, SW: 0.043311)
+[poslog] Train Epoch: 4 [153600/1219219 (13%)]	Loss: 0.065207 (Recon: 0.019140, SW: 0.046067)
+[poslog] Train Epoch: 4 [179200/1219219 (15%)]	Loss: 0.064645 (Recon: 0.017814, SW: 0.046831)
+[poslog] Train Epoch: 4 [204800/1219219 (17%)]	Loss: 0.076424 (Recon: 0.025347, SW: 0.051077)
+[poslog] Train Epoch: 4 [230400/1219219 (19%)]	Loss: 0.114122 (Recon: 0.047580, SW: 0.066542)
+[poslog] Train Epoch: 4 [256000/1219219 (21%)]	Loss: 0.074357 (Recon: 0.024305, SW: 0.050052)
+[poslog] Train Epoch: 4 [281600/1219219 (23%)]	Loss: 0.078366 (Recon: 0.021799, SW: 0.056567)
+[poslog] Train Epoch: 4 [307200/1219219 (25%)]	Loss: 0.072959 (Recon: 0.026180, SW: 0.046778)
+[poslog] Train Epoch: 4 [332800/1219219 (27%)]	Loss: 0.065170 (Recon: 0.020980, SW: 0.044191)
+[poslog] Train Epoch: 4 [358400/1219219 (29%)]	Loss: 0.072023 (Recon: 0.020100, SW: 0.051923)
+[poslog] Train Epoch: 4 [384000/1219219 (31%)]	Loss: 0.117769 (Recon: 0.067192, SW: 0.050577)
+[poslog] Train Epoch: 4 [409600/1219219 (34%)]	Loss: 0.070263 (Recon: 0.019671, SW: 0.050592)
+[poslog] Train Epoch: 4 [435200/1219219 (36%)]	Loss: 0.079995 (Recon: 0.034847, SW: 0.045149)
+[poslog] Train Epoch: 4 [460800/1219219 (38%)]	Loss: 0.069584 (Recon: 0.026297, SW: 0.043287)
+[poslog] Train Epoch: 4 [486400/1219219 (40%)]	Loss: 0.095014 (Recon: 0.040719, SW: 0.054295)
+[poslog] Train Epoch: 4 [512000/1219219 (42%)]	Loss: 0.066856 (Recon: 0.017319, SW: 0.049537)
+[poslog] Train Epoch: 4 [537600/1219219 (44%)]	Loss: 0.078694 (Recon: 0.023566, SW: 0.055128)
+[poslog] Train Epoch: 4 [563200/1219219 (46%)]	Loss: 0.074077 (Recon: 0.019913, SW: 0.054164)
+[poslog] Train Epoch: 4 [588800/1219219 (48%)]	Loss: 0.060837 (Recon: 0.015756, SW: 0.045081)
+[poslog] Train Epoch: 4 [614400/1219219 (50%)]	Loss: 0.072086 (Recon: 0.016838, SW: 0.055248)
+[poslog] Train Epoch: 4 [640000/1219219 (52%)]	Loss: 0.065160 (Recon: 0.020703, SW: 0.044457)
+[poslog] Train Epoch: 4 [665600/1219219 (55%)]	Loss: 0.078491 (Recon: 0.024001, SW: 0.054490)
+[poslog] Train Epoch: 4 [691200/1219219 (57%)]	Loss: 0.076192 (Recon: 0.027806, SW: 0.048387)
+[poslog] Train Epoch: 4 [716800/1219219 (59%)]	Loss: 0.070469 (Recon: 0.025708, SW: 0.044761)
+[poslog] Train Epoch: 4 [742400/1219219 (61%)]	Loss: 0.071142 (Recon: 0.019890, SW: 0.051251)
+[poslog] Train Epoch: 4 [768000/1219219 (63%)]	Loss: 0.062396 (Recon: 0.022247, SW: 0.040149)
+[poslog] Train Epoch: 4 [793600/1219219 (65%)]	Loss: 0.068016 (Recon: 0.019851, SW: 0.048165)
+[poslog] Train Epoch: 4 [819200/1219219 (67%)]	Loss: 0.074351 (Recon: 0.023522, SW: 0.050829)
+[poslog] Train Epoch: 4 [844800/1219219 (69%)]	Loss: 0.067889 (Recon: 0.019912, SW: 0.047977)
+[poslog] Train Epoch: 4 [870400/1219219 (71%)]	Loss: 0.071751 (Recon: 0.019927, SW: 0.051825)
+[poslog] Train Epoch: 4 [896000/1219219 (73%)]	Loss: 0.083434 (Recon: 0.034966, SW: 0.048468)
+[poslog] Train Epoch: 4 [921600/1219219 (76%)]	Loss: 0.071701 (Recon: 0.017468, SW: 0.054234)
+[poslog] Train Epoch: 4 [947200/1219219 (78%)]	Loss: 0.064426 (Recon: 0.019256, SW: 0.045170)
+[poslog] Train Epoch: 4 [972800/1219219 (80%)]	Loss: 0.067028 (Recon: 0.019786, SW: 0.047242)
+[poslog] Train Epoch: 4 [998400/1219219 (82%)]	Loss: 0.067245 (Recon: 0.020246, SW: 0.046999)
+[poslog] Train Epoch: 4 [1024000/1219219 (84%)]	Loss: 0.081952 (Recon: 0.029744, SW: 0.052208)
+[poslog] Train Epoch: 4 [1049600/1219219 (86%)]	Loss: 0.084463 (Recon: 0.027837, SW: 0.056626)
+[poslog] Train Epoch: 4 [1075200/1219219 (88%)]	Loss: 0.058332 (Recon: 0.018594, SW: 0.039738)
+[poslog] Train Epoch: 4 [1100800/1219219 (90%)]	Loss: 0.064385 (Recon: 0.017998, SW: 0.046387)
+[poslog] Train Epoch: 4 [1126400/1219219 (92%)]	Loss: 0.061003 (Recon: 0.017181, SW: 0.043823)
+[poslog] Train Epoch: 4 [1152000/1219219 (94%)]	Loss: 0.057289 (Recon: 0.019159, SW: 0.038131)
+[poslog] Train Epoch: 4 [1177600/1219219 (97%)]	Loss: 0.077530 (Recon: 0.018547, SW: 0.058983)
+[poslog] Train Epoch: 4 [1203200/1219219 (99%)]	Loss: 0.078835 (Recon: 0.020872, SW: 0.057963)
+[asinh] Train Epoch: 4 [0/406406 (0%)]	Loss: 0.276818 (Recon: 0.034949, SW: 0.241869)
+[asinh] Train Epoch: 4 [25600/406406 (6%)]	Loss: 0.188943 (Recon: 0.007443, SW: 0.181500)
+[asinh] Train Epoch: 4 [51200/406406 (13%)]	Loss: 0.165939 (Recon: 0.002099, SW: 0.163839)
+[asinh] Train Epoch: 4 [76800/406406 (19%)]	Loss: 0.176255 (Recon: 0.003741, SW: 0.172514)
+[asinh] Train Epoch: 4 [102400/406406 (25%)]	Loss: 0.225682 (Recon: 0.004925, SW: 0.220758)
+[asinh] Train Epoch: 4 [128000/406406 (31%)]	Loss: 0.179135 (Recon: 0.007025, SW: 0.172110)
+[asinh] Train Epoch: 4 [153600/406406 (38%)]	Loss: 0.184687 (Recon: 0.002965, SW: 0.181722)
+[asinh] Train Epoch: 4 [179200/406406 (44%)]	Loss: 0.186314 (Recon: 0.007333, SW: 0.178982)
+[asinh] Train Epoch: 4 [204800/406406 (50%)]	Loss: 0.239401 (Recon: 0.001734, SW: 0.237667)
+[asinh] Train Epoch: 4 [230400/406406 (57%)]	Loss: 0.229414 (Recon: 0.019820, SW: 0.209595)
+[asinh] Train Epoch: 4 [256000/406406 (63%)]	Loss: 0.200218 (Recon: 0.011080, SW: 0.189138)
+[asinh] Train Epoch: 4 [281600/406406 (69%)]	Loss: 0.227048 (Recon: 0.003256, SW: 0.223793)
+[asinh] Train Epoch: 4 [307200/406406 (76%)]	Loss: 0.218562 (Recon: 0.016548, SW: 0.202013)
+[asinh] Train Epoch: 4 [332800/406406 (82%)]	Loss: 0.174973 (Recon: 0.002457, SW: 0.172516)
+[asinh] Train Epoch: 4 [358400/406406 (88%)]	Loss: 0.172167 (Recon: 0.002805, SW: 0.169362)
+[asinh] Train Epoch: 4 [384000/406406 (94%)]	Loss: 0.171696 (Recon: 0.003720, SW: 0.167976)
+[poslog] Validation Epoch: 4	Loss: 0.068412 (Recon: 0.019257, SW: 0.049155)
+[asinh] Validation Epoch: 4	Loss: 0.187891 (Recon: 0.005808, SW: 0.182083)
+
+Epoch 4 completed in 38.0s
+
+Model Performance Summary:
+  [poslog] Train Loss: 0.075043, Val Loss: 0.068412
+  [poslog] Early stopping counter: 0/40
+  [asinh] Train Loss: 0.195887, Val Loss: 0.187891
+  [asinh] Early stopping counter: 0/40
+[poslog] New best model saved (val_loss: 0.068412)
+[asinh] New best model saved (val_loss: 0.187891)
+
+================================================================================
+EPOCH 5/1000
+================================================================================
+[poslog] Train Epoch: 5 [0/1219219 (0%)]	Loss: 0.058894 (Recon: 0.015831, SW: 0.043063)
+[poslog] Train Epoch: 5 [25600/1219219 (2%)]	Loss: 0.063495 (Recon: 0.016570, SW: 0.046925)
+[poslog] Train Epoch: 5 [51200/1219219 (4%)]	Loss: 0.060826 (Recon: 0.015680, SW: 0.045145)
+[poslog] Train Epoch: 5 [76800/1219219 (6%)]	Loss: 0.063413 (Recon: 0.019895, SW: 0.043518)
+[poslog] Train Epoch: 5 [102400/1219219 (8%)]	Loss: 0.062031 (Recon: 0.016137, SW: 0.045894)
+[poslog] Train Epoch: 5 [128000/1219219 (10%)]	Loss: 0.059796 (Recon: 0.011480, SW: 0.048316)
+[poslog] Train Epoch: 5 [153600/1219219 (13%)]	Loss: 0.073302 (Recon: 0.024566, SW: 0.048736)
+[poslog] Train Epoch: 5 [179200/1219219 (15%)]	Loss: 0.068290 (Recon: 0.024717, SW: 0.043573)
+[poslog] Train Epoch: 5 [204800/1219219 (17%)]	Loss: 0.066987 (Recon: 0.021785, SW: 0.045202)
+[poslog] Train Epoch: 5 [230400/1219219 (19%)]	Loss: 0.084335 (Recon: 0.020656, SW: 0.063679)
+[poslog] Train Epoch: 5 [256000/1219219 (21%)]	Loss: 0.059322 (Recon: 0.010446, SW: 0.048876)
+[poslog] Train Epoch: 5 [281600/1219219 (23%)]	Loss: 0.066398 (Recon: 0.015139, SW: 0.051259)
+[poslog] Train Epoch: 5 [307200/1219219 (25%)]	Loss: 0.057989 (Recon: 0.019826, SW: 0.038163)
+[poslog] Train Epoch: 5 [332800/1219219 (27%)]	Loss: 0.068494 (Recon: 0.012857, SW: 0.055637)
+[poslog] Train Epoch: 5 [358400/1219219 (29%)]	Loss: 0.077460 (Recon: 0.013915, SW: 0.063545)
+[poslog] Train Epoch: 5 [384000/1219219 (31%)]	Loss: 0.073946 (Recon: 0.032416, SW: 0.041531)
+[poslog] Train Epoch: 5 [409600/1219219 (34%)]	Loss: 0.067797 (Recon: 0.018014, SW: 0.049783)
+[poslog] Train Epoch: 5 [435200/1219219 (36%)]	Loss: 0.070621 (Recon: 0.018633, SW: 0.051988)
+[poslog] Train Epoch: 5 [460800/1219219 (38%)]	Loss: 0.070077 (Recon: 0.019612, SW: 0.050465)
+[poslog] Train Epoch: 5 [486400/1219219 (40%)]	Loss: 0.062164 (Recon: 0.013150, SW: 0.049015)
+[poslog] Train Epoch: 5 [512000/1219219 (42%)]	Loss: 0.074929 (Recon: 0.023619, SW: 0.051310)
+[poslog] Train Epoch: 5 [537600/1219219 (44%)]	Loss: 0.067545 (Recon: 0.018915, SW: 0.048630)
+[poslog] Train Epoch: 5 [563200/1219219 (46%)]	Loss: 0.056008 (Recon: 0.012507, SW: 0.043501)
+[poslog] Train Epoch: 5 [588800/1219219 (48%)]	Loss: 0.067672 (Recon: 0.016632, SW: 0.051039)
+[poslog] Train Epoch: 5 [614400/1219219 (50%)]	Loss: 0.087145 (Recon: 0.026625, SW: 0.060520)
+[poslog] Train Epoch: 5 [640000/1219219 (52%)]	Loss: 0.067130 (Recon: 0.021790, SW: 0.045340)
+[poslog] Train Epoch: 5 [665600/1219219 (55%)]	Loss: 0.059966 (Recon: 0.019674, SW: 0.040292)
+[poslog] Train Epoch: 5 [691200/1219219 (57%)]	Loss: 0.062324 (Recon: 0.011396, SW: 0.050928)
+[poslog] Train Epoch: 5 [716800/1219219 (59%)]	Loss: 0.061168 (Recon: 0.015590, SW: 0.045578)
+[poslog] Train Epoch: 5 [742400/1219219 (61%)]	Loss: 0.053120 (Recon: 0.017761, SW: 0.035359)
+[poslog] Train Epoch: 5 [768000/1219219 (63%)]	Loss: 0.062796 (Recon: 0.018789, SW: 0.044007)
+[poslog] Train Epoch: 5 [793600/1219219 (65%)]	Loss: 0.074911 (Recon: 0.033262, SW: 0.041649)
+[poslog] Train Epoch: 5 [819200/1219219 (67%)]	Loss: 0.063131 (Recon: 0.019181, SW: 0.043950)
+[poslog] Train Epoch: 5 [844800/1219219 (69%)]	Loss: 0.053251 (Recon: 0.012231, SW: 0.041020)
+[poslog] Train Epoch: 5 [870400/1219219 (71%)]	Loss: 0.070599 (Recon: 0.028043, SW: 0.042556)
+[poslog] Train Epoch: 5 [896000/1219219 (73%)]	Loss: 0.059424 (Recon: 0.012844, SW: 0.046580)
+[poslog] Train Epoch: 5 [921600/1219219 (76%)]	Loss: 0.072550 (Recon: 0.021223, SW: 0.051327)
+[poslog] Train Epoch: 5 [947200/1219219 (78%)]	Loss: 0.068031 (Recon: 0.022707, SW: 0.045324)
+[poslog] Train Epoch: 5 [972800/1219219 (80%)]	Loss: 0.063444 (Recon: 0.015685, SW: 0.047759)
+[poslog] Train Epoch: 5 [998400/1219219 (82%)]	Loss: 0.058958 (Recon: 0.014572, SW: 0.044386)
+[poslog] Train Epoch: 5 [1024000/1219219 (84%)]	Loss: 0.060222 (Recon: 0.010110, SW: 0.050113)
+[poslog] Train Epoch: 5 [1049600/1219219 (86%)]	Loss: 0.074663 (Recon: 0.014995, SW: 0.059668)
+[poslog] Train Epoch: 5 [1075200/1219219 (88%)]	Loss: 0.058631 (Recon: 0.019360, SW: 0.039272)
+[poslog] Train Epoch: 5 [1100800/1219219 (90%)]	Loss: 0.059665 (Recon: 0.019221, SW: 0.040444)
+[poslog] Train Epoch: 5 [1126400/1219219 (92%)]	Loss: 0.080114 (Recon: 0.024418, SW: 0.055696)
+[poslog] Train Epoch: 5 [1152000/1219219 (94%)]	Loss: 0.075827 (Recon: 0.011265, SW: 0.064563)
+[poslog] Train Epoch: 5 [1177600/1219219 (97%)]	Loss: 0.053210 (Recon: 0.010827, SW: 0.042382)
+[poslog] Train Epoch: 5 [1203200/1219219 (99%)]	Loss: 0.066152 (Recon: 0.015446, SW: 0.050707)
+[asinh] Train Epoch: 5 [0/406406 (0%)]	Loss: 0.184674 (Recon: 0.003270, SW: 0.181404)
+[asinh] Train Epoch: 5 [25600/406406 (6%)]	Loss: 0.174307 (Recon: 0.004042, SW: 0.170265)
+[asinh] Train Epoch: 5 [51200/406406 (13%)]	Loss: 0.227406 (Recon: 0.024245, SW: 0.203161)
+[asinh] Train Epoch: 5 [76800/406406 (19%)]	Loss: 0.193150 (Recon: 0.004090, SW: 0.189060)
+[asinh] Train Epoch: 5 [102400/406406 (25%)]	Loss: 0.218969 (Recon: 0.003542, SW: 0.215427)
+[asinh] Train Epoch: 5 [128000/406406 (31%)]	Loss: 0.195283 (Recon: 0.004910, SW: 0.190373)
+[asinh] Train Epoch: 5 [153600/406406 (38%)]	Loss: 0.182372 (Recon: 0.005716, SW: 0.176655)
+[asinh] Train Epoch: 5 [179200/406406 (44%)]	Loss: 0.180236 (Recon: 0.003212, SW: 0.177024)
+[asinh] Train Epoch: 5 [204800/406406 (50%)]	Loss: 0.175202 (Recon: 0.014329, SW: 0.160872)
+[asinh] Train Epoch: 5 [230400/406406 (57%)]	Loss: 0.171950 (Recon: 0.022306, SW: 0.149644)
+[asinh] Train Epoch: 5 [256000/406406 (63%)]	Loss: 0.169243 (Recon: 0.003339, SW: 0.165904)
+[asinh] Train Epoch: 5 [281600/406406 (69%)]	Loss: 0.216683 (Recon: 0.001822, SW: 0.214861)
+[asinh] Train Epoch: 5 [307200/406406 (76%)]	Loss: 0.193834 (Recon: 0.004890, SW: 0.188944)
+[asinh] Train Epoch: 5 [332800/406406 (82%)]	Loss: 0.155452 (Recon: 0.004079, SW: 0.151373)
+[asinh] Train Epoch: 5 [358400/406406 (88%)]	Loss: 0.192564 (Recon: 0.003035, SW: 0.189529)
+[asinh] Train Epoch: 5 [384000/406406 (94%)]	Loss: 0.205767 (Recon: 0.014874, SW: 0.190893)
+[poslog] Validation Epoch: 5	Loss: 0.060348 (Recon: 0.015328, SW: 0.045021)
+[asinh] Validation Epoch: 5	Loss: 0.170477 (Recon: 0.004867, SW: 0.165609)
+
+Epoch 5 completed in 37.0s
+
+Model Performance Summary:
+  [poslog] Train Loss: 0.065914, Val Loss: 0.060348
+  [poslog] Early stopping counter: 0/40
+  [asinh] Train Loss: 0.182785, Val Loss: 0.170477
+  [asinh] Early stopping counter: 0/40
+[poslog] New best model saved (val_loss: 0.060348)
+[asinh] New best model saved (val_loss: 0.170477)
+
+[poslog] Reconstruction Quality (10 samples):
+Average PSNR: inf dB
+Average MSE: 0.000001
+
+Per-Variable Metrics:
+  unknown: PSNR=inf dB, MSE=0.000001
+
+Training completed!
+Models saved in: ./save/swae_dual_transform/
+  - poslog model: ./save/swae_dual_transform/poslog/
+  - asinh model: ./save/swae_dual_transform/asinh/

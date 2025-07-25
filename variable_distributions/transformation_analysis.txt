@@ -1,0 +1,75 @@
+TRANSFORMATION EFFECTIVENESS ANALYSIS
+================================================================================
+
+
+U_B2:
+----
+Transform                       Orig Skew   New Skew  Orig Kurt   New Kurt   Range Comp
+----------------------------------------------------------------------------------
+Poslog (Current)                  -10.619    -32.151    143.303   3085.676      236.870
+Asinh (scale=0.001)               -10.619     -2.254    143.303     12.415      105.730
+Standardization                   -10.619    -10.619    143.303    143.303      352.949
+Robust Scaling                    -10.619    -10.619    143.303    143.303     2703.602
+Asinh (scale=0.01)                -10.619     -7.088    143.303     63.488       44.508
+
+Best for reducing skewness: Asinh (scale=0.001)
+
+U_SYMAT2:
+--------
+Transform                       Orig Skew   New Skew  Orig Kurt   New Kurt   Range Comp
+----------------------------------------------------------------------------------
+Poslog (Current)                    0.000    -36.180    104.067   8306.938        7.967
+Symmetric Log (c=0.1)               0.000      0.000    104.067     23.577        0.212
+Standardization                     0.000      0.000    104.067    104.067       17.707
+Robust Scaling                      0.000      0.000    104.067    104.067      396.589
+Asinh (scale=1.0)                   0.000      0.000    104.067     88.257        0.845
+
+Best for reducing skewness: Symmetric Log (c=0.1)
+
+U_GT2:
+-----
+Transform                       Orig Skew   New Skew  Orig Kurt   New Kurt   Range Comp
+----------------------------------------------------------------------------------
+Poslog (Current)                    2.450      0.022      7.563     -1.453      135.203
+Asinh (scale=0.01)                  2.450      0.829      7.563     -0.309       26.935
+Standardization                     2.450      2.450      7.563      7.563       56.866
+Robust Scaling                      2.450      2.450      7.563      7.563       57.979
+Asinh (scale=0.1)                   2.450      2.174      7.563      5.595        8.477
+
+Best for reducing skewness: Poslog (Current)
+
+U_SYMGT2:
+--------
+Transform                       Orig Skew   New Skew  Orig Kurt   New Kurt   Range Comp
+----------------------------------------------------------------------------------
+Poslog (Current)                    0.000     -3.606      6.856    204.532       96.920
+Symmetric Log (c=0.01)              0.000      0.000      6.856      1.538        0.263
+Standardization                     0.000      0.000      6.856      6.856       99.870
+Robust Scaling                      0.000      0.000      6.856      6.856      256.774
+Asinh (scale=0.1)                   0.000      0.000      6.856      6.305        9.057
+
+Best for reducing skewness: Robust Scaling
+
+U_SYMAT4:
+--------
+Transform                       Orig Skew   New Skew  Orig Kurt   New Kurt   Range Comp
+----------------------------------------------------------------------------------
+Poslog (Current)                   -0.000    -35.804    104.951   7997.360        7.227
+Symmetric Log (c=0.1)              -0.000     -0.000    104.951     21.909        0.199
+Standardization                    -0.000     -0.000    104.951    104.951       15.868
+Robust Scaling                     -0.000     -0.000    104.951    104.951      181.889
+Asinh (scale=1.0)                  -0.000     -0.000    104.951     86.208        0.822
+
+Best for reducing skewness: Asinh (scale=1.0)
+
+U_SYMAT3:
+--------
+Transform                       Orig Skew   New Skew  Orig Kurt   New Kurt   Range Comp
+----------------------------------------------------------------------------------
+Poslog (Current)                   -1.984     -6.982      8.632    377.230        7.518
+Asinh (scale=0.1)                  -1.984     -0.524      8.632      1.037        2.489
+Standardization                    -1.984     -1.984      8.632      8.632        5.223
+Robust Scaling                     -1.984     -1.984      8.632      8.632       13.949
+Asinh (scale=1.0)                  -1.984     -1.683      8.632      6.514        0.815
+
+Best for reducing skewness: Asinh (scale=0.1)

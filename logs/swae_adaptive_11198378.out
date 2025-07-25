@@ -1,0 +1,1788 @@
+Wed Jul 23 14:03:33 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A40                     On  |   00000000:C7:00.0 Off |                    0 |
+|  0%   29C    P0             57W /  300W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Starting SWAE Training with Adaptive Scaling
+===========================================
+Job ID: 11198378
+Node: gpub047
+
+This approach scales each variable to a learnable range [-10, 10]
+regardless of their original scale (including 10^-8 values)
+
+Warning: TensorBoard not available. Logging disabled.
+Using device: cuda
+Creating datasets with adaptive scaling...
+Loading from 38 files...
+
+Calculating scaling parameters for each variable...
+  U_ALPHA: type=percentile, scale=1.00e+01, magnitude=6.92e-01, range=[9.49e-03, 9.98e-01]
+  U_CHI: type=percentile, scale=1.01e+01, magnitude=6.16e-01, range=[1.00e-04, 9.96e-01]
+  U_K: type=percentile, scale=6.37e+01, magnitude=9.05e-03, range=[-1.02e-02, 7.87e-01]
+  U_GT0: type=percentile, scale=1.58e+01, magnitude=7.41e-02, range=[-8.18e-01, 8.18e-01]
+  U_GT1: type=percentile, scale=2.74e+01, magnitude=7.26e-02, range=[-7.30e-01, 7.30e-01]
+  U_GT2: type=percentile, scale=1.99e+02, magnitude=9.01e-03, range=[-1.24e-03, 1.30e-01]
+  U_BETA0: type=percentile, scale=4.31e+01, magnitude=2.59e-02, range=[-3.05e-01, 3.05e-01]
+  U_BETA1: type=percentile, scale=7.47e+01, magnitude=2.66e-02, range=[-2.70e-01, 2.70e-01]
+  U_BETA2: type=percentile, scale=5.27e+02, magnitude=3.26e-03, range=[-4.61e-04, 8.39e-02]
+  U_B0: type=percentile, scale=4.11e+02, magnitude=3.29e-03, range=[-1.12e-01, 1.12e-01]
+  U_B1: type=percentile, scale=4.53e+02, magnitude=2.99e-03, range=[-1.14e-01, 1.14e-01]
+  U_B2: type=percentile, scale=3.79e+03, magnitude=2.27e-04, range=[-1.04e-01, 7.68e-03]
+  U_SYMGT0: type=percentile, scale=8.70e+00, magnitude=9.97e-01, range=[7.75e-01, 1.26e+00]
+  U_SYMGT1: type=percentile, scale=5.25e+01, magnitude=4.86e-02, range=[-2.22e-01, 2.41e-01]
+  U_SYMGT2: type=percentile, scale=4.47e+02, magnitude=3.29e-03, range=[-8.59e-02, 8.59e-02]
+  U_SYMGT3: type=percentile, scale=7.79e+00, magnitude=1.08e+00, range=[9.01e-01, 1.42e+00]
+  U_SYMGT4: type=percentile, scale=6.45e+02, magnitude=3.95e-03, range=[-4.59e-02, 4.59e-02]
+  U_SYMGT5: type=percentile, scale=1.00e+01, magnitude=9.74e-01, range=[8.58e-01, 1.02e+00]
+  U_SYMAT0: type=percentile, scale=2.45e+01, magnitude=1.90e-02, range=[-1.48e+00, 8.49e-01]
+  U_SYMAT1: type=percentile, scale=2.54e+01, magnitude=2.69e-02, range=[-1.18e+00, 1.19e+00]
+  U_SYMAT2: type=percentile, scale=1.37e+02, magnitude=1.91e-03, range=[-1.32e+00, 1.32e+00]
+  U_SYMAT3: type=percentile, scale=2.09e+01, magnitude=3.04e-02, range=[-1.66e+00, 9.15e-01]
+  U_SYMAT4: type=percentile, scale=1.25e+02, magnitude=3.12e-03, range=[-1.35e+00, 1.35e+00]
+  U_SYMAT5: type=percentile, scale=3.07e+01, magnitude=2.94e-02, range=[-1.72e+00, 6.98e-01]
+
+Applying adaptive scaling...
+
+Scaled data statistics:
+  Overall range: [-394.79, 181.00]
+  Overall mean: 1.99
+  Overall std: 5.96
+Adaptive Scaling Dataset initialized:
+  Split: train
+  Data shape: (429427, 1, 5, 5, 5)
+  Variables: 24
+  Target range: [-10.0, 10.0]
+Loading from 38 files...
+
+Calculating scaling parameters for each variable...
+  U_ALPHA: type=percentile, scale=1.00e+01, magnitude=6.92e-01, range=[9.49e-03, 9.98e-01]
+  U_CHI: type=percentile, scale=1.01e+01, magnitude=6.16e-01, range=[1.00e-04, 9.96e-01]
+  U_K: type=percentile, scale=6.37e+01, magnitude=9.05e-03, range=[-1.02e-02, 7.87e-01]
+  U_GT0: type=percentile, scale=1.58e+01, magnitude=7.41e-02, range=[-8.18e-01, 8.18e-01]
+  U_GT1: type=percentile, scale=2.74e+01, magnitude=7.26e-02, range=[-7.30e-01, 7.30e-01]
+  U_GT2: type=percentile, scale=1.99e+02, magnitude=9.01e-03, range=[-1.24e-03, 1.30e-01]
+  U_BETA0: type=percentile, scale=4.31e+01, magnitude=2.59e-02, range=[-3.05e-01, 3.05e-01]
+  U_BETA1: type=percentile, scale=7.47e+01, magnitude=2.66e-02, range=[-2.70e-01, 2.70e-01]
+  U_BETA2: type=percentile, scale=5.27e+02, magnitude=3.26e-03, range=[-4.61e-04, 8.39e-02]
+  U_B0: type=percentile, scale=4.11e+02, magnitude=3.29e-03, range=[-1.12e-01, 1.12e-01]
+  U_B1: type=percentile, scale=4.53e+02, magnitude=2.99e-03, range=[-1.14e-01, 1.14e-01]
+  U_B2: type=percentile, scale=3.79e+03, magnitude=2.27e-04, range=[-1.04e-01, 7.68e-03]
+  U_SYMGT0: type=percentile, scale=8.70e+00, magnitude=9.97e-01, range=[7.75e-01, 1.26e+00]
+  U_SYMGT1: type=percentile, scale=5.25e+01, magnitude=4.86e-02, range=[-2.22e-01, 2.41e-01]
+  U_SYMGT2: type=percentile, scale=4.47e+02, magnitude=3.29e-03, range=[-8.59e-02, 8.59e-02]
+  U_SYMGT3: type=percentile, scale=7.79e+00, magnitude=1.08e+00, range=[9.01e-01, 1.42e+00]
+  U_SYMGT4: type=percentile, scale=6.45e+02, magnitude=3.95e-03, range=[-4.59e-02, 4.59e-02]
+  U_SYMGT5: type=percentile, scale=1.00e+01, magnitude=9.74e-01, range=[8.58e-01, 1.02e+00]
+  U_SYMAT0: type=percentile, scale=2.45e+01, magnitude=1.90e-02, range=[-1.48e+00, 8.49e-01]
+  U_SYMAT1: type=percentile, scale=2.54e+01, magnitude=2.69e-02, range=[-1.18e+00, 1.19e+00]
+  U_SYMAT2: type=percentile, scale=1.37e+02, magnitude=1.91e-03, range=[-1.32e+00, 1.32e+00]
+  U_SYMAT3: type=percentile, scale=2.09e+01, magnitude=3.04e-02, range=[-1.66e+00, 9.15e-01]
+  U_SYMAT4: type=percentile, scale=1.25e+02, magnitude=3.12e-03, range=[-1.35e+00, 1.35e+00]
+  U_SYMAT5: type=percentile, scale=3.07e+01, magnitude=2.94e-02, range=[-1.72e+00, 6.98e-01]
+
+Applying adaptive scaling...
+
+Scaled data statistics:
+  Overall range: [-394.79, 181.00]
+  Overall mean: 1.99
+  Overall std: 5.96
+Adaptive Scaling Dataset initialized:
+  Split: val
+  Data shape: (80517, 1, 5, 5, 5)
+  Variables: 24
+  Target range: [-10.0, 10.0]
+Loading from 38 files...
+
+Calculating scaling parameters for each variable...
+  U_ALPHA: type=percentile, scale=1.00e+01, magnitude=6.92e-01, range=[9.49e-03, 9.98e-01]
+  U_CHI: type=percentile, scale=1.01e+01, magnitude=6.16e-01, range=[1.00e-04, 9.96e-01]
+  U_K: type=percentile, scale=6.37e+01, magnitude=9.05e-03, range=[-1.02e-02, 7.87e-01]
+  U_GT0: type=percentile, scale=1.58e+01, magnitude=7.41e-02, range=[-8.18e-01, 8.18e-01]
+  U_GT1: type=percentile, scale=2.74e+01, magnitude=7.26e-02, range=[-7.30e-01, 7.30e-01]
+  U_GT2: type=percentile, scale=1.99e+02, magnitude=9.01e-03, range=[-1.24e-03, 1.30e-01]
+  U_BETA0: type=percentile, scale=4.31e+01, magnitude=2.59e-02, range=[-3.05e-01, 3.05e-01]
+  U_BETA1: type=percentile, scale=7.47e+01, magnitude=2.66e-02, range=[-2.70e-01, 2.70e-01]
+  U_BETA2: type=percentile, scale=5.27e+02, magnitude=3.26e-03, range=[-4.61e-04, 8.39e-02]
+  U_B0: type=percentile, scale=4.11e+02, magnitude=3.29e-03, range=[-1.12e-01, 1.12e-01]
+  U_B1: type=percentile, scale=4.53e+02, magnitude=2.99e-03, range=[-1.14e-01, 1.14e-01]
+  U_B2: type=percentile, scale=3.79e+03, magnitude=2.27e-04, range=[-1.04e-01, 7.68e-03]
+  U_SYMGT0: type=percentile, scale=8.70e+00, magnitude=9.97e-01, range=[7.75e-01, 1.26e+00]
+  U_SYMGT1: type=percentile, scale=5.25e+01, magnitude=4.86e-02, range=[-2.22e-01, 2.41e-01]
+  U_SYMGT2: type=percentile, scale=4.47e+02, magnitude=3.29e-03, range=[-8.59e-02, 8.59e-02]
+  U_SYMGT3: type=percentile, scale=7.79e+00, magnitude=1.08e+00, range=[9.01e-01, 1.42e+00]
+  U_SYMGT4: type=percentile, scale=6.45e+02, magnitude=3.95e-03, range=[-4.59e-02, 4.59e-02]
+  U_SYMGT5: type=percentile, scale=1.00e+01, magnitude=9.74e-01, range=[8.58e-01, 1.02e+00]
+  U_SYMAT0: type=percentile, scale=2.45e+01, magnitude=1.90e-02, range=[-1.48e+00, 8.49e-01]
+  U_SYMAT1: type=percentile, scale=2.54e+01, magnitude=2.69e-02, range=[-1.18e+00, 1.19e+00]
+  U_SYMAT2: type=percentile, scale=1.37e+02, magnitude=1.91e-03, range=[-1.32e+00, 1.32e+00]
+  U_SYMAT3: type=percentile, scale=2.09e+01, magnitude=3.04e-02, range=[-1.66e+00, 9.15e-01]
+  U_SYMAT4: type=percentile, scale=1.25e+02, magnitude=3.12e-03, range=[-1.35e+00, 1.35e+00]
+  U_SYMAT5: type=percentile, scale=3.07e+01, magnitude=2.94e-02, range=[-1.72e+00, 6.98e-01]
+
+Applying adaptive scaling...
+
+Scaled data statistics:
+  Overall range: [-394.79, 181.00]
+  Overall mean: 1.99
+  Overall std: 5.96
+Adaptive Scaling Dataset initialized:
+  Split: test
+  Data shape: (26840, 1, 5, 5, 5)
+  Variables: 24
+  Target range: [-10.0, 10.0]
+
+Dataset sizes:
+  Train: 429427
+  Val: 80517
+  Test: 26840
+
+Model created: 145,549 parameters
+
+Starting training for 200 epochs...
+
+Epoch 1/200:
+  Train - Loss: 2.535046, Recon: 1.445147, SW: 1.089899
+  Val   - Loss: 0.816912, Recon: 0.224246, SW: 0.592665
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 2/200:
+  Train - Loss: 0.703993, Recon: 0.207997, SW: 0.495996
+  Val   - Loss: 0.668548, Recon: 0.202802, SW: 0.465746
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 3/200:
+  Train - Loss: 0.583999, Recon: 0.157412, SW: 0.426586
+  Val   - Loss: 0.608824, Recon: 0.182707, SW: 0.426118
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 4/200:
+  Train - Loss: 0.535161, Recon: 0.136136, SW: 0.399024
+  Val   - Loss: 0.540232, Recon: 0.134188, SW: 0.406044
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 5/200:
+  Train - Loss: 0.491581, Recon: 0.116350, SW: 0.375231
+  Val   - Loss: 0.516374, Recon: 0.134115, SW: 0.382259
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 6/200:
+  Train - Loss: 0.457821, Recon: 0.104286, SW: 0.353535
+  Val   - Loss: 0.456903, Recon: 0.107642, SW: 0.349261
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 7/200:
+  Train - Loss: 0.417465, Recon: 0.094244, SW: 0.323220
+  Val   - Loss: 0.446117, Recon: 0.113686, SW: 0.332431
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 8/200:
+  Train - Loss: 0.396240, Recon: 0.094387, SW: 0.301853
+  Val   - Loss: 0.389111, Recon: 0.085048, SW: 0.304063
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 9/200:
+  Train - Loss: 0.378514, Recon: 0.086929, SW: 0.291585
+  Val   - Loss: 0.493049, Recon: 0.193328, SW: 0.299721
+  LR: 0.000200
+
+Epoch 10/200:
+  Train - Loss: 0.369855, Recon: 0.089253, SW: 0.280602
+  Val   - Loss: 0.358186, Recon: 0.075144, SW: 0.283042
+  LR: 0.000200
+  ✓ New best model saved!
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 5.930233e-05
+  U_B0: 6.008514e-08
+  U_B1: 2.162547e-07
+  U_B2: 6.439359e-12
+  U_BETA0: 5.603006e-07
+  U_BETA1: 5.316207e-07
+  U_BETA2: 1.603861e-07
+  U_CHI: 5.641819e-05
+  U_GT0: 3.011664e-05
+  U_GT1: 4.535988e-06
+  U_GT2: 1.578393e-06
+  U_K: 1.022698e-08
+  U_SYMAT0: 1.278812e-06
+  U_SYMAT1: 8.075584e-06
+  U_SYMAT2: 5.496609e-08
+  U_SYMAT3: 2.207236e-06
+  U_SYMAT4: 3.917494e-07
+  U_SYMAT5: 3.403034e-06
+  U_SYMGT0: 7.378752e-05
+  U_SYMGT1: 1.086596e-05
+  U_SYMGT2: 1.268654e-07
+  U_SYMGT3: 1.442457e-04
+  U_SYMGT4: 5.138150e-08
+  U_SYMGT5: 1.137886e-04
+Average MSE (original scale): 2.676357e-05
+
+Epoch 11/200:
+  Train - Loss: 0.354636, Recon: 0.077126, SW: 0.277510
+  Val   - Loss: 0.410500, Recon: 0.106353, SW: 0.304147
+  LR: 0.000200
+
+Epoch 12/200:
+  Train - Loss: 0.352243, Recon: 0.077118, SW: 0.275126
+  Val   - Loss: 0.358800, Recon: 0.083461, SW: 0.275339
+  LR: 0.000200
+
+Epoch 13/200:
+  Train - Loss: 0.344721, Recon: 0.074686, SW: 0.270035
+  Val   - Loss: 0.358673, Recon: 0.074552, SW: 0.284121
+  LR: 0.000200
+
+Epoch 14/200:
+  Train - Loss: 0.333466, Recon: 0.071018, SW: 0.262449
+  Val   - Loss: 0.390562, Recon: 0.117741, SW: 0.272821
+  LR: 0.000200
+
+Epoch 15/200:
+  Train - Loss: 0.328690, Recon: 0.071475, SW: 0.257216
+  Val   - Loss: 0.366971, Recon: 0.102844, SW: 0.264127
+  LR: 0.000200
+
+Epoch 16/200:
+  Train - Loss: 0.328412, Recon: 0.072980, SW: 0.255432
+  Val   - Loss: 0.329970, Recon: 0.064309, SW: 0.265660
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 17/200:
+  Train - Loss: 0.327150, Recon: 0.078214, SW: 0.248936
+  Val   - Loss: 0.330926, Recon: 0.057563, SW: 0.273363
+  LR: 0.000200
+
+Epoch 18/200:
+  Train - Loss: 0.310904, Recon: 0.068162, SW: 0.242742
+  Val   - Loss: 0.326378, Recon: 0.060939, SW: 0.265439
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 19/200:
+  Train - Loss: 0.312034, Recon: 0.075737, SW: 0.236297
+  Val   - Loss: 0.399750, Recon: 0.123569, SW: 0.276181
+  LR: 0.000200
+
+Epoch 20/200:
+  Train - Loss: 0.308229, Recon: 0.075787, SW: 0.232442
+  Val   - Loss: 0.294598, Recon: 0.062581, SW: 0.232017
+  LR: 0.000200
+  ✓ New best model saved!
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 1.264470e-04
+  U_B0: 5.006991e-08
+  U_B1: 1.367838e-07
+  U_B2: 2.553064e-11
+  U_BETA0: 6.962496e-07
+  U_BETA1: 7.162914e-07
+  U_BETA2: 2.599912e-08
+  U_CHI: 1.108979e-04
+  U_GT0: 4.041297e-05
+  U_GT1: 7.953773e-06
+  U_GT2: 3.384984e-07
+  U_K: 6.942917e-08
+  U_SYMAT0: 4.036699e-06
+  U_SYMAT1: 1.242851e-05
+  U_SYMAT2: 4.060804e-08
+  U_SYMAT3: 1.867150e-06
+  U_SYMAT4: 1.793950e-07
+  U_SYMAT5: 2.968705e-06
+  U_SYMGT0: 1.660637e-04
+  U_SYMGT1: 7.752945e-06
+  U_SYMGT2: 2.824476e-08
+  U_SYMGT3: 3.150179e-04
+  U_SYMGT4: 4.828230e-08
+  U_SYMGT5: 2.517774e-04
+Average MSE (original scale): 5.524834e-05
+
+Epoch 21/200:
+  Train - Loss: 0.295531, Recon: 0.071170, SW: 0.224361
+  Val   - Loss: 0.367186, Recon: 0.128634, SW: 0.238552
+  LR: 0.000200
+
+Epoch 22/200:
+  Train - Loss: 0.294015, Recon: 0.072062, SW: 0.221954
+  Val   - Loss: 0.444711, Recon: 0.194015, SW: 0.250696
+  LR: 0.000200
+
+Epoch 23/200:
+  Train - Loss: 0.278740, Recon: 0.064723, SW: 0.214017
+  Val   - Loss: 0.283331, Recon: 0.056577, SW: 0.226754
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 24/200:
+  Train - Loss: 0.278731, Recon: 0.071711, SW: 0.207020
+  Val   - Loss: 0.337177, Recon: 0.111555, SW: 0.225621
+  LR: 0.000200
+
+Epoch 25/200:
+  Train - Loss: 0.272979, Recon: 0.068001, SW: 0.204978
+  Val   - Loss: 0.324003, Recon: 0.112198, SW: 0.211805
+  LR: 0.000200
+
+Epoch 26/200:
+  Train - Loss: 0.264090, Recon: 0.063736, SW: 0.200354
+  Val   - Loss: 0.317300, Recon: 0.066605, SW: 0.250695
+  LR: 0.000200
+
+Epoch 27/200:
+  Train - Loss: 0.255985, Recon: 0.061035, SW: 0.194950
+  Val   - Loss: 0.257702, Recon: 0.056800, SW: 0.200902
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 28/200:
+  Train - Loss: 0.256014, Recon: 0.060536, SW: 0.195479
+  Val   - Loss: 0.258842, Recon: 0.055904, SW: 0.202938
+  LR: 0.000200
+
+Epoch 29/200:
+  Train - Loss: 0.255411, Recon: 0.065522, SW: 0.189889
+  Val   - Loss: 0.257030, Recon: 0.061960, SW: 0.195070
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 30/200:
+  Train - Loss: 0.248404, Recon: 0.061320, SW: 0.187085
+  Val   - Loss: 0.292879, Recon: 0.081420, SW: 0.211459
+  LR: 0.000200
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.433090e-04
+  U_B0: 1.066221e-07
+  U_B1: 1.444814e-07
+  U_B2: 9.039729e-11
+  U_BETA0: 1.691767e-06
+  U_BETA1: 1.593008e-06
+  U_BETA2: 2.111799e-07
+  U_CHI: 2.114211e-04
+  U_GT0: 3.553099e-05
+  U_GT1: 1.594825e-05
+  U_GT2: 5.982808e-07
+  U_K: 3.608232e-07
+  U_SYMAT0: 8.873438e-06
+  U_SYMAT1: 2.276131e-05
+  U_SYMAT2: 8.431342e-08
+  U_SYMAT3: 5.342408e-06
+  U_SYMAT4: 2.712507e-07
+  U_SYMAT5: 1.183608e-05
+  U_SYMGT0: 3.343522e-04
+  U_SYMGT1: 1.102846e-05
+  U_SYMGT2: 1.709127e-07
+  U_SYMGT3: 5.367047e-04
+  U_SYMGT4: 4.156647e-08
+  U_SYMGT5: 3.878228e-04
+Average MSE (original scale): 9.609169e-05
+
+Epoch 31/200:
+  Train - Loss: 0.252083, Recon: 0.065070, SW: 0.187013
+  Val   - Loss: 0.325397, Recon: 0.118466, SW: 0.206931
+  LR: 0.000200
+
+Epoch 32/200:
+  Train - Loss: 0.243206, Recon: 0.058671, SW: 0.184535
+  Val   - Loss: 0.325652, Recon: 0.128511, SW: 0.197141
+  LR: 0.000200
+
+Epoch 33/200:
+  Train - Loss: 0.245551, Recon: 0.061357, SW: 0.184194
+  Val   - Loss: 0.240709, Recon: 0.053057, SW: 0.187653
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 34/200:
+  Train - Loss: 0.239143, Recon: 0.057401, SW: 0.181742
+  Val   - Loss: 0.242444, Recon: 0.059259, SW: 0.183185
+  LR: 0.000200
+
+Epoch 35/200:
+  Train - Loss: 0.252327, Recon: 0.070867, SW: 0.181460
+  Val   - Loss: 0.274077, Recon: 0.072694, SW: 0.201383
+  LR: 0.000200
+
+Epoch 36/200:
+  Train - Loss: 0.238182, Recon: 0.057058, SW: 0.181124
+  Val   - Loss: 0.243684, Recon: 0.056850, SW: 0.186834
+  LR: 0.000200
+
+Epoch 37/200:
+  Train - Loss: 0.236540, Recon: 0.056599, SW: 0.179940
+  Val   - Loss: 0.268997, Recon: 0.080799, SW: 0.188198
+  LR: 0.000200
+
+Epoch 38/200:
+  Train - Loss: 0.236934, Recon: 0.056948, SW: 0.179986
+  Val   - Loss: 0.248252, Recon: 0.057259, SW: 0.190993
+  LR: 0.000200
+
+Epoch 39/200:
+  Train - Loss: 0.231925, Recon: 0.056294, SW: 0.175631
+  Val   - Loss: 0.231647, Recon: 0.046682, SW: 0.184964
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 40/200:
+  Train - Loss: 0.226382, Recon: 0.051455, SW: 0.174927
+  Val   - Loss: 0.223296, Recon: 0.035334, SW: 0.187962
+  LR: 0.000200
+  ✓ New best model saved!
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 3.162835e-05
+  U_B0: 3.556011e-08
+  U_B1: 4.489089e-08
+  U_B2: 3.945972e-11
+  U_BETA0: 4.059525e-07
+  U_BETA1: 3.176303e-07
+  U_BETA2: 8.507892e-08
+  U_CHI: 2.278249e-05
+  U_GT0: 1.152082e-05
+  U_GT1: 1.459962e-06
+  U_GT2: 4.527826e-07
+  U_K: 5.818163e-08
+  U_SYMAT0: 2.454099e-06
+  U_SYMAT1: 6.389460e-06
+  U_SYMAT2: 3.813895e-08
+  U_SYMAT3: 1.203589e-06
+  U_SYMAT4: 1.116343e-07
+  U_SYMAT5: 1.541173e-06
+  U_SYMGT0: 3.313970e-05
+  U_SYMGT1: 2.329235e-06
+  U_SYMGT2: 8.430386e-08
+  U_SYMGT3: 5.507049e-05
+  U_SYMGT4: 3.344096e-08
+  U_SYMGT5: 4.333381e-05
+Average MSE (original scale): 1.107553e-05
+
+Epoch 41/200:
+  Train - Loss: 0.227879, Recon: 0.053577, SW: 0.174302
+  Val   - Loss: 0.252268, Recon: 0.079112, SW: 0.173157
+  LR: 0.000200
+
+Epoch 42/200:
+  Train - Loss: 0.223574, Recon: 0.054834, SW: 0.168739
+  Val   - Loss: 0.204965, Recon: 0.036156, SW: 0.168810
+  LR: 0.000200
+  ✓ New best model saved!
+
+Epoch 43/200:
+  Train - Loss: 0.229451, Recon: 0.056626, SW: 0.172825
+  Val   - Loss: 0.269789, Recon: 0.094551, SW: 0.175238
+  LR: 0.000200
+
+Epoch 44/200:
+  Train - Loss: 0.225472, Recon: 0.054766, SW: 0.170706
+  Val   - Loss: 0.259199, Recon: 0.072425, SW: 0.186773
+  LR: 0.000200
+
+Epoch 45/200:
+  Train - Loss: 0.220644, Recon: 0.056005, SW: 0.164639
+  Val   - Loss: 0.401258, Recon: 0.101226, SW: 0.300032
+  LR: 0.000200
+
+Epoch 46/200:
+  Train - Loss: 0.218447, Recon: 0.053209, SW: 0.165238
+  Val   - Loss: 0.227817, Recon: 0.065314, SW: 0.162503
+  LR: 0.000200
+
+Epoch 47/200:
+  Train - Loss: 0.217095, Recon: 0.054219, SW: 0.162877
+  Val   - Loss: 0.232581, Recon: 0.066542, SW: 0.166040
+  LR: 0.000200
+
+Epoch 48/200:
+  Train - Loss: 0.215555, Recon: 0.053885, SW: 0.161670
+  Val   - Loss: 0.240911, Recon: 0.053360, SW: 0.187551
+  LR: 0.000200
+
+Epoch 49/200:
+  Train - Loss: 0.213806, Recon: 0.053503, SW: 0.160303
+  Val   - Loss: 0.242585, Recon: 0.075786, SW: 0.166800
+  LR: 0.000200
+
+Epoch 50/200:
+  Train - Loss: 0.210415, Recon: 0.053013, SW: 0.157402
+  Val   - Loss: 0.253123, Recon: 0.093093, SW: 0.160030
+  LR: 0.000200
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 8.253692e-05
+  U_B0: 5.605627e-08
+  U_B1: 2.753839e-07
+  U_B2: 1.575178e-10
+  U_BETA0: 1.381215e-06
+  U_BETA1: 5.379411e-07
+  U_BETA2: 1.229982e-07
+  U_CHI: 8.291921e-05
+  U_GT0: 4.004068e-05
+  U_GT1: 9.893416e-06
+  U_GT2: 1.104603e-06
+  U_K: 5.886828e-07
+  U_SYMAT0: 4.932866e-06
+  U_SYMAT1: 8.863793e-06
+  U_SYMAT2: 2.418714e-07
+  U_SYMAT3: 5.763532e-06
+  U_SYMAT4: 7.299790e-07
+  U_SYMAT5: 3.947381e-06
+  U_SYMGT0: 1.113435e-04
+  U_SYMGT1: 1.195917e-05
+  U_SYMGT2: 1.700131e-07
+  U_SYMGT3: 2.447489e-04
+  U_SYMGT4: 6.667774e-08
+  U_SYMGT5: 1.939519e-04
+Average MSE (original scale): 4.226573e-05
+
+Epoch 51/200:
+  Train - Loss: 0.210232, Recon: 0.055120, SW: 0.155112
+  Val   - Loss: 0.227299, Recon: 0.072361, SW: 0.154939
+  LR: 0.000200
+
+Epoch 52/200:
+  Train - Loss: 0.215164, Recon: 0.052753, SW: 0.162411
+  Val   - Loss: 0.212535, Recon: 0.051779, SW: 0.160756
+  LR: 0.000200
+
+Epoch 53/200:
+  Train - Loss: 0.208653, Recon: 0.053453, SW: 0.155200
+  Val   - Loss: 0.250687, Recon: 0.063682, SW: 0.187005
+  LR: 0.000100
+
+Epoch 54/200:
+  Train - Loss: 0.168530, Recon: 0.023856, SW: 0.144673
+  Val   - Loss: 0.169855, Recon: 0.026790, SW: 0.143065
+  LR: 0.000100
+  ✓ New best model saved!
+
+Epoch 55/200:
+  Train - Loss: 0.161820, Recon: 0.023110, SW: 0.138710
+  Val   - Loss: 0.185127, Recon: 0.042161, SW: 0.142966
+  LR: 0.000100
+
+Epoch 56/200:
+  Train - Loss: 0.161950, Recon: 0.026730, SW: 0.135220
+  Val   - Loss: 0.169195, Recon: 0.031003, SW: 0.138191
+  LR: 0.000100
+  ✓ New best model saved!
+
+Epoch 57/200:
+  Train - Loss: 0.161733, Recon: 0.028151, SW: 0.133582
+  Val   - Loss: 0.188202, Recon: 0.047039, SW: 0.141164
+  LR: 0.000100
+
+Epoch 58/200:
+  Train - Loss: 0.162065, Recon: 0.027411, SW: 0.134654
+  Val   - Loss: 0.164492, Recon: 0.029291, SW: 0.135201
+  LR: 0.000100
+  ✓ New best model saved!
+
+Epoch 59/200:
+  Train - Loss: 0.161792, Recon: 0.027678, SW: 0.134114
+  Val   - Loss: 0.172264, Recon: 0.031518, SW: 0.140746
+  LR: 0.000100
+
+Epoch 60/200:
+  Train - Loss: 0.160242, Recon: 0.029650, SW: 0.130591
+  Val   - Loss: 0.184441, Recon: 0.049369, SW: 0.135073
+  LR: 0.000100
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.286442e-05
+  U_B0: 2.614612e-08
+  U_B1: 2.244720e-07
+  U_B2: 1.316933e-11
+  U_BETA0: 1.410772e-07
+  U_BETA1: 6.125659e-07
+  U_BETA2: 8.047865e-08
+  U_CHI: 2.100700e-05
+  U_GT0: 1.436324e-04
+  U_GT1: 2.376004e-06
+  U_GT2: 3.747305e-07
+  U_K: 8.171618e-09
+  U_SYMAT0: 1.588306e-05
+  U_SYMAT1: 2.801788e-05
+  U_SYMAT2: 1.795076e-08
+  U_SYMAT3: 2.076359e-06
+  U_SYMAT4: 5.005694e-08
+  U_SYMAT5: 1.407185e-06
+  U_SYMGT0: 3.525554e-05
+  U_SYMGT1: 3.308955e-05
+  U_SYMGT2: 5.539264e-08
+  U_SYMGT3: 6.552758e-05
+  U_SYMGT4: 1.716322e-08
+  U_SYMGT5: 5.040698e-05
+Average MSE (original scale): 1.991501e-05
+
+Epoch 61/200:
+  Train - Loss: 0.159561, Recon: 0.029531, SW: 0.130029
+  Val   - Loss: 0.180527, Recon: 0.031468, SW: 0.149059
+  LR: 0.000100
+
+Epoch 62/200:
+  Train - Loss: 0.159185, Recon: 0.029763, SW: 0.129422
+  Val   - Loss: 0.179816, Recon: 0.046829, SW: 0.132987
+  LR: 0.000100
+
+Epoch 63/200:
+  Train - Loss: 0.158260, Recon: 0.029804, SW: 0.128456
+  Val   - Loss: 0.203666, Recon: 0.071167, SW: 0.132499
+  LR: 0.000100
+
+Epoch 64/200:
+  Train - Loss: 0.158116, Recon: 0.028863, SW: 0.129253
+  Val   - Loss: 0.190230, Recon: 0.054853, SW: 0.135377
+  LR: 0.000100
+
+Epoch 65/200:
+  Train - Loss: 0.158061, Recon: 0.031132, SW: 0.126928
+  Val   - Loss: 0.172799, Recon: 0.035047, SW: 0.137752
+  LR: 0.000100
+
+Epoch 66/200:
+  Train - Loss: 0.157248, Recon: 0.030317, SW: 0.126931
+  Val   - Loss: 0.179485, Recon: 0.045767, SW: 0.133718
+  LR: 0.000100
+
+Epoch 67/200:
+  Train - Loss: 0.156308, Recon: 0.030569, SW: 0.125739
+  Val   - Loss: 0.179303, Recon: 0.034673, SW: 0.144631
+  LR: 0.000100
+
+Epoch 68/200:
+  Train - Loss: 0.158666, Recon: 0.032525, SW: 0.126141
+  Val   - Loss: 0.157832, Recon: 0.026857, SW: 0.130975
+  LR: 0.000100
+  ✓ New best model saved!
+
+Epoch 69/200:
+  Train - Loss: 0.154204, Recon: 0.029454, SW: 0.124750
+  Val   - Loss: 0.187232, Recon: 0.053954, SW: 0.133278
+  LR: 0.000100
+
+Epoch 70/200:
+  Train - Loss: 0.155690, Recon: 0.031094, SW: 0.124597
+  Val   - Loss: 0.202496, Recon: 0.062678, SW: 0.139818
+  LR: 0.000100
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 4.853613e-05
+  U_B0: 5.880223e-08
+  U_B1: 2.749414e-08
+  U_B2: 1.942438e-11
+  U_BETA0: 2.899896e-07
+  U_BETA1: 2.099779e-07
+  U_BETA2: 1.041418e-08
+  U_CHI: 4.122897e-05
+  U_GT0: 1.307711e-05
+  U_GT1: 1.917328e-06
+  U_GT2: 3.190891e-07
+  U_K: 3.519371e-08
+  U_SYMAT0: 2.955921e-06
+  U_SYMAT1: 7.390993e-06
+  U_SYMAT2: 2.251777e-08
+  U_SYMAT3: 7.356465e-07
+  U_SYMAT4: 6.107115e-08
+  U_SYMAT5: 1.112273e-06
+  U_SYMGT0: 6.003844e-05
+  U_SYMGT1: 1.315482e-06
+  U_SYMGT2: 1.077520e-08
+  U_SYMGT3: 1.054932e-04
+  U_SYMGT4: 1.837617e-08
+  U_SYMGT5: 8.112485e-05
+Average MSE (original scale): 1.927047e-05
+
+Epoch 71/200:
+  Train - Loss: 0.159717, Recon: 0.032375, SW: 0.127342
+  Val   - Loss: 0.163050, Recon: 0.036935, SW: 0.126115
+  LR: 0.000100
+
+Epoch 72/200:
+  Train - Loss: 0.156710, Recon: 0.032559, SW: 0.124151
+  Val   - Loss: 0.178947, Recon: 0.045393, SW: 0.133554
+  LR: 0.000100
+
+Epoch 73/200:
+  Train - Loss: 0.159895, Recon: 0.035008, SW: 0.124887
+  Val   - Loss: 0.172358, Recon: 0.039904, SW: 0.132454
+  LR: 0.000100
+
+Epoch 74/200:
+  Train - Loss: 0.152675, Recon: 0.029221, SW: 0.123454
+  Val   - Loss: 0.175130, Recon: 0.048239, SW: 0.126891
+  LR: 0.000100
+
+Epoch 75/200:
+  Train - Loss: 0.154012, Recon: 0.031547, SW: 0.122465
+  Val   - Loss: 0.171353, Recon: 0.044081, SW: 0.127272
+  LR: 0.000100
+
+Epoch 76/200:
+  Train - Loss: 0.154556, Recon: 0.029967, SW: 0.124589
+  Val   - Loss: 0.158695, Recon: 0.033384, SW: 0.125311
+  LR: 0.000100
+
+Epoch 77/200:
+  Train - Loss: 0.153583, Recon: 0.030337, SW: 0.123246
+  Val   - Loss: 0.161727, Recon: 0.034030, SW: 0.127698
+  LR: 0.000100
+
+Epoch 78/200:
+  Train - Loss: 0.158505, Recon: 0.033765, SW: 0.124740
+  Val   - Loss: 0.168628, Recon: 0.038418, SW: 0.130210
+  LR: 0.000100
+
+Epoch 79/200:
+  Train - Loss: 0.155886, Recon: 0.031795, SW: 0.124091
+  Val   - Loss: 0.184873, Recon: 0.053610, SW: 0.131262
+  LR: 0.000050
+
+Epoch 80/200:
+  Train - Loss: 0.134477, Recon: 0.015703, SW: 0.118774
+  Val   - Loss: 0.147314, Recon: 0.022119, SW: 0.125195
+  LR: 0.000050
+  ✓ New best model saved!
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.782940e-06
+  U_B0: 3.008152e-08
+  U_B1: 3.175429e-08
+  U_B2: 5.365037e-12
+  U_BETA0: 1.484432e-07
+  U_BETA1: 1.086563e-07
+  U_BETA2: 1.526869e-08
+  U_CHI: 2.821698e-06
+  U_GT0: 7.514002e-06
+  U_GT1: 4.007771e-07
+  U_GT2: 1.038980e-07
+  U_K: 6.541566e-09
+  U_SYMAT0: 1.420794e-06
+  U_SYMAT1: 1.351876e-06
+  U_SYMAT2: 1.362768e-08
+  U_SYMAT3: 5.153277e-07
+  U_SYMAT4: 3.113504e-08
+  U_SYMAT5: 3.494767e-07
+  U_SYMGT0: 3.429446e-06
+  U_SYMGT1: 2.573554e-06
+  U_SYMGT2: 1.374095e-08
+  U_SYMGT3: 4.036017e-06
+  U_SYMGT4: 6.245812e-09
+  U_SYMGT5: 2.548119e-06
+Average MSE (original scale): 1.428541e-06
+
+Epoch 81/200:
+  Train - Loss: 0.133012, Recon: 0.016513, SW: 0.116499
+  Val   - Loss: 0.143953, Recon: 0.020538, SW: 0.123415
+  LR: 0.000050
+  ✓ New best model saved!
+
+Epoch 82/200:
+  Train - Loss: 0.131849, Recon: 0.015092, SW: 0.116757
+  Val   - Loss: 0.156220, Recon: 0.030278, SW: 0.125943
+  LR: 0.000050
+
+Epoch 83/200:
+  Train - Loss: 0.130409, Recon: 0.015788, SW: 0.114621
+  Val   - Loss: 0.148441, Recon: 0.023862, SW: 0.124580
+  LR: 0.000050
+
+Epoch 84/200:
+  Train - Loss: 0.129800, Recon: 0.015024, SW: 0.114775
+  Val   - Loss: 0.151734, Recon: 0.030432, SW: 0.121302
+  LR: 0.000050
+
+Epoch 85/200:
+  Train - Loss: 0.131032, Recon: 0.017236, SW: 0.113796
+  Val   - Loss: 0.143431, Recon: 0.022752, SW: 0.120679
+  LR: 0.000050
+  ✓ New best model saved!
+
+Epoch 86/200:
+  Train - Loss: 0.129238, Recon: 0.016327, SW: 0.112911
+  Val   - Loss: 0.138799, Recon: 0.020262, SW: 0.118537
+  LR: 0.000050
+  ✓ New best model saved!
+
+Epoch 87/200:
+  Train - Loss: 0.131227, Recon: 0.018097, SW: 0.113131
+  Val   - Loss: 0.142285, Recon: 0.025119, SW: 0.117166
+  LR: 0.000050
+
+Epoch 88/200:
+  Train - Loss: 0.129727, Recon: 0.016913, SW: 0.112815
+  Val   - Loss: 0.162362, Recon: 0.025262, SW: 0.137100
+  LR: 0.000050
+
+Epoch 89/200:
+  Train - Loss: 0.128505, Recon: 0.016399, SW: 0.112106
+  Val   - Loss: 0.163585, Recon: 0.040209, SW: 0.123376
+  LR: 0.000050
+
+Epoch 90/200:
+  Train - Loss: 0.128729, Recon: 0.016863, SW: 0.111866
+  Val   - Loss: 0.143448, Recon: 0.021967, SW: 0.121481
+  LR: 0.000050
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 4.037612e-06
+  U_B0: 2.780105e-08
+  U_B1: 2.814655e-08
+  U_B2: 1.444538e-11
+  U_BETA0: 6.642897e-07
+  U_BETA1: 7.305270e-08
+  U_BETA2: 1.517512e-08
+  U_CHI: 4.382234e-06
+  U_GT0: 1.816529e-06
+  U_GT1: 8.652295e-07
+  U_GT2: 7.148974e-08
+  U_K: 2.209518e-08
+  U_SYMAT0: 1.264843e-06
+  U_SYMAT1: 1.049751e-06
+  U_SYMAT2: 1.685349e-08
+  U_SYMAT3: 5.071140e-07
+  U_SYMAT4: 3.735108e-08
+  U_SYMAT5: 6.064761e-07
+  U_SYMGT0: 6.145626e-06
+  U_SYMGT1: 1.042991e-06
+  U_SYMGT2: 9.820939e-09
+  U_SYMGT3: 1.172802e-05
+  U_SYMGT4: 1.174256e-08
+  U_SYMGT5: 7.921463e-06
+Average MSE (original scale): 2.162742e-06
+
+Epoch 91/200:
+  Train - Loss: 0.129928, Recon: 0.017191, SW: 0.112737
+  Val   - Loss: 0.143768, Recon: 0.026956, SW: 0.116812
+  LR: 0.000050
+
+Epoch 92/200:
+  Train - Loss: 0.129668, Recon: 0.018519, SW: 0.111150
+  Val   - Loss: 0.144336, Recon: 0.022426, SW: 0.121910
+  LR: 0.000050
+
+Epoch 93/200:
+  Train - Loss: 0.128265, Recon: 0.018276, SW: 0.109989
+  Val   - Loss: 0.145374, Recon: 0.032625, SW: 0.112748
+  LR: 0.000050
+
+Epoch 94/200:
+  Train - Loss: 0.128773, Recon: 0.017967, SW: 0.110806
+  Val   - Loss: 0.140608, Recon: 0.020675, SW: 0.119932
+  LR: 0.000050
+
+Epoch 95/200:
+  Train - Loss: 0.128346, Recon: 0.017975, SW: 0.110371
+  Val   - Loss: 0.139983, Recon: 0.022353, SW: 0.117630
+  LR: 0.000050
+
+Epoch 96/200:
+  Train - Loss: 0.128765, Recon: 0.018689, SW: 0.110077
+  Val   - Loss: 0.135546, Recon: 0.019858, SW: 0.115688
+  LR: 0.000050
+  ✓ New best model saved!
+
+Epoch 97/200:
+  Train - Loss: 0.129338, Recon: 0.019171, SW: 0.110168
+  Val   - Loss: 0.133781, Recon: 0.019161, SW: 0.114620
+  LR: 0.000050
+  ✓ New best model saved!
+
+Epoch 98/200:
+  Train - Loss: 0.128534, Recon: 0.018969, SW: 0.109564
+  Val   - Loss: 0.146353, Recon: 0.031581, SW: 0.114772
+  LR: 0.000050
+
+Epoch 99/200:
+  Train - Loss: 0.129595, Recon: 0.019220, SW: 0.110375
+  Val   - Loss: 0.135734, Recon: 0.020813, SW: 0.114920
+  LR: 0.000050
+
+Epoch 100/200:
+  Train - Loss: 0.127298, Recon: 0.018305, SW: 0.108993
+  Val   - Loss: 0.187879, Recon: 0.069949, SW: 0.117930
+  LR: 0.000050
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 4.411005e-06
+  U_B0: 2.487440e-08
+  U_B1: 5.630796e-08
+  U_B2: 1.299682e-11
+  U_BETA0: 4.036121e-07
+  U_BETA1: 2.803845e-07
+  U_BETA2: 2.403600e-08
+  U_CHI: 6.117808e-06
+  U_GT0: 1.902254e-05
+  U_GT1: 1.787918e-06
+  U_GT2: 9.874105e-08
+  U_K: 8.366973e-09
+  U_SYMAT0: 1.368688e-06
+  U_SYMAT1: 3.182313e-06
+  U_SYMAT2: 2.204512e-08
+  U_SYMAT3: 6.610000e-07
+  U_SYMAT4: 5.988833e-08
+  U_SYMAT5: 1.178666e-06
+  U_SYMGT0: 6.450118e-06
+  U_SYMGT1: 5.450382e-06
+  U_SYMGT2: 1.235353e-08
+  U_SYMGT3: 1.266042e-05
+  U_SYMGT4: 1.175550e-08
+  U_SYMGT5: 9.156738e-06
+Average MSE (original scale): 3.480487e-06
+
+Epoch 101/200:
+  Train - Loss: 0.126148, Recon: 0.017576, SW: 0.108572
+  Val   - Loss: 0.138800, Recon: 0.023353, SW: 0.115447
+  LR: 0.000050
+
+Epoch 102/200:
+  Train - Loss: 0.128548, Recon: 0.018836, SW: 0.109712
+  Val   - Loss: 0.145554, Recon: 0.029654, SW: 0.115900
+  LR: 0.000050
+
+Epoch 103/200:
+  Train - Loss: 0.127144, Recon: 0.018521, SW: 0.108622
+  Val   - Loss: 0.140545, Recon: 0.024358, SW: 0.116187
+  LR: 0.000050
+
+Epoch 104/200:
+  Train - Loss: 0.126365, Recon: 0.018111, SW: 0.108254
+  Val   - Loss: 0.134129, Recon: 0.018663, SW: 0.115466
+  LR: 0.000050
+
+Epoch 105/200:
+  Train - Loss: 0.127504, Recon: 0.019868, SW: 0.107636
+  Val   - Loss: 0.145204, Recon: 0.032565, SW: 0.112640
+  LR: 0.000050
+
+Epoch 106/200:
+  Train - Loss: 0.126067, Recon: 0.017897, SW: 0.108171
+  Val   - Loss: 0.148204, Recon: 0.035494, SW: 0.112709
+  LR: 0.000050
+
+Epoch 107/200:
+  Train - Loss: 0.126703, Recon: 0.018377, SW: 0.108325
+  Val   - Loss: 0.131015, Recon: 0.019407, SW: 0.111608
+  LR: 0.000050
+  ✓ New best model saved!
+
+Epoch 108/200:
+  Train - Loss: 0.125565, Recon: 0.017497, SW: 0.108068
+  Val   - Loss: 0.137847, Recon: 0.023809, SW: 0.114038
+  LR: 0.000050
+
+Epoch 109/200:
+  Train - Loss: 0.127805, Recon: 0.019744, SW: 0.108061
+  Val   - Loss: 0.150173, Recon: 0.036429, SW: 0.113744
+  LR: 0.000050
+
+Epoch 110/200:
+  Train - Loss: 0.126746, Recon: 0.018834, SW: 0.107911
+  Val   - Loss: 0.147607, Recon: 0.023926, SW: 0.123681
+  LR: 0.000050
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 6.054168e-06
+  U_B0: 1.556298e-08
+  U_B1: 1.831607e-08
+  U_B2: 1.079334e-11
+  U_BETA0: 2.708490e-07
+  U_BETA1: 1.563504e-07
+  U_BETA2: 6.152152e-09
+  U_CHI: 6.373011e-06
+  U_GT0: 5.207639e-06
+  U_GT1: 8.382961e-07
+  U_GT2: 9.042369e-08
+  U_K: 2.437579e-08
+  U_SYMAT0: 2.760594e-06
+  U_SYMAT1: 2.183208e-06
+  U_SYMAT2: 1.604232e-08
+  U_SYMAT3: 8.038172e-07
+  U_SYMAT4: 4.152881e-08
+  U_SYMAT5: 9.525450e-07
+  U_SYMGT0: 8.593882e-06
+  U_SYMGT1: 9.135568e-07
+  U_SYMGT2: 6.305840e-09
+  U_SYMGT3: 1.374424e-05
+  U_SYMGT4: 1.168145e-08
+  U_SYMGT5: 9.595580e-06
+Average MSE (original scale): 2.954337e-06
+
+Epoch 111/200:
+  Train - Loss: 0.125101, Recon: 0.018142, SW: 0.106959
+  Val   - Loss: 0.132615, Recon: 0.021104, SW: 0.111511
+  LR: 0.000050
+
+Epoch 112/200:
+  Train - Loss: 0.125918, Recon: 0.018322, SW: 0.107596
+  Val   - Loss: 0.132197, Recon: 0.020038, SW: 0.112158
+  LR: 0.000050
+
+Epoch 113/200:
+  Train - Loss: 0.126723, Recon: 0.019761, SW: 0.106962
+  Val   - Loss: 0.138170, Recon: 0.027891, SW: 0.110279
+  LR: 0.000050
+
+Epoch 114/200:
+  Train - Loss: 0.124901, Recon: 0.017983, SW: 0.106918
+  Val   - Loss: 0.149282, Recon: 0.037787, SW: 0.111496
+  LR: 0.000050
+
+Epoch 115/200:
+  Train - Loss: 0.126026, Recon: 0.018898, SW: 0.107128
+  Val   - Loss: 0.133341, Recon: 0.019433, SW: 0.113907
+  LR: 0.000050
+
+Epoch 116/200:
+  Train - Loss: 0.124369, Recon: 0.018284, SW: 0.106086
+  Val   - Loss: 0.145059, Recon: 0.033477, SW: 0.111582
+  LR: 0.000050
+
+Epoch 117/200:
+  Train - Loss: 0.125847, Recon: 0.019090, SW: 0.106757
+  Val   - Loss: 0.138963, Recon: 0.023128, SW: 0.115835
+  LR: 0.000050
+
+Epoch 118/200:
+  Train - Loss: 0.123442, Recon: 0.018073, SW: 0.105370
+  Val   - Loss: 0.134673, Recon: 0.024940, SW: 0.109733
+  LR: 0.000025
+
+Epoch 119/200:
+  Train - Loss: 0.113177, Recon: 0.009940, SW: 0.103237
+  Val   - Loss: 0.126985, Recon: 0.016576, SW: 0.110409
+  LR: 0.000025
+  ✓ New best model saved!
+
+Epoch 120/200:
+  Train - Loss: 0.113458, Recon: 0.009641, SW: 0.103817
+  Val   - Loss: 0.129151, Recon: 0.017300, SW: 0.111851
+  LR: 0.000025
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.517402e-06
+  U_B0: 2.275923e-08
+  U_B1: 3.838059e-08
+  U_B2: 8.358572e-12
+  U_BETA0: 2.040167e-07
+  U_BETA1: 5.817643e-08
+  U_BETA2: 8.878895e-09
+  U_CHI: 2.598397e-06
+  U_GT0: 3.647932e-06
+  U_GT1: 3.190602e-07
+  U_GT2: 4.195089e-08
+  U_K: 3.215565e-09
+  U_SYMAT0: 5.990180e-07
+  U_SYMAT1: 1.161151e-06
+  U_SYMAT2: 1.336387e-08
+  U_SYMAT3: 3.974232e-07
+  U_SYMAT4: 1.163636e-08
+  U_SYMAT5: 4.700397e-07
+  U_SYMGT0: 1.603208e-06
+  U_SYMGT1: 1.058583e-06
+  U_SYMGT2: 7.395900e-09
+  U_SYMGT3: 3.449682e-06
+  U_SYMGT4: 1.090148e-08
+  U_SYMGT5: 2.515862e-06
+Average MSE (original scale): 1.030913e-06
+
+Epoch 121/200:
+  Train - Loss: 0.113413, Recon: 0.010091, SW: 0.103323
+  Val   - Loss: 0.130786, Recon: 0.023114, SW: 0.107673
+  LR: 0.000025
+
+Epoch 122/200:
+  Train - Loss: 0.112997, Recon: 0.010166, SW: 0.102831
+  Val   - Loss: 0.124112, Recon: 0.016174, SW: 0.107938
+  LR: 0.000025
+  ✓ New best model saved!
+
+Epoch 123/200:
+  Train - Loss: 0.113231, Recon: 0.010506, SW: 0.102725
+  Val   - Loss: 0.125616, Recon: 0.016434, SW: 0.109181
+  LR: 0.000025
+
+Epoch 124/200:
+  Train - Loss: 0.112703, Recon: 0.009967, SW: 0.102736
+  Val   - Loss: 0.129267, Recon: 0.020818, SW: 0.108449
+  LR: 0.000025
+
+Epoch 125/200:
+  Train - Loss: 0.112350, Recon: 0.010374, SW: 0.101976
+  Val   - Loss: 0.127880, Recon: 0.017832, SW: 0.110048
+  LR: 0.000025
+
+Epoch 126/200:
+  Train - Loss: 0.111923, Recon: 0.010133, SW: 0.101790
+  Val   - Loss: 0.125789, Recon: 0.016623, SW: 0.109166
+  LR: 0.000025
+
+Epoch 127/200:
+  Train - Loss: 0.113090, Recon: 0.010788, SW: 0.102302
+  Val   - Loss: 0.127680, Recon: 0.017020, SW: 0.110660
+  LR: 0.000025
+
+Epoch 128/200:
+  Train - Loss: 0.113123, Recon: 0.010388, SW: 0.102735
+  Val   - Loss: 0.123419, Recon: 0.015951, SW: 0.107468
+  LR: 0.000025
+  ✓ New best model saved!
+
+Epoch 129/200:
+  Train - Loss: 0.111199, Recon: 0.010317, SW: 0.100882
+  Val   - Loss: 0.123942, Recon: 0.015115, SW: 0.108828
+  LR: 0.000025
+
+Epoch 130/200:
+  Train - Loss: 0.110772, Recon: 0.010055, SW: 0.100718
+  Val   - Loss: 0.125844, Recon: 0.017764, SW: 0.108080
+  LR: 0.000025
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.417898e-06
+  U_B0: 1.996378e-08
+  U_B1: 1.351522e-08
+  U_B2: 5.333788e-12
+  U_BETA0: 2.360162e-07
+  U_BETA1: 1.002210e-07
+  U_BETA2: 3.205731e-09
+  U_CHI: 2.358973e-06
+  U_GT0: 1.310045e-06
+  U_GT1: 3.145606e-07
+  U_GT2: 1.862623e-08
+  U_K: 8.199409e-09
+  U_SYMAT0: 8.012922e-07
+  U_SYMAT1: 7.432460e-07
+  U_SYMAT2: 1.288883e-08
+  U_SYMAT3: 5.510034e-07
+  U_SYMAT4: 1.808268e-08
+  U_SYMAT5: 6.528352e-07
+  U_SYMGT0: 3.380208e-06
+  U_SYMGT1: 3.463766e-07
+  U_SYMGT2: 6.752886e-09
+  U_SYMGT3: 5.434264e-06
+  U_SYMGT4: 8.427556e-09
+  U_SYMGT5: 3.644961e-06
+Average MSE (original scale): 1.123428e-06
+
+Epoch 131/200:
+  Train - Loss: 0.111266, Recon: 0.010203, SW: 0.101063
+  Val   - Loss: 0.126355, Recon: 0.018668, SW: 0.107687
+  LR: 0.000025
+
+Epoch 132/200:
+  Train - Loss: 0.111318, Recon: 0.010114, SW: 0.101203
+  Val   - Loss: 0.127476, Recon: 0.021255, SW: 0.106221
+  LR: 0.000025
+
+Epoch 133/200:
+  Train - Loss: 0.110092, Recon: 0.010404, SW: 0.099688
+  Val   - Loss: 0.120826, Recon: 0.015507, SW: 0.105319
+  LR: 0.000025
+  ✓ New best model saved!
+
+Epoch 134/200:
+  Train - Loss: 0.111762, Recon: 0.011161, SW: 0.100601
+  Val   - Loss: 0.126385, Recon: 0.017640, SW: 0.108745
+  LR: 0.000025
+
+Epoch 135/200:
+  Train - Loss: 0.111776, Recon: 0.011465, SW: 0.100311
+  Val   - Loss: 0.123867, Recon: 0.017956, SW: 0.105910
+  LR: 0.000025
+
+Epoch 136/200:
+  Train - Loss: 0.111632, Recon: 0.010462, SW: 0.101170
+  Val   - Loss: 0.127106, Recon: 0.018683, SW: 0.108423
+  LR: 0.000025
+
+Epoch 137/200:
+  Train - Loss: 0.110826, Recon: 0.010338, SW: 0.100489
+  Val   - Loss: 0.124081, Recon: 0.017743, SW: 0.106338
+  LR: 0.000025
+
+Epoch 138/200:
+  Train - Loss: 0.110665, Recon: 0.010088, SW: 0.100577
+  Val   - Loss: 0.126754, Recon: 0.017009, SW: 0.109746
+  LR: 0.000025
+
+Epoch 139/200:
+  Train - Loss: 0.110663, Recon: 0.011103, SW: 0.099559
+  Val   - Loss: 0.122455, Recon: 0.016650, SW: 0.105804
+  LR: 0.000025
+
+Epoch 140/200:
+  Train - Loss: 0.109770, Recon: 0.010345, SW: 0.099425
+  Val   - Loss: 0.125248, Recon: 0.019713, SW: 0.105535
+  LR: 0.000025
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.863452e-06
+  U_B0: 2.348900e-08
+  U_B1: 1.528616e-08
+  U_B2: 6.235758e-12
+  U_BETA0: 1.832463e-07
+  U_BETA1: 8.231377e-08
+  U_BETA2: 2.575863e-09
+  U_CHI: 2.625873e-06
+  U_GT0: 4.291634e-06
+  U_GT1: 7.058526e-07
+  U_GT2: 1.808879e-08
+  U_K: 3.096090e-09
+  U_SYMAT0: 1.371231e-06
+  U_SYMAT1: 1.700177e-06
+  U_SYMAT2: 1.207239e-08
+  U_SYMAT3: 5.293550e-07
+  U_SYMAT4: 1.106450e-08
+  U_SYMAT5: 4.974252e-07
+  U_SYMGT0: 4.277954e-06
+  U_SYMGT1: 1.751600e-06
+  U_SYMGT2: 4.875964e-09
+  U_SYMGT3: 7.332719e-06
+  U_SYMGT4: 8.743945e-09
+  U_SYMGT5: 4.499207e-06
+Average MSE (original scale): 1.605691e-06
+
+Epoch 141/200:
+  Train - Loss: 0.110879, Recon: 0.011095, SW: 0.099784
+  Val   - Loss: 0.124745, Recon: 0.018818, SW: 0.105927
+  LR: 0.000025
+
+Epoch 142/200:
+  Train - Loss: 0.109743, Recon: 0.010814, SW: 0.098929
+  Val   - Loss: 0.121578, Recon: 0.016477, SW: 0.105102
+  LR: 0.000025
+
+Epoch 143/200:
+  Train - Loss: 0.109989, Recon: 0.010969, SW: 0.099020
+  Val   - Loss: 0.137400, Recon: 0.033776, SW: 0.103624
+  LR: 0.000025
+
+Epoch 144/200:
+  Train - Loss: 0.110146, Recon: 0.010840, SW: 0.099306
+  Val   - Loss: 0.124023, Recon: 0.018727, SW: 0.105296
+  LR: 0.000013
+
+Epoch 145/200:
+  Train - Loss: 0.105299, Recon: 0.007293, SW: 0.098006
+  Val   - Loss: 0.119079, Recon: 0.015487, SW: 0.103592
+  LR: 0.000013
+  ✓ New best model saved!
+
+Epoch 146/200:
+  Train - Loss: 0.105099, Recon: 0.007223, SW: 0.097876
+  Val   - Loss: 0.117721, Recon: 0.014355, SW: 0.103366
+  LR: 0.000013
+  ✓ New best model saved!
+
+Epoch 147/200:
+  Train - Loss: 0.104450, Recon: 0.007263, SW: 0.097187
+  Val   - Loss: 0.121064, Recon: 0.016149, SW: 0.104915
+  LR: 0.000013
+
+Epoch 148/200:
+  Train - Loss: 0.104503, Recon: 0.007212, SW: 0.097292
+  Val   - Loss: 0.117959, Recon: 0.014535, SW: 0.103424
+  LR: 0.000013
+
+Epoch 149/200:
+  Train - Loss: 0.104628, Recon: 0.007178, SW: 0.097450
+  Val   - Loss: 0.119717, Recon: 0.016060, SW: 0.103657
+  LR: 0.000013
+
+Epoch 150/200:
+  Train - Loss: 0.104283, Recon: 0.007263, SW: 0.097020
+  Val   - Loss: 0.120404, Recon: 0.015873, SW: 0.104531
+  LR: 0.000013
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.803640e-06
+  U_B0: 1.712467e-08
+  U_B1: 2.076151e-08
+  U_B2: 4.163592e-12
+  U_BETA0: 1.742426e-07
+  U_BETA1: 5.383137e-08
+  U_BETA2: 3.550970e-09
+  U_CHI: 2.435289e-06
+  U_GT0: 2.989698e-06
+  U_GT1: 2.098317e-07
+  U_GT2: 1.934785e-08
+  U_K: 3.097595e-09
+  U_SYMAT0: 5.668787e-07
+  U_SYMAT1: 7.720840e-07
+  U_SYMAT2: 1.032595e-08
+  U_SYMAT3: 2.268785e-07
+  U_SYMAT4: 8.540140e-09
+  U_SYMAT5: 2.709669e-07
+  U_SYMGT0: 3.198810e-06
+  U_SYMGT1: 8.651850e-07
+  U_SYMGT2: 3.556150e-09
+  U_SYMGT3: 5.337535e-06
+  U_SYMGT4: 1.269862e-08
+  U_SYMGT5: 4.260180e-06
+Average MSE (original scale): 1.217979e-06
+
+Epoch 151/200:
+  Train - Loss: 0.103879, Recon: 0.007238, SW: 0.096642
+  Val   - Loss: 0.118375, Recon: 0.014440, SW: 0.103935
+  LR: 0.000013
+
+Epoch 152/200:
+  Train - Loss: 0.104540, Recon: 0.007413, SW: 0.097128
+  Val   - Loss: 0.117220, Recon: 0.014552, SW: 0.102667
+  LR: 0.000013
+  ✓ New best model saved!
+
+Epoch 153/200:
+  Train - Loss: 0.104036, Recon: 0.007139, SW: 0.096897
+  Val   - Loss: 0.117393, Recon: 0.014682, SW: 0.102711
+  LR: 0.000013
+
+Epoch 154/200:
+  Train - Loss: 0.104201, Recon: 0.007183, SW: 0.097019
+  Val   - Loss: 0.119320, Recon: 0.014786, SW: 0.104534
+  LR: 0.000013
+
+Epoch 155/200:
+  Train - Loss: 0.103860, Recon: 0.007273, SW: 0.096587
+  Val   - Loss: 0.117139, Recon: 0.014831, SW: 0.102308
+  LR: 0.000013
+  ✓ New best model saved!
+
+Epoch 156/200:
+  Train - Loss: 0.103689, Recon: 0.007210, SW: 0.096479
+  Val   - Loss: 0.117680, Recon: 0.014338, SW: 0.103342
+  LR: 0.000013
+
+Epoch 157/200:
+  Train - Loss: 0.103741, Recon: 0.007051, SW: 0.096690
+  Val   - Loss: 0.115340, Recon: 0.014836, SW: 0.100503
+  LR: 0.000013
+  ✓ New best model saved!
+
+Epoch 158/200:
+  Train - Loss: 0.103091, Recon: 0.007149, SW: 0.095943
+  Val   - Loss: 0.118796, Recon: 0.014476, SW: 0.104320
+  LR: 0.000013
+
+Epoch 159/200:
+  Train - Loss: 0.103927, Recon: 0.007269, SW: 0.096657
+  Val   - Loss: 0.117945, Recon: 0.015273, SW: 0.102672
+  LR: 0.000013
+
+Epoch 160/200:
+  Train - Loss: 0.104068, Recon: 0.007384, SW: 0.096684
+  Val   - Loss: 0.118120, Recon: 0.016036, SW: 0.102084
+  LR: 0.000013
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 3.803435e-06
+  U_B0: 1.830036e-08
+  U_B1: 2.384624e-08
+  U_B2: 6.564722e-12
+  U_BETA0: 2.105505e-07
+  U_BETA1: 1.150737e-07
+  U_BETA2: 6.969728e-09
+  U_CHI: 3.477286e-06
+  U_GT0: 7.861562e-06
+  U_GT1: 4.487370e-07
+  U_GT2: 6.544454e-08
+  U_K: 3.934169e-09
+  U_SYMAT0: 1.182081e-06
+  U_SYMAT1: 1.883049e-06
+  U_SYMAT2: 1.399446e-08
+  U_SYMAT3: 4.291413e-07
+  U_SYMAT4: 1.560370e-08
+  U_SYMAT5: 3.452958e-07
+  U_SYMGT0: 5.319253e-06
+  U_SYMGT1: 1.794769e-06
+  U_SYMGT2: 1.037234e-08
+  U_SYMGT3: 8.879220e-06
+  U_SYMGT4: 9.815254e-09
+  U_SYMGT5: 6.251317e-06
+Average MSE (original scale): 2.077067e-06
+
+Epoch 161/200:
+  Train - Loss: 0.103623, Recon: 0.007390, SW: 0.096233
+  Val   - Loss: 0.116199, Recon: 0.014967, SW: 0.101231
+  LR: 0.000013
+
+Epoch 162/200:
+  Train - Loss: 0.103383, Recon: 0.007396, SW: 0.095988
+  Val   - Loss: 0.118398, Recon: 0.014172, SW: 0.104226
+  LR: 0.000013
+
+Epoch 163/200:
+  Train - Loss: 0.103007, Recon: 0.007111, SW: 0.095896
+  Val   - Loss: 0.116943, Recon: 0.014831, SW: 0.102112
+  LR: 0.000013
+
+Epoch 164/200:
+  Train - Loss: 0.103776, Recon: 0.007464, SW: 0.096312
+  Val   - Loss: 0.116976, Recon: 0.015367, SW: 0.101609
+  LR: 0.000013
+
+Epoch 165/200:
+  Train - Loss: 0.103336, Recon: 0.007291, SW: 0.096045
+  Val   - Loss: 0.117695, Recon: 0.015470, SW: 0.102225
+  LR: 0.000013
+
+Epoch 166/200:
+  Train - Loss: 0.102880, Recon: 0.007308, SW: 0.095572
+  Val   - Loss: 0.117886, Recon: 0.016503, SW: 0.101382
+  LR: 0.000013
+
+Epoch 167/200:
+  Train - Loss: 0.103104, Recon: 0.007296, SW: 0.095808
+  Val   - Loss: 0.118748, Recon: 0.017015, SW: 0.101733
+  LR: 0.000013
+
+Epoch 168/200:
+  Train - Loss: 0.102844, Recon: 0.007357, SW: 0.095487
+  Val   - Loss: 0.115353, Recon: 0.014536, SW: 0.100817
+  LR: 0.000006
+
+Epoch 169/200:
+  Train - Loss: 0.100973, Recon: 0.006016, SW: 0.094956
+  Val   - Loss: 0.116502, Recon: 0.014677, SW: 0.101825
+  LR: 0.000006
+
+Epoch 170/200:
+  Train - Loss: 0.101588, Recon: 0.005959, SW: 0.095630
+  Val   - Loss: 0.113716, Recon: 0.013974, SW: 0.099743
+  LR: 0.000006
+  ✓ New best model saved!
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 7.925919e-07
+  U_B0: 1.563369e-08
+  U_B1: 1.008595e-08
+  U_B2: 4.179591e-12
+  U_BETA0: 1.720734e-07
+  U_BETA1: 3.617825e-08
+  U_BETA2: 1.716895e-09
+  U_CHI: 1.223028e-06
+  U_GT0: 7.325562e-07
+  U_GT1: 2.100335e-07
+  U_GT2: 1.420851e-08
+  U_K: 1.668390e-09
+  U_SYMAT0: 4.352413e-07
+  U_SYMAT1: 5.155529e-07
+  U_SYMAT2: 1.014198e-08
+  U_SYMAT3: 1.933186e-07
+  U_SYMAT4: 6.253990e-09
+  U_SYMAT5: 3.679151e-07
+  U_SYMGT0: 7.432534e-07
+  U_SYMGT1: 3.049374e-07
+  U_SYMGT2: 2.593024e-09
+  U_SYMGT3: 1.605470e-06
+  U_SYMGT4: 1.411263e-08
+  U_SYMGT5: 1.364097e-06
+Average MSE (original scale): 4.402496e-07
+
+Epoch 171/200:
+  Train - Loss: 0.100493, Recon: 0.005913, SW: 0.094580
+  Val   - Loss: 0.115481, Recon: 0.013975, SW: 0.101506
+  LR: 0.000006
+
+Epoch 172/200:
+  Train - Loss: 0.100798, Recon: 0.005960, SW: 0.094839
+  Val   - Loss: 0.116048, Recon: 0.014350, SW: 0.101698
+  LR: 0.000006
+
+Epoch 173/200:
+  Train - Loss: 0.100537, Recon: 0.006014, SW: 0.094523
+  Val   - Loss: 0.115156, Recon: 0.014487, SW: 0.100669
+  LR: 0.000006
+
+Epoch 174/200:
+  Train - Loss: 0.099887, Recon: 0.005974, SW: 0.093913
+  Val   - Loss: 0.114131, Recon: 0.013517, SW: 0.100614
+  LR: 0.000006
+
+Epoch 175/200:
+  Train - Loss: 0.100440, Recon: 0.005944, SW: 0.094495
+  Val   - Loss: 0.114139, Recon: 0.014523, SW: 0.099616
+  LR: 0.000006
+
+Epoch 176/200:
+  Train - Loss: 0.100598, Recon: 0.005940, SW: 0.094658
+  Val   - Loss: 0.115476, Recon: 0.013975, SW: 0.101502
+  LR: 0.000006
+
+Epoch 177/200:
+  Train - Loss: 0.100422, Recon: 0.005996, SW: 0.094426
+  Val   - Loss: 0.115245, Recon: 0.015106, SW: 0.100139
+  LR: 0.000006
+
+Epoch 178/200:
+  Train - Loss: 0.099721, Recon: 0.005897, SW: 0.093824
+  Val   - Loss: 0.114666, Recon: 0.013777, SW: 0.100889
+  LR: 0.000006
+
+Epoch 179/200:
+  Train - Loss: 0.100255, Recon: 0.005918, SW: 0.094337
+  Val   - Loss: 0.112950, Recon: 0.013731, SW: 0.099219
+  LR: 0.000006
+  ✓ New best model saved!
+
+Epoch 180/200:
+  Train - Loss: 0.100006, Recon: 0.005836, SW: 0.094170
+  Val   - Loss: 0.115288, Recon: 0.014207, SW: 0.101081
+  LR: 0.000006
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 6.549268e-07
+  U_B0: 1.587492e-08
+  U_B1: 1.136322e-08
+  U_B2: 5.109465e-12
+  U_BETA0: 1.843741e-07
+  U_BETA1: 4.760843e-08
+  U_BETA2: 1.017734e-09
+  U_CHI: 8.726850e-07
+  U_GT0: 9.642959e-07
+  U_GT1: 2.641370e-07
+  U_GT2: 6.137615e-09
+  U_K: 3.319635e-09
+  U_SYMAT0: 5.549667e-07
+  U_SYMAT1: 5.273447e-07
+  U_SYMAT2: 1.168740e-08
+  U_SYMAT3: 1.364933e-07
+  U_SYMAT4: 8.035110e-09
+  U_SYMAT5: 3.227874e-07
+  U_SYMGT0: 5.992953e-07
+  U_SYMGT1: 4.733719e-07
+  U_SYMGT2: 3.092475e-09
+  U_SYMGT3: 1.242739e-06
+  U_SYMGT4: 1.431974e-08
+  U_SYMGT5: 1.009325e-06
+Average MSE (original scale): 3.805218e-07
+
+Epoch 181/200:
+  Train - Loss: 0.100433, Recon: 0.005861, SW: 0.094572
+  Val   - Loss: 0.114594, Recon: 0.013793, SW: 0.100800
+  LR: 0.000006
+
+Epoch 182/200:
+  Train - Loss: 0.099834, Recon: 0.005976, SW: 0.093859
+  Val   - Loss: 0.115094, Recon: 0.014990, SW: 0.100105
+  LR: 0.000006
+
+Epoch 183/200:
+  Train - Loss: 0.100092, Recon: 0.005831, SW: 0.094261
+  Val   - Loss: 0.113945, Recon: 0.013964, SW: 0.099982
+  LR: 0.000006
+
+Epoch 184/200:
+  Train - Loss: 0.100129, Recon: 0.005900, SW: 0.094229
+  Val   - Loss: 0.114951, Recon: 0.014204, SW: 0.100747
+  LR: 0.000006
+
+Epoch 185/200:
+  Train - Loss: 0.099794, Recon: 0.005875, SW: 0.093918
+  Val   - Loss: 0.115421, Recon: 0.013932, SW: 0.101488
+  LR: 0.000006
+
+Epoch 186/200:
+  Train - Loss: 0.099956, Recon: 0.005933, SW: 0.094024
+  Val   - Loss: 0.114025, Recon: 0.014043, SW: 0.099982
+  LR: 0.000006
+
+Epoch 187/200:
+  Train - Loss: 0.099806, Recon: 0.005906, SW: 0.093900
+  Val   - Loss: 0.113946, Recon: 0.014029, SW: 0.099917
+  LR: 0.000006
+
+Epoch 188/200:
+  Train - Loss: 0.099766, Recon: 0.005941, SW: 0.093826
+  Val   - Loss: 0.113248, Recon: 0.014079, SW: 0.099170
+  LR: 0.000006
+
+Epoch 189/200:
+  Train - Loss: 0.099921, Recon: 0.005845, SW: 0.094076
+  Val   - Loss: 0.115501, Recon: 0.014059, SW: 0.101441
+  LR: 0.000006
+
+Epoch 190/200:
+  Train - Loss: 0.099571, Recon: 0.005926, SW: 0.093645
+  Val   - Loss: 0.115527, Recon: 0.014596, SW: 0.100931
+  LR: 0.000003
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 6.393293e-07
+  U_B0: 1.515987e-08
+  U_B1: 1.646368e-08
+  U_B2: 3.907459e-12
+  U_BETA0: 1.767349e-07
+  U_BETA1: 3.806307e-08
+  U_BETA2: 2.453542e-09
+  U_CHI: 7.678810e-07
+  U_GT0: 7.258551e-07
+  U_GT1: 3.071096e-07
+  U_GT2: 1.562509e-08
+  U_K: 1.351685e-09
+  U_SYMAT0: 4.401598e-07
+  U_SYMAT1: 3.972406e-07
+  U_SYMAT2: 1.105241e-08
+  U_SYMAT3: 1.484579e-07
+  U_SYMAT4: 9.904793e-09
+  U_SYMAT5: 2.943581e-07
+  U_SYMGT0: 7.189619e-07
+  U_SYMGT1: 2.860853e-07
+  U_SYMGT2: 3.531488e-09
+  U_SYMGT3: 1.045381e-06
+  U_SYMGT4: 1.251114e-08
+  U_SYMGT5: 7.777567e-07
+Average MSE (original scale): 3.254577e-07
+
+Epoch 191/200:
+  Train - Loss: 0.098820, Recon: 0.005391, SW: 0.093429
+  Val   - Loss: 0.113334, Recon: 0.013533, SW: 0.099801
+  LR: 0.000003
+
+Epoch 192/200:
+  Train - Loss: 0.098733, Recon: 0.005436, SW: 0.093297
+  Val   - Loss: 0.112365, Recon: 0.013752, SW: 0.098613
+  LR: 0.000003
+  ✓ New best model saved!
+
+Epoch 193/200:
+  Train - Loss: 0.098682, Recon: 0.005389, SW: 0.093292
+  Val   - Loss: 0.112212, Recon: 0.013413, SW: 0.098799
+  LR: 0.000003
+  ✓ New best model saved!
+
+Epoch 194/200:
+  Train - Loss: 0.098488, Recon: 0.005348, SW: 0.093140
+  Val   - Loss: 0.112550, Recon: 0.013778, SW: 0.098772
+  LR: 0.000003
+
+Epoch 195/200:
+  Train - Loss: 0.098960, Recon: 0.005412, SW: 0.093548
+  Val   - Loss: 0.113632, Recon: 0.013356, SW: 0.100276
+  LR: 0.000003
+
+Epoch 196/200:
+  Train - Loss: 0.098389, Recon: 0.005371, SW: 0.093018
+  Val   - Loss: 0.112363, Recon: 0.013608, SW: 0.098755
+  LR: 0.000003
+
+Epoch 197/200:
+  Train - Loss: 0.098458, Recon: 0.005311, SW: 0.093147
+  Val   - Loss: 0.113352, Recon: 0.014056, SW: 0.099297
+  LR: 0.000003
+
+Epoch 198/200:
+  Train - Loss: 0.098961, Recon: 0.005353, SW: 0.093608
+  Val   - Loss: 0.114308, Recon: 0.013523, SW: 0.100786
+  LR: 0.000003
+
+Epoch 199/200:
+  Train - Loss: 0.098109, Recon: 0.005345, SW: 0.092765
+  Val   - Loss: 0.113528, Recon: 0.013626, SW: 0.099903
+  LR: 0.000003
+
+Epoch 200/200:
+  Train - Loss: 0.098811, Recon: 0.005318, SW: 0.093493
+  Val   - Loss: 0.112193, Recon: 0.013574, SW: 0.098619
+  LR: 0.000003
+  ✓ New best model saved!
+
+Evaluating reconstruction quality...
+
+Per-variable MSE (original scale):
+  U_ALPHA: 2.896740e-07
+  U_B0: 1.469237e-08
+  U_B1: 1.363279e-08
+  U_B2: 4.757724e-12
+  U_BETA0: 1.594116e-07
+  U_BETA1: 3.377799e-08
+  U_BETA2: 1.855616e-09
+  U_CHI: 6.830477e-07
+  U_GT0: 7.763718e-07
+  U_GT1: 1.949883e-07
+  U_GT2: 1.731043e-08
+  U_K: 1.409990e-09
+  U_SYMAT0: 5.935688e-07
+  U_SYMAT1: 4.402411e-07
+  U_SYMAT2: 1.047255e-08
+  U_SYMAT3: 1.814624e-07
+  U_SYMAT4: 7.540209e-09
+  U_SYMAT5: 2.659665e-07
+  U_SYMGT0: 2.682658e-07
+  U_SYMGT1: 4.097124e-07
+  U_SYMGT2: 2.680496e-09
+  U_SYMGT3: 3.092200e-07
+  U_SYMGT4: 1.292380e-08
+  U_SYMGT5: 1.660598e-07
+Average MSE (original scale): 2.234053e-07
+
+Training completed!
+Best validation loss: 0.112193
+
+Training completed!
+Models saved in: ./save/swae_adaptive_scaling/
+Scaling parameters saved in: ./scaling_params.json
