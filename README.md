@@ -8,141 +8,115 @@ The project implements various SWAE architectures to compress 5x5x5 subvolumes o
 
 ## Architecture Implementations
 
-### 1. Initial CNN + Batch Normalization SWAE
+### 1. CNN SWAE Architecture
 
-The baseline implementation uses a convolutional neural network architecture with batch normalization:
+The convolutional neural network implementation with optimized architecture:
 
-```mermaid
-graph TB
-    subgraph "CNN SWAE Encoder"
-        I["Input<br/>5×5×5×1<br/>(125 values)"] --> C1["Conv3D<br/>3×3×3, 32 ch"]
-        C1 --> BN1["BatchNorm3D"] --> R1["ReLU"] --> C2["Conv3D<br/>3×3×3, 64 ch"]
-        C2 --> BN2["BatchNorm3D"] --> R2["ReLU"] --> C3["Conv3D<br/>3×3×3, 128 ch"]
-        C3 --> BN3["BatchNorm3D"] --> R3["ReLU"] --> C4["Conv3D<br/>3×3×3, 128 ch"]
-        C4 --> BN4["BatchNorm3D"] --> R4["ReLU"] --> C5["Conv3D<br/>3×3×3, 256 ch"]
-        C5 --> BN5["BatchNorm3D"] --> R5["ReLU"] --> C6["Conv3D<br/>3×3×3, 256 ch"]
-        C6 --> BN6["BatchNorm3D"] --> R6["ReLU"] --> C7["Conv3D<br/>3×3×3, 256 ch"]
-        C7 --> BN7["BatchNorm3D"] --> R7["ReLU"] --> C8["Conv3D<br/>3×3×3, 256 ch"]
-        C8 --> BN8["BatchNorm3D"] --> R8["ReLU"] --> F["Flatten<br/>(2048 values)"]
-        F --> FC1["Linear<br/>2048→16"]
-        FC1 --> L["Latent Code<br/>16 dimensions"]
-    end
+**Encoder Architecture:**
+```
+Input (5×5×5×1) → Conv3D(32) → ReLU → Conv3D(64) → ReLU → 
+Conv3D(128) → ReLU → Conv3D(256) → ReLU → Flatten → 
+Linear(2048→16) → Latent(16D)
 ```
 
-```mermaid
-graph TB
-    subgraph "CNN SWAE Decoder"
-        L["Latent Code<br/>16 dimensions"] --> FC2["Linear<br/>16→2048"]
-        FC2 --> RS["Reshape<br/>2×2×2×256"] --> D1["ConvTranspose3D<br/>2×2×2, 128 ch<br/>stride=2"]
-        D1 --> BN9["BatchNorm3D"] --> R9["ReLU"] --> D2["ConvTranspose3D<br/>2×2×2, 64 ch<br/>stride=2"]
-        D2 --> BN10["BatchNorm3D"] --> R10["ReLU"] --> D3["ConvTranspose3D<br/>2×2×2, 32 ch<br/>stride=2"]
-        D3 --> BN11["BatchNorm3D"] --> R11["ReLU"] --> D4["ConvTranspose3D<br/>2×2×2, 1 ch<br/>stride=2"]
-        D4 --> CR["Crop to 5×5×5"] --> O["Output<br/>5×5×5×1<br/>(125 values)"]
-    end
+**Decoder Architecture:**
+```
+Latent(16D) → Linear(16→2048) → Reshape(2×2×2×256) → 
+ConvTranspose3D(128) → ReLU → ConvTranspose3D(64) → ReLU → 
+ConvTranspose3D(32) → ReLU → ConvTranspose3D(1) → 
+Crop → Output(5×5×5×1)
 ```
 
 **Key Features:**
-- 8 convolutional layers with progressive channel expansion (32→64→128→256)
-- Batch normalization after each convolutional layer
-- ReLU activation functions
-- Final fully connected layer: 2048 → 16 (latent dimension)
-- Total FLOPs: 57,343,552 (Encoder) + 24,902,144 (Decoder)
+- Progressive channel expansion: 32→64→128→256
+- 3×3×3 kernels throughout
+- Stride-2 transposed convolutions for upsampling
+- Total parameters: ~3.2M
+- FLOPs: 57.3M (Encoder) + 24.9M (Decoder)
 
-**Training Script:** `train_swae_u_chi_5x5x5.py` (for U_chi variable only)
+### 2. MLP SWAE Architecture
 
-### 2. Optimized Network Versions (_opt suffix)
+The Multi-Layer Perceptron implementation for ultra-low latency:
 
-The optimized versions focus on faster inference while maintaining quality:
-
-#### a. Convolutional SWAE (Optimized)
-
-```mermaid
-graph TB
-    subgraph "Optimized Conv SWAE"
-        I2["Input<br/>5×5×5×1"] --> OC1["Conv3D<br/>32 ch"]
-        OC1 --> OR1["ReLU"] --> OC2["Conv3D<br/>64 ch"]
-        OC2 --> OR2["ReLU"] --> OC3["Conv3D<br/>128 ch"]
-        OC3 --> OR3["ReLU"] --> OC4["Conv3D<br/>256 ch"]
-        OC4 --> OR4["ReLU"] --> OF["Flatten"]
-        OF --> OFC["Linear<br/>2048→16"]
-        OFC --> OL["Latent<br/>16D"]
-        OL --> OFC2["Linear<br/>16→2048"]
-        OFC2 --> ORS["Reshape"] --> OD1["ConvTranspose3D"]
-        OD1 --> OR5["ReLU"] --> OD2["ConvTranspose3D"]
-        OD2 --> OR6["ReLU"] --> OD3["ConvTranspose3D"]
-        OD3 --> OR7["ReLU"] --> OD4["ConvTranspose3D"]
-        OD4 --> OO["Output<br/>5×5×5×1"]
-    end
+**Architecture:**
+```
+Encoder: Input(125) → Linear(512) → ReLU → Linear(256) → ReLU → Linear(16) → Latent(16D)
+Decoder: Latent(16D) → Linear(256) → ReLU → Linear(512) → ReLU → Linear(125) → Output(125)
 ```
 
-- Streamlined architecture without batch normalization for faster inference
-- Supports INT8 and Float8 quantization for additional speedup
-- Maintains the same encoder/decoder structure but optimized for deployment
-
-#### b. MLP SWAE
-
-```mermaid
-graph LR
-    subgraph "MLP SWAE Architecture"
-        I3["Input<br/>5×5×5×1<br/>(125 values)"] --> FL["Flatten<br/>125"]
-        FL --> M1["Linear<br/>125→512"]
-        M1 --> MR1["ReLU"] --> M2["Linear<br/>512→256"]
-        M2 --> MR2["ReLU"] --> M3["Linear<br/>256→16"]
-        M3 --> ML["Latent<br/>16D"]
-        ML --> M4["Linear<br/>16→256"]
-        M4 --> MR3["ReLU"] --> M5["Linear<br/>256→512"]
-        M5 --> MR4["ReLU"] --> M6["Linear<br/>512→125"]
-        M6 --> MRS["Reshape<br/>5×5×5×1"] --> MO["Output<br/>5×5×5×1"]
-    end
-```
-
-**MLP Architecture Details:**
-- Fully connected architecture for ultra-low latency
-- **Encoder:** 125→512→256→16
-- **Decoder:** 16→256→512→125
-- Total FLOPs: 796,672 (significantly lower than CNN)
+**Key Features:**
+- Fully connected architecture (no convolutions)
+- Total parameters: ~398K (8x fewer than CNN)
+- FLOPs: 796K (72x fewer than CNN)
 - Supports INT8/Float8 quantization for 16x speedup
+- Ideal for latency-sensitive applications
 
 **Training Scripts:** 
-- Files ending with `_opt` (e.g., `train_swae_u_chi_5x5x5_opt.py`)
-- Architecture selection via `--arch` parameter: `conv` or `mlp`
+- Use `--arch mlp` flag with any training script
+- Optimized versions have `_opt` suffix
 
 ### 3. All Variables Model
 
-Extended implementation that handles multiple simulation variables with a single model:
+Extended implementation that handles all 24 BSSN variables with a single model:
 
-```mermaid
-graph TB
-    subgraph "Multi-Variable Training"
-        V1["U_chi"] --> N1["Per-sample<br/>Normalization"]
-        V2["U_phi"] --> N2["Per-sample<br/>Normalization"]
-        V3["U_psi"] --> N3["Per-sample<br/>Normalization"]
-        VN["...other U_*<br/>variables"] --> NN["Per-sample<br/>Normalization"]
-        
-        N1 --> M["Shared SWAE Model<br/>(CNN or MLP)"]
-        N2 --> M
-        N3 --> M
-        NN --> M
-        
-        M --> D1["Denormalization"]
-        D1 --> R1["Reconstructed<br/>Variables"]
-    end
+**Training Pipeline:**
+```
+All U_* Variables → Per-sample Normalization → Shared SWAE Model (CNN/MLP) → 
+Latent Space (16D) → Reconstruction → Denormalization → Output
 ```
 
-**Supported Variables:** All variables ending with `U_chi` pattern
-- Processes multiple physical quantities from gravitational wave simulations
+**Supported Variables:** 
+- All 24 BSSN formalism variables (U_ALPHA, U_B0-B2, U_BETA0-2, U_CHI, U_GT0-2, U_K, U_SYMAT0-5, U_SYMGT0-5)
 - Uses the same architecture but trained on diverse data distribution
 - Maintains per-sample normalization for handling different value ranges
 
-**Training Script:** `train_swae_5x5x5_all_variables.py`
-**Inference Script:** `inference_swae_5x5x5_all_variables.py`
+**Training Script:** `train_swae_5x5x5_all_variables.py`  
+**Inference Script:** `inference_swae_all_variables_validation_5x5x5_opt.py`
 
 ## Performance Metrics
 
-### Compression Ratios
+### Latest Results (All 24 Variables)
+
+**Overall Performance:**
+- **Average MSE:** 0.004907
+- **Average PSNR:** 47.81 dB
+- **Average MAE:** 0.0330
+- **Mean Relative Error:** 0.91%
+- **Compression Ratio:** 15.6:1 (5×5×5 → 8 latent dimensions)
+
+**Per-Variable Performance (Best to Worst):**
+```
+Variable    MSE        PSNR (dB)   MAE        Mean Rel Err   Samples
+U_CHI       0.000734   55.88       0.017151   0.34%          358
+U_ALPHA     0.000932   55.61       0.018036   0.34%          359
+U_BETA0     0.002279   inf         0.026260   0.37%          364
+U_SYMGT0    0.003279   50.49       0.031647   0.49%          352
+U_SYMAT3    0.003563   49.31       0.033936   0.88%          345
+U_SYMAT1    0.003613   48.73       0.034668   4.31%          363
+U_SYMAT2    0.003738   46.94       0.034485   0.98%          349
+U_B0        0.004242   inf         0.035187   0.42%          314
+U_GT1       0.004353   inf         0.030563   0.53%          311
+U_BETA2     0.004463   inf         0.027832   0.35%          344
+U_SYMAT5    0.004623   48.47       0.035736   2.49%          334
+U_BETA1     0.004795   inf         0.031555   0.44%          346
+U_B2        0.005043   inf         0.040131   0.44%          329
+U_SYMGT3    0.005184   49.89       0.035706   0.54%          338
+U_SYMGT5    0.005375   48.55       0.038483   0.54%          334
+U_SYMGT4    0.006050   47.09       0.040497   0.57%          343
+U_SYMAT0    0.006081   48.74       0.039001   2.82%          334
+U_GT0       0.006222   inf         0.030762   0.53%          349
+U_SYMGT1    0.006325   48.63       0.038300   0.58%          322
+U_GT2       0.006702   inf         0.031708   0.52%          329
+U_B1        0.006714   inf         0.038605   0.47%          362
+U_K         0.006718   48.35       0.029282   0.38%          348
+U_SYMGT2    0.008354   47.90       0.038483   0.54%          362
+U_SYMAT4    0.008797   47.49       0.036743   1.72%          373
+```
+
+### Compression Specifications
 - **Input:** 5×5×5 = 125 float32 values (500 bytes)
-- **Compressed:** 16 latent dimensions (64 bytes)
-- **Compression Ratio:** 7.8:1
+- **Compressed:** 8 latent dimensions (32 bytes)
+- **Compression Ratio:** 15.6:1
 
 ### Latency Analysis (from computation_costs.py)
 
@@ -281,7 +255,7 @@ Supports multiple normalization strategies:
 .
 ├── README.md                                    # Project documentation
 ├── compress_folder.sh                           # Script to compress all HDF5 files in a folder
-├── compression_and_reconstruction.py            # Inference script with HDF5 output
+├── compression_and_reconstruction.py            # Main compression/reconstruction script
 ├── compression_and_reconstruction.sbatch        # SLURM job for compression/reconstruction
 ├── computation_costs.py                         # Analyzes latency for different network interconnects
 ├── utils.py                                     # Utility functions
@@ -289,22 +263,16 @@ Supports multiple normalization strategies:
 ├── models/                                      # Model architectures
 │   ├── __init__.py
 │   ├── models.py                               # Model factory and utilities
-│   ├── swae_pure_3d_5x5x5.py                  # CNN SWAE with batch normalization
+│   ├── swae_pure_3d_5x5x5.py                  # CNN SWAE base implementation
 │   ├── swae_pure_3d_5x5x5_opt.py              # Optimized CNN and MLP SWAE
-│   ├── swae_mlp_3d_5x5x5.py                   # MLP-specific implementations
-│   ├── swae_log_loss_3d_5x5x5.py              # Log-domain loss variant
-│   ├── swae_relative_error_3d_5x5x5.py        # Relative error loss variant
-│   └── swae_robust_loss_3d_5x5x5.py           # Robust loss variant
+│   └── swae_mlp_3d_5x5x5.py                   # MLP-specific implementations
 │
 ├── datasets/                                    # Dataset loaders
 │   ├── __init__.py
 │   ├── datasets.py                             # Base dataset classes
-│   ├── all_variables_dataset_5x5x5_opt.py      # All variables dataset (optimized)
-│   ├── u_chi_dataset_5x5x5.py                 # Single variable dataset
-│   ├── u_chi_dataset_5x5x5_opt.py             # Single variable dataset (optimized)
-│   ├── adaptive_scaling_dataset_5x5x5.py      # Adaptive scaling experiments
-│   ├── dual_transform_dataset_5x5x5.py        # Dual transformation experiments
-│   └── problematic_variables_dataset_5x5x5.py # Dataset for challenging variables
+│   ├── all_variables_dataset_5x5x5_opt.py      # All 24 variables dataset
+│   ├── u_chi_dataset.py                        # Original 7x7x7 single variable
+│   └── u_chi_dataset_5x5x5_opt.py             # 5x5x5 single variable dataset
 │
 ├── train_swae_5x5x5_all_variables.py           # Main training script
 ├── train_swae_5x5x5_all_variables.sbatch       # SLURM job for training
@@ -313,25 +281,19 @@ Supports multiple normalization strategies:
 ├── inference_swae_all_variables_validation_5x5x5_opt.sbatch # SLURM job for validation
 │
 ├── save/                                        # Model checkpoints
-│   └── swae_all_vars_5x5x5_opt_mlp/           # Pre-trained MLP model
+│   └── swae_all_vars_5x5x5_opt_conv/          # Pre-trained models
 │       └── best_model.pth
 │
-├── logs/                                        # Training and inference logs
+├── compression_reconstruction_results_*/        # Results directories
+│   ├── all_variables_reconstructed.h5         # Reconstructed data (7x7x7 padded)
+│   ├── all_variables_encoded.h5               # Compressed latent codes
+│   ├── average_metrics.txt                    # Performance metrics
+│   └── U_*/                                   # Per-variable visualizations
+│       ├── sample_*_comparison_slices_*.png   # Comparison plots
+│       └── vti_files/                         # VTK files for ParaView
 │
-├── SWAE-3D-Architecture/                        # Architecture visualization
-│   └── swae_architecture_diagram.py            # Generates architecture diagrams
-│
-├── exact_flops_analysis/                        # Performance analysis
-│   ├── calculate_swae_flops.py                 # FLOP calculations
-│   └── compression_feasibility_plotter.py      # Feasibility plots
-│
-└── architecture_search_experiment/              # Architecture search experiments
-    ├── train_swae_u_chi.py                     # Base training script
-    ├── train_swae_architecture_search.sbatch   # Main architecture search job
-    ├── train_swae_arch_search_latent*.sbatch   # Jobs for different latent dimensions
-    ├── submit_parallel_arch_search.sh          # Submit all architecture searches
-    ├── consolidate_parallel_results.sh         # Gather results
-    └── analyze_compression_results.py          # Analyze search results
+└── SWAE-3D-Architecture/                        # Architecture visualization
+    └── swae_architecture_diagram.py            # Generates architecture diagrams
 ```
 
 ## Key Scripts
