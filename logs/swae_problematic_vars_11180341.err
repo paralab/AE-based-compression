@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/u/tawal/0722-NN-based-compression-AE/train_swae_5x5x5_problematic_vars.py", line 405, in <module>
-    main()
-  File "/u/tawal/0722-NN-based-compression-AE/train_swae_5x5x5_problematic_vars.py", line 274, in main
-    model = create_swae_3d_5x5x5_model(
-TypeError: create_swae_3d_5x5x5_model() got an unexpected keyword argument 'arch_type'

@@ -1,9 +1,0 @@
-Final Test Results
-==================
-Model: SWAE 3D (mlp architecture)
-Variables: ['U_B2', 'U_SYMAT2', 'U_GT2', 'U_SYMGT2', 'U_SYMAT4', 'U_SYMAT3']
-Normalization: auto
-Best epoch: 5
-Test Loss: 0.241340
-Test PSNR: inf dB
-Compression ratio: 7.8:1

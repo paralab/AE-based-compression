@@ -25,12 +25,12 @@ echo "Node: $SLURM_NODELIST"
 # Default model path - can be overridden when submitting
 MODEL_PATH=${MODEL_PATH:-"./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth"}
 ARCH=${ARCH:-"mlp"}
-OUTPUT_DIR=${OUTPUT_DIR:-"test_all_vars_5x5x5_opt_results"}
+OUTPUT_DIR=${OUTPUT_DIR:-"test_all_vars_test_5x5x5_opt_results"}
 USE_FLOAT8=${USE_FLOAT8:-"false"}
 
 echo "Model path: $MODEL_PATH"
 echo "Architecture: $ARCH"
-echo "Output directory: $OUTPUT_DIR"
+echo "Output Directory: $OUTPUT_DIR"
 echo "Use Float8 quantization: $USE_FLOAT8"
 
 # Run inference with speed benchmarking
@@ -41,7 +41,7 @@ else
 fi
 
 python inference_swae_all_variables_validation_5x5x5_opt.py \
-    --data-folder "/u/tawal/BSSN-Extracted-Data/tt_q01/" \
+    --data-folder "/u/tawal/BSSN-Extracted-Data/tt_q/" \
     --model-path "$MODEL_PATH" \
     --output-dir "$OUTPUT_DIR" \
     --arch "$ARCH" \
@@ -55,12 +55,3 @@ python inference_swae_all_variables_validation_5x5x5_opt.py \
 
 echo "Inference completed!"
 echo "Results saved in: $OUTPUT_DIR"
-echo ""
-echo "📊 To run inference on different architectures:"
-echo "   MLP: sbatch --export=MODEL_PATH=./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth,ARCH=mlp,OUTPUT_DIR=results_mlp inference_swae_all_variables_validation_5x5x5_opt.sbatch"
-echo "   gMLP: sbatch --export=MODEL_PATH=./save/swae_all_vars_5x5x5_opt_gmlp/best_model.pth,ARCH=gmlp,OUTPUT_DIR=results_gmlp inference_swae_all_variables_validation_5x5x5_opt.sbatch"
-echo "   Conv: sbatch --export=MODEL_PATH=./save/swae_all_vars_5x5x5/best_model.pth,ARCH=conv,OUTPUT_DIR=results_conv inference_swae_all_variables_validation_5x5x5_opt.sbatch"
-echo ""
-echo "🔢 To run with Float8 quantization (MLP/gMLP only):"
-echo "   Add --use-float8 flag to python command, or set USE_FLOAT8=true in sbatch export"
-echo "   Example: sbatch --export=MODEL_PATH=./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth,ARCH=mlp,OUTPUT_DIR=results_mlp_float8,USE_FLOAT8=true inference_swae_all_variables_validation_5x5x5_opt.sbatch" 

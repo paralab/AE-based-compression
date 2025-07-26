@@ -24,7 +24,7 @@ echo "Node: $SLURM_NODELIST"
 # Run training - MLP architecture with optimizations for all variables
 python train_swae_5x5x5_all_variables.py \
     --data-folder "/u/tawal/BSSN-Extracted-Data/tt_q01/" \
-    --save-dir "./save/swae_all_vars_5x5x5_opt_mlp" \
+    --save-dir "./save/swae_all_vars_5x5x5" \
     --arch mlp \
     --batch-size 256 \
     --epochs 1000 \
@@ -39,4 +39,4 @@ python train_swae_5x5x5_all_variables.py \
     --exclude-vars  # Empty list means include all variables
 
 echo "Training completed!"
-echo "Model saved in: ./save/swae_all_vars_5x5x5_opt_mlp" 
+echo "Model saved in: ./save/swae_all_vars_5x5x5" 

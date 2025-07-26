@@ -195,17 +195,44 @@ sbatch inference_swae_u_chi_validation_5x5x5.sbatch
 
 2. **All Variables Inference:**
 ```bash
-python inference_swae_5x5x5_all_variables.py \
-    --model-path ./save/best_model.pth \
+python inference_swae_all_variables_validation_5x5x5_opt.py \
+    --model-path ./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth \
     --output-dir results \
-    --enable-float8  # For Float8 quantization
+    --use-float8  # For Float8 quantization
 ```
+
+### Compression and Reconstruction
+
+To compress an entire folder of HDF5 files and save both reconstructed data and embeddings:
+
+```bash
+./compress_folder.sh
+```
+
+This will:
+- Process all HDF5 files in `/u/tawal/BSSN-Extracted-Data/tt_q/`
+- Generate comparison plots for each variable
+- Save `all_variables_reconstructed.h5` with 7x7x7 reconstructed data
+- Save `all_variables_encoded.h5` with 16-dimensional latent embeddings
+- Create timestamped output directory with all results
 
 ### Quantization Options
 
 For MLP architectures, enable faster inference with:
+- `--use-float8`: Float8 quantization (16x theoretical speedup with better accuracy than INT8)
+  - Available in inference scripts with the `--use-float8` flag
+  - Maintains better numerical precision than INT8 while achieving similar speedups
+  - Particularly effective for the MLP architecture
 - `--enable-int8`: INT8 quantization (16x theoretical speedup)
-- `--enable-float8`: Float8 quantization (16x theoretical speedup with better accuracy than INT8)
+  - Legacy option for older scripts
+
+Example usage:
+```bash
+python inference_swae_all_variables_validation_5x5x5_opt.py \
+    --model-path ./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth \
+    --use-float8 \
+    --arch mlp
+```
 
 ## Architecture Search Experiment
 
@@ -247,6 +274,82 @@ Supports multiple normalization strategies:
 3. **Early stopping:** Prevents overfitting with configurable patience
 4. **Comprehensive metrics:** PSNR, MSE, correlation, and relative error analysis
 5. **Production-ready optimizations:** TF32, mixed precision, and model compilation support
+
+## Directory Structure
+
+```
+.
+├── README.md                                    # Project documentation
+├── compress_folder.sh                           # Script to compress all HDF5 files in a folder
+├── compression_and_reconstruction.py            # Inference script with HDF5 output
+├── compression_and_reconstruction.sbatch        # SLURM job for compression/reconstruction
+├── computation_costs.py                         # Analyzes latency for different network interconnects
+├── utils.py                                     # Utility functions
+│
+├── models/                                      # Model architectures
+│   ├── __init__.py
+│   ├── models.py                               # Model factory and utilities
+│   ├── swae_pure_3d_5x5x5.py                  # CNN SWAE with batch normalization
+│   ├── swae_pure_3d_5x5x5_opt.py              # Optimized CNN and MLP SWAE
+│   ├── swae_mlp_3d_5x5x5.py                   # MLP-specific implementations
+│   ├── swae_log_loss_3d_5x5x5.py              # Log-domain loss variant
+│   ├── swae_relative_error_3d_5x5x5.py        # Relative error loss variant
+│   └── swae_robust_loss_3d_5x5x5.py           # Robust loss variant
+│
+├── datasets/                                    # Dataset loaders
+│   ├── __init__.py
+│   ├── datasets.py                             # Base dataset classes
+│   ├── all_variables_dataset_5x5x5_opt.py      # All variables dataset (optimized)
+│   ├── u_chi_dataset_5x5x5.py                 # Single variable dataset
+│   ├── u_chi_dataset_5x5x5_opt.py             # Single variable dataset (optimized)
+│   ├── adaptive_scaling_dataset_5x5x5.py      # Adaptive scaling experiments
+│   ├── dual_transform_dataset_5x5x5.py        # Dual transformation experiments
+│   └── problematic_variables_dataset_5x5x5.py # Dataset for challenging variables
+│
+├── train_swae_5x5x5_all_variables.py           # Main training script
+├── train_swae_5x5x5_all_variables.sbatch       # SLURM job for training
+│
+├── inference_swae_all_variables_validation_5x5x5_opt.py    # Validation inference
+├── inference_swae_all_variables_validation_5x5x5_opt.sbatch # SLURM job for validation
+│
+├── save/                                        # Model checkpoints
+│   └── swae_all_vars_5x5x5_opt_mlp/           # Pre-trained MLP model
+│       └── best_model.pth
+│
+├── logs/                                        # Training and inference logs
+│
+├── SWAE-3D-Architecture/                        # Architecture visualization
+│   └── swae_architecture_diagram.py            # Generates architecture diagrams
+│
+├── exact_flops_analysis/                        # Performance analysis
+│   ├── calculate_swae_flops.py                 # FLOP calculations
+│   └── compression_feasibility_plotter.py      # Feasibility plots
+│
+└── architecture_search_experiment/              # Architecture search experiments
+    ├── train_swae_u_chi.py                     # Base training script
+    ├── train_swae_architecture_search.sbatch   # Main architecture search job
+    ├── train_swae_arch_search_latent*.sbatch   # Jobs for different latent dimensions
+    ├── submit_parallel_arch_search.sh          # Submit all architecture searches
+    ├── consolidate_parallel_results.sh         # Gather results
+    └── analyze_compression_results.py          # Analyze search results
+```
+
+## Key Scripts
+
+### Training
+- `train_swae_5x5x5_all_variables.py`: Main training script supporting both CNN and MLP architectures
+- `train_swae_5x5x5_all_variables.sbatch`: SLURM submission script
+
+### Inference and Compression
+- `compression_and_reconstruction.py`: Process folders of HDF5 files, generate plots and save compressed/reconstructed data
+- `compress_folder.sh`: Convenience script to compress all HDF5 files in a folder and save both:
+  - `all_variables_reconstructed.h5`: Reconstructed 7x7x7 data in BSSN format
+  - `all_variables_encoded.h5`: Compressed latent embeddings (16D vectors)
+- `inference_swae_all_variables_validation_5x5x5_opt.py`: Validation with comprehensive metrics
+
+### Analysis
+- `computation_costs.py`: Analyze compression performance across different network interconnects
+- `exact_flops_analysis/calculate_swae_flops.py`: Detailed FLOP analysis for different architectures
 
 ## Citation
 
