@@ -11,7 +11,7 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 OUTPUT_DIR="compression_reconstruction_results_${TIMESTAMP}"
 
 # Default model (MLP architecture)
-MODEL_PATH="./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth"
+MODEL_PATH="./save/swae_all_vars_5x5x5/best_model.pth"
 ARCH="mlp"
 SAMPLES_PER_VAR="all"  # Process all samples
 

@@ -27,7 +27,7 @@ MODEL_PATH=${MODEL_PATH:-"./save/swae_all_vars_5x5x5_opt_mlp/best_model.pth"}
 ARCH=${ARCH:-"mlp"}
 OUTPUT_DIR=${OUTPUT_DIR:-"validation_results_with_hdf5"}
 USE_FLOAT8=${USE_FLOAT8:-"false"}
-USE_FLOAT16=${USE_FLOAT16:-"true"}
+USE_FLOAT16=${USE_FLOAT16:-"false"}
 SAMPLES_PER_VAR=${SAMPLES_PER_VAR:-"all"}
 
 echo "Model path: $MODEL_PATH"
@@ -61,4 +61,4 @@ python "compression_and_reconstruction.py" \
 
 echo "Inference completed!"
 echo "Results saved in: $OUTPUT_DIR"
-echo "HDF5 files: all_variables_reconstructed.h5 and all_variables_encoded.h5"
+echo "HDF5 files: all_variables_reconstructed.h5 (5x5x5) and all_variables_encoded.h5 (all variables)"

@@ -504,7 +504,7 @@ def save_hdf5_results(reconstructed_data_dict, encoded_data_dict, output_dir, da
     Save reconstructed and encoded data as HDF5 files
     
     Args:
-        reconstructed_data_dict: Dict mapping variable names to reconstructed 7x7x7 arrays
+        reconstructed_data_dict: Dict mapping variable names to reconstructed 5x5x5 arrays
         encoded_data_dict: Dict mapping variable names to encoded latent vectors
         output_dir: Output directory
         dataset_info: Info about the dataset (folder path, etc.)
@@ -532,7 +532,7 @@ def save_hdf5_results(reconstructed_data_dict, encoded_data_dict, output_dir, da
         # Create var_data array in BSSN format
         # Find the maximum number of samples across all variables
         max_samples = max(data.shape[0] for data in reconstructed_data_dict.values())
-        var_data_shape = (len(var_names), max_samples, 7, 7, 7)
+        var_data_shape = (len(var_names), max_samples, 5, 5, 5)
         var_data = np.zeros(var_data_shape, dtype=np.float32)
         
         # Fill the array, padding with zeros if necessary
@@ -565,6 +565,8 @@ def save_hdf5_results(reconstructed_data_dict, encoded_data_dict, output_dir, da
     
     # Save encoded data
     print(f"Saving encoded data to: {encoded_file}")
+    print(f"  Variables to save: {list(encoded_data_dict.keys())}")
+    print(f"  Number of variables: {len(encoded_data_dict)}")
     with h5py.File(encoded_file, 'w') as f:
         # Save metadata
         f.attrs['source_folder'] = dataset_info.get('folder', 'unknown')
@@ -577,11 +579,12 @@ def save_hdf5_results(reconstructed_data_dict, encoded_data_dict, output_dir, da
         
         # Save encoded data for each variable
         for var_name, latent_vectors in encoded_data_dict.items():
+            print(f"    Saving {var_name} with shape {latent_vectors.shape}...")
             var_group = f.create_group(var_name)
             var_group.create_dataset('latent_vectors', data=latent_vectors, compression='gzip')
             var_group.attrs['num_samples'] = len(latent_vectors)
             var_group.attrs['latent_dim'] = latent_vectors.shape[1] if len(latent_vectors.shape) > 1 else 1
-            var_group.attrs['original_shape'] = (7, 7, 7)
+            var_group.attrs['original_shape'] = (5, 5, 5)
             var_group.attrs['processed_shape'] = (5, 5, 5)
             
             # Add metrics if available
@@ -590,7 +593,7 @@ def save_hdf5_results(reconstructed_data_dict, encoded_data_dict, output_dir, da
                 var_group.attrs['mse'] = var_metrics['mse']
                 var_group.attrs['psnr'] = var_metrics['psnr']
                 var_group.attrs['mae'] = var_metrics['mae']
-                var_group.attrs['mean_relative_error'] = var_metrics['mean_relative_error']
+                var_group.attrs['mean_relative_error'] = var_metrics['mean_relative_error_percent']
         
         # Save summary metrics
         if metrics_dict:
@@ -832,7 +835,7 @@ def main():
                 print(f"  Warning: Only {len(indices)} samples available for {var_name}, using all")
             
             # Initialize lists to store data for this variable
-            var_reconstructed_7x7x7 = []
+            var_reconstructed_5x5x5 = []
             var_encoded = []
             
             # Process selected samples for this variable
@@ -877,25 +880,11 @@ def main():
                     per_variable_metrics[var_name] = []
                 per_variable_metrics[var_name].append(metrics)
                 
-                # For HDF5 saving, we need to pad 5x5x5 back to 7x7x7
-                # First get the original 7x7x7 sample (before dataset extracted 5x5x5)
-                # The dataset should have the original 7x7x7 data stored
-                if hasattr(eval_dataset, 'get_original_7x7x7'):
-                    original_7x7x7 = eval_dataset.get_original_7x7x7(sample_idx)
-                else:
-                    # If no method available, create a simple padded version
-                    # with zeros (not ideal but functional)
-                    original_7x7x7 = np.zeros((7, 7, 7), dtype=np.float32)
-                    original_7x7x7[1:6, 1:6, 1:6] = original_denorm  # Place denorm in center
-                
-                # Denormalize the reconstructed data
+                # For HDF5 saving, store the denormalized 5x5x5 reconstruction directly
                 reconstructed_denorm_5x5x5 = eval_dataset.denormalize(reconstructed_normalized, sample_idx=sample_idx)
                 
-                # Pad the reconstructed 5x5x5 back to 7x7x7 using original boundaries
-                reconstructed_7x7x7 = pad_5x5x5_to_7x7x7(reconstructed_denorm_5x5x5, original_7x7x7)
-                
                 # Store for HDF5 saving
-                var_reconstructed_7x7x7.append(reconstructed_7x7x7)
+                var_reconstructed_5x5x5.append(reconstructed_denorm_5x5x5)
                 var_encoded.append(latent_vector)
             
                 # Determine if this sample should get VTI output (only save a few per variable)
@@ -933,9 +922,10 @@ def main():
                 total_processed += 1
             
             # After processing all samples for this variable, store in dictionaries
-            if var_reconstructed_7x7x7:
-                reconstructed_data_dict[var_name] = np.array(var_reconstructed_7x7x7)
+            if var_reconstructed_5x5x5:
+                reconstructed_data_dict[var_name] = np.array(var_reconstructed_5x5x5)
                 encoded_data_dict[var_name] = np.array(var_encoded)
+                print(f"  ✓ Stored {var_name} data: {len(var_reconstructed_5x5x5)} samples, encoded shape: {np.array(var_encoded).shape}")
     
     # Calculate and save average metrics
     avg_metrics = {
